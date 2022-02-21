@@ -31,21 +31,18 @@ $site        = $konfigurasi->listing();
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body class="hold-transition login-page" style="background-color: #2596be;">
-<div class="login-box" style="min-width: 35% !important; ">
+<div class="login-box" style="min-width: 25% !important; ">
 
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body" style="border-radius: 10px;">
 
       <div class="login-logo">
-        <div class="row">
-          <div class="col-md-3">
-            <img src="<?= base_url('assets/upload/image/' . $site['icon']) ?>" class="img img-fluid">
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <img src="<?= base_url('assets/upload/image/' . $site['icon']) ?>" class="img img-fluid" width="150px">
           </div>
-          <div class="col-md-9 text-left">
-            <h1><?= $site['namaweb'] ?></h1>
-            <p style="font-size: 12px; font-weight: bold;"><?= $site['tagline'] ?></p>
-          </div>
+          
         </div>
       </div>
       <hr>

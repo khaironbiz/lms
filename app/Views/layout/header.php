@@ -25,9 +25,7 @@ $menu_layanan = $menu->layanan();
     <div class="container d-flex align-items-center">
 
       <a href="index.html" class="logo me-auto"><img src="<?= base_url('assets/upload/image/' . $site['logo']) ?>" alt="<?= $site['namaweb'] ?>"></a>
-      <!-- Uncomment below if you prefer to use an image logo -->
-      <!-- <h1 class="logo me-auto"><a href="index.html">Medicio</a></h1> -->
-
+      
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
           <li><a class="nav-link scrollto " href="<?= base_url() ?>">Home</a></li>
@@ -36,7 +34,7 @@ $menu_layanan = $menu->layanan();
               <?php foreach ($menu_profil as $menu_profil) { ?>
               <li><a href="<?= base_url('berita/profil/' . $menu_profil['slug_berita']) ?>"><?= $menu_profil['judul_berita'] ?></a></li>
               <?php } ?>
-              <li><a href="<?= base_url('staff') ?>">Our Team</a></li>
+              
             </ul>
           </li>
 

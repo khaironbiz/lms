@@ -33,6 +33,7 @@
 			<option value="Berita">Berita</option>
 			<option value="Layanan">Layanan</option>
 			<option value="Profil">Profil</option>
+			<option value="Event">Event</option>
 		</select>
 		<small class="text-secondary">Jenis konten</small>
 	</div>
