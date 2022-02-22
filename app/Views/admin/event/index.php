@@ -1,5 +1,5 @@
 <p>
-	<a href="<?= base_url('admin/berita/tambah') ?>" class="btn btn-success">
+	<a href="<?= base_url('admin/event/tambah') ?>" class="btn btn-success">
 		<i class="fa fa-plus"></i> Tambah Baru
 	</a>
 </p>
