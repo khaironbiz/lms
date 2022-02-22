@@ -6,6 +6,9 @@ use App\Models\User_model;
 
 class Akun extends BaseController
 {
+    public function __construct(){
+        $this->email = \Config\Services::email();
+    }
     public function index()
     {
         checklogin();
@@ -36,14 +39,16 @@ class Akun extends BaseController
                 // masuk database
                 // masuk database
                 if (strlen($this->request->getPost('password')) >= 6 && strlen($this->request->getPost('password')) <= 32) {
-                    $data = ['nama' => $this->request->getPost('nama'),
+                    $data = [
+                        'nama'      => $this->request->getPost('nama'),
                         'email'     => $this->request->getPost('email'),
                         'username'  => $this->request->getPost('username'),
                         'password'  => sha1($this->request->getPost('password')),
                         'gambar'    => $namabaru,
                     ];
                 } else {
-                    $data = ['nama' => $this->request->getPost('nama'),
+                    $data = [
+                        'nama'      => $this->request->getPost('nama'),
                         'email'     => $this->request->getPost('email'),
                         'username'  => $this->request->getPost('username'),
                         'gambar'    => $namabaru,
@@ -52,28 +57,53 @@ class Akun extends BaseController
             } else {
                 // masuk database
                 if (strlen($this->request->getPost('password')) >= 6 && strlen($this->request->getPost('password')) <= 32) {
-                    $data = ['nama' => $this->request->getPost('nama'),
+                    $data = [
+                        'nama'      => $this->request->getPost('nama'),
                         'email'     => $this->request->getPost('email'),
                         'username'  => $this->request->getPost('username'),
                         'password'  => sha1($this->request->getPost('password')),
                     ];
                 } else {
-                    $data = ['nama' => $this->request->getPost('nama'),
+                    $data = [
+                        'nama'      => $this->request->getPost('nama'),
                         'email'     => $this->request->getPost('email'),
                         'username'  => $this->request->getPost('username'),
                     ];
                 }
             }
             $m_user->update($id_user, $data);
+            //file attachment
+            $attachment = base_url('asstets/upload/file/Daftar_Harga_Kursus_2020_v2.pdf');
+            //html message untuk body email
+            $message = "<h1>Invoice Pembelian</h1>Kepada Berikut Invoice atas pembelian";
+            //memanggil private function sendEmail
+            $this->sendEmail($attachment, 'khaironbiz@gmail.com', 'Invoice', $message);
             // masuk database
             $this->session->setFlashdata('sukses', 'Data telah diedit');
-
             return redirect()->to(base_url('admin/akun'));
         }
-        $data = ['title' => 'Update Profile: ' . $user['nama'],
-            'user'       => $user,
-            'content'    => 'admin/akun/index',
+        $data = [
+            'title'     => 'Update Profile: ' . $user['nama'],
+            'user'      => $user,
+            'content'   => 'admin/akun/index',
         ];
         echo view('admin/layout/wrapper', $data);
     }
+    //send email
+    private function sendEmail($attachment, $to, $title, $message){
+
+		$this->email->setFrom('hpii.ppni@gmail.com','khairon');
+		$this->email->setTo($to);
+
+		$this->email->attach($attachment);
+
+		$this->email->setSubject($title);
+		$this->email->setMessage($message);
+
+		if(! $this->email->send()){
+			return false;
+		}else{
+			return true;
+		}
+	}
 }

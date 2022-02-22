@@ -22,7 +22,8 @@ class Kategori extends BaseController
         )) {
             // masuk database
             $slug = url_title($this->request->getPost('nama_kategori'), '-', true);
-            $data = ['id_user'  => $this->session->get('id_user'),
+            $data = [
+                'id_user'  => $this->session->get('id_user'),
                 'nama_kategori' => $this->request->getPost('nama_kategori'),
                 'slug_kategori' => $slug,
                 'urutan'        => $this->request->getPost('urutan'),
@@ -33,9 +34,11 @@ class Kategori extends BaseController
 
             return redirect()->to(base_url('admin/kategori'));
         }
-        $data = ['title' => 'Kategori Berita, Profil &amp; Layanan: ' . $total['total'],
-            'kategori'   => $kategori,
-            'content'    => 'admin/kategori/index',
+        $data = [
+            'title'     => 'Kategori Berita, Profil &amp; Layanan: ' . $total['total'],
+            'kategori'  => $kategori,
+            'sub_menu'  => 'admin/sub_menu/berita',
+            'content'   => 'admin/kategori/index',
         ];
         echo view('admin/layout/wrapper', $data);
     }

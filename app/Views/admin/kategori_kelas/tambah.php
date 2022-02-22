@@ -1,9 +1,9 @@
 <p>
-	<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-default">
+	<button type="button" class="btn btn-success mt-2" data-toggle="modal" data-target="#modal-default">
 		<i class="fa fa-plus"></i> Tambah Baru
 	</button>
 </p>
-<?= form_open(base_url('admin/kategori_kelas'));
+<?= form_open(base_url('admin/kategori_kelas/tambah'));
 echo csrf_field();
 ?>
 <div class="modal fade" id="modal-default">

@@ -46,12 +46,10 @@ $site        = $konfigurasi->listing();
         </div>
       </div>
       <hr>
-      <p class="login-box-msg">Masukkan username dan password</p>
-
-       <?= '<span class="text-danger">' . \Config\Services::validation()->listErrors() . '</span>'; ?>
-<?= form_open(base_url('login')); ?>
+      <p class="login-box-msg"><?= $site['namaweb']?></p>
+      <?= '<span class="text-danger">' . \Config\Services::validation()->listErrors() . '</span>'; ?>
+      <?= form_open(base_url('login')); ?>
       <?= csrf_field() ?>
-
         <div class="input-group mb-3">
           <input type="text" name="username" class="form-control" placeholder="Username">
           <div class="input-group-append">

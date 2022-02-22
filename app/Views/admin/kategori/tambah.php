@@ -1,5 +1,5 @@
 <p>
-	<button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-default">
+	<button type="button" class="btn btn-success mt-2" data-toggle="modal" data-target="#modal-default">
 		<i class="fa fa-plus"></i> Tambah Baru
 	</button>
 </p>

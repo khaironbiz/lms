@@ -1,8 +1,5 @@
-<?php
-echo view($sub_menu)
-?>
 <p>
-	<a href="<?= base_url('admin/berita/tambah') ?>" class="btn btn-success mt-2">
+	<a href="<?= base_url('admin/berita/tambah') ?>" class="btn btn-success">
 		<i class="fa fa-plus"></i> Tambah Baru
 	</a>
 </p>

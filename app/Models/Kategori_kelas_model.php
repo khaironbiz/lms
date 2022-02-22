@@ -12,7 +12,6 @@ class Kategori_kelas_model extends Model
     protected $useSoftDeletes     = false;
     protected $allowedFields      = [
                                     'id_kategori_kelas', 
-                                    'id_user', 
                                     'kategori_kelas', 
                                     'slug_kategori_kelas', 
                                     'urutan', 
@@ -35,6 +34,7 @@ class Kategori_kelas_model extends Model
     public function listing()
     {
         $builder = $this->db->table('kategori_kelas');
+        $builder->where('deleted_at', '0000-00-00 00:00:00');
         $builder->orderBy('kategori_kelas.id_kategori_kelas', 'DESC');
         $query = $builder->get();
 
@@ -50,6 +50,17 @@ class Kategori_kelas_model extends Model
         $query = $builder->get();
         return $query->getRowArray();
     }
+    // count
+    public function count($kategori_kelas)
+    {
+        $builder = $this->db->table('kategori_kelas');
+        $builder->select('COUNT(*) AS count');
+        $builder->where('kategori_kelas', $kategori_kelas);
+        $builder->orderBy('kategori_kelas.id_kategori_kelas', 'DESC');
+        $query = $builder->get();
+        return $query->getRowArray();
+    }
+    
     // detail
     public function detail($has_kategori_kelas)
     {
@@ -68,4 +79,5 @@ class Kategori_kelas_model extends Model
         $query = $builder->get();
         return $query->getRowArray();
     }
+    
 }

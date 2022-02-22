@@ -40,11 +40,12 @@ class Berita extends BaseController
         $m_berita->edit($data);
         // Update hits
 
-        $data = ['title'  => $berita['judul_berita'],
-            'description' => $berita['judul_berita'],
-            'keywords'    => $berita['judul_berita'],
-            'berita'      => $berita,
-            'content'     => 'berita/read',
+        $data = [
+            'title'         => $berita['judul_berita'],
+            'description'   => $berita['judul_berita'],
+            'keywords'      => $berita['judul_berita'],
+            'berita'        => $berita,
+            'content'       => 'berita/read',
         ];
         echo view('layout/wrapper', $data);
     }
@@ -58,8 +59,9 @@ class Berita extends BaseController
         $berita        = $m_berita->read($slug_berita);
 
         // Update hits
-        $data = ['id_berita' => $berita['id_berita'],
-            'hits'           => $berita['hits'] + 1,
+        $data = [
+            'id_berita' => $berita['id_berita'],
+            'hits'      => $berita['hits'] + 1,
         ];
         $m_berita->edit($data);
         // Update hits

@@ -34,6 +34,7 @@ class Login extends BaseController
             if ($user) {
                 // Jika username password benar
                 $this->session->set('username', $username);
+                $this->session->set('gambar', $user['gambar']);
                 $this->session->set('id_user', $user['id_user']);
                 $this->session->set('akses_level', $user['akses_level']);
                 $this->session->set('nama', $user['nama']);
@@ -47,10 +48,11 @@ class Login extends BaseController
             return redirect()->to(base_url('login'));
         }
         // End validasi
-        $data = ['title'  => 'Login Administrator',
-            'description' => $konfigurasi['namaweb'] . ', ' . $konfigurasi['tentang'],
-            'keywords'    => $konfigurasi['namaweb'] . ', ' . $konfigurasi['keywords'],
-            'session'     => $session,
+        $data = [
+            'title'         => 'Member Area',
+            'description'   => $konfigurasi['namaweb'] . ', ' . $konfigurasi['tentang'],
+            'keywords'      => $konfigurasi['namaweb'] . ', ' . $konfigurasi['keywords'],
+            'session'       => $session,
         ];
         echo view('login/index', $data);
 

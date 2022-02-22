@@ -1,4 +1,8 @@
-<?php include 'tambah.php'; ?>
+
+<?php 
+echo view($sub_menu);
+include 'tambah.php'; 
+?>
 <table class="table table-bordered" id="example1">
 	<thead>
 		<tr>

@@ -17,9 +17,11 @@ class Berita extends BaseController
         $berita     = $m_berita->listing();
         $total      = $m_berita->total();
 
-        $data = ['title' => 'Berita, Profil dan Layanan (' . $total . ')',
-            'berita'     => $berita,
-            'content'    => 'admin/berita/index',
+        $data = [
+            'title'     => 'Berita, Profil dan Layanan (' . $total . ')',
+            'berita'    => $berita,
+            'sub_menu'  => 'admin/sub_menu/berita',
+            'content'   => 'admin/berita/index',
         ];
         echo view('admin/layout/wrapper', $data);
     }
@@ -103,8 +105,8 @@ class Berita extends BaseController
         // Start validasi
         if ($this->request->getMethod() === 'post' && $this->validate(
             [
-                'judul_berita' => 'required',
-                'gambar' => [
+                'judul_berita'  => 'required',
+                'gambar'        => [
                     'mime_in[gambar,image/jpg,image/jpeg,image/gif,image/png]',
                     'max_size[gambar,4096]',
                 ],
@@ -137,7 +139,6 @@ class Berita extends BaseController
                     'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
                 ];
                 $m_berita->tambah($data);
-
                 return redirect()->to(base_url('admin/berita/jenis_berita/' . $this->request->getVar('jenis_berita')))->with('sukses', 'Data Berhasil di Simpan');
             }
             $data = [
