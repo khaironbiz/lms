@@ -148,7 +148,7 @@ tinymce.init({
     <div class="float-right d-none d-sm-block">
       <b>Version</b> 3.1.0
     </div>
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2014-2021 <a href="<?= $site['website']?>"><?= $site['namaweb']?></a>.</strong> All rights reserved.
   </footer>
 
   <!-- Control Sidebar -->
@@ -205,7 +205,8 @@ $(document).ready(function(){
 <script>
   $(function () {
     $("#example1").DataTable({
-      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+      // "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+      "buttons": ["csv", "excel", "pdf"],
       "responsive": true,
       "paging": true,
       "lengthMenu": [[100, 250, 500, -1], [100, 250, 500, "All"]],
