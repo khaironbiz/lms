@@ -45,7 +45,7 @@ class Event extends BaseController
     }
 
     // jenis_berita
-    public function jenis_berita($jenis_berita)
+    public function berita($jenis_berita)
     {
         checklogin();
         $m_berita   = new Berita_model();
@@ -53,9 +53,11 @@ class Event extends BaseController
         $berita     = $m_berita->jenis_berita_all($jenis_berita);
         $total      = $m_berita->total_jenis_berita($jenis_berita);
 
-        $data = ['title' => $jenis_berita . ' (' . $total . ')',
-            'berita'     => $berita,
-            'content'    => 'admin/berita/index',
+        $data = [
+            'title'     => $jenis_berita . ' (' . $total . ')',
+            'berita'    => $berita,
+            'sub_menu'  => 'admin/sub_menu/berita',
+            'content'   => 'admin/berita/index',
         ];
         echo view('admin/layout/wrapper', $data);
     }
@@ -173,10 +175,24 @@ class Event extends BaseController
             return redirect()->to(base_url('admin/berita/jenis_berita/' . $this->request->getVar('jenis_berita')))->with('sukses', 'Data Berhasil di Simpan');
         }
     }
-
-
     // edit
     public function edit($id_berita)
+    {
+        checklogin();
+        $m_kategori = new Kategori_model();
+        $m_berita   = new Berita_model();
+        $kategori   = $m_kategori->listing();
+        $berita     = $m_berita->detail($id_berita);
+        $data       = [
+            'title'     => 'Edit Berita: ' . $berita['judul_berita'],
+            'kategori'  => $kategori,
+            'berita'    => $berita,
+            'content'   => 'admin/event/edit',
+        ];
+        echo view('admin/layout/wrapper', $data);
+    }
+    // UPDATE
+    public function update($id_berita)
     {
         checklogin();
         $m_kategori = new Kategori_model();
@@ -220,8 +236,7 @@ class Event extends BaseController
                     'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
                 ];
                 $m_berita->edit($data);
-
-                return redirect()->to(base_url('admin/berita/jenis_berita/' . $this->request->getVar('jenis_berita')))->with('sukses', 'Data Berhasil di Simpan');
+                return redirect()->to(base_url('admin/event'))->with('sukses', 'Data Berhasil di Simpan');
             }
             $data = [
                 'id_berita'       => $id_berita,
@@ -238,18 +253,9 @@ class Event extends BaseController
                 'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
             ];
             $m_berita->edit($data);
-
-            return redirect()->to(base_url('admin/berita/jenis_berita/' . $this->request->getVar('jenis_berita')))->with('sukses', 'Data Berhasil di Simpan');
+            return redirect()->to(base_url('admin/event'))->with('sukses', 'Data Berhasil di Simpan');
         }
-
-        $data = ['title' => 'Edit Berita: ' . $berita['judul_berita'],
-            'kategori'   => $kategori,
-            'berita'     => $berita,
-            'content'    => 'admin/berita/edit',
-        ];
-        echo view('admin/layout/wrapper', $data);
     }
-
     // Delete
     public function delete($id_berita)
     {
@@ -259,7 +265,6 @@ class Event extends BaseController
         $m_berita->delete($data);
         // masuk database
         $this->session->setFlashdata('sukses', 'Data telah dihapus');
-
         return redirect()->to(base_url('admin/berita'));
     }
     public function baru(){

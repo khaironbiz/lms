@@ -53,8 +53,7 @@ echo view($sub_menu)
 			</td>
 			<td>
 				<small>
-					
-						<?php
+					<?php
 						foreach($kelas as $kelas){
 					?>
 					<?= $kelas['nama_kelas'];?> => <?= $kelas['kuota'];?> => <?= $kelas['harga_jual'];?><br>

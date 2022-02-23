@@ -1,4 +1,4 @@
-<form action="<?= base_url('admin/berita/edit/' . $berita['id_berita']) ?>" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+<form action="<?= base_url('admin/event/update/' . $berita['id_berita']) ?>" method="post" accept-charset="utf-8" enctype="multipart/form-data">
 <?= csrf_field();
 ?>
 
@@ -32,13 +32,7 @@
 	</div>
 	<div class="col-md-2">
 		<select name="jenis_berita" class="form-control">
-			<option value="Berita">Berita</option>
-			<option value="Layanan" <?php if ($berita['jenis_berita'] === 'Layanan') {
-    echo 'selected';
-} ?>>Layanan</option>
-			<option value="Profil" <?php if ($berita['jenis_berita'] === 'Profil') {
-    echo 'selected';
-} ?>>Profil</option>
+			<option value="Event">Event</option>
 		</select>
 		<small class="text-secondary">Jenis konten</small>
 	</div>
