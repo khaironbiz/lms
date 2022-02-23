@@ -29,7 +29,16 @@ class Kategori_kelas_model extends Model
     protected $validationRules    = [];
     protected $validationMessages = [];
     protected $skipValidation     = false;
+    // Index
+    public function index()
+    {
+        $builder = $this->db->table('kategori_kelas');
+        $builder->where('deleted_at', '0000-00-00 00:00:00');
+        $builder->orderBy('kategori_kelas.id_kategori_kelas', 'DESC');
+        $query = $builder->get();
 
+        return $query->getResultArray();
+    }
     // listing
     public function listing()
     {

@@ -5,6 +5,7 @@ namespace App\Controllers\Admin;
 use App\Models\Berita_model;
 use App\Models\Kategori_model;
 use App\Models\User_model;
+use App\Models\Kelas_model;
 
 class Event extends BaseController
 {
@@ -14,13 +15,15 @@ class Event extends BaseController
         checklogin();
         $m_berita   = new Berita_model();
         $m_kategori = new Kategori_model();
-        $berita     = $m_berita->listing();
-        $total      = $m_berita->total();
+        $m_kelas    = new Kelas_model();
+        $berita     = $m_berita->event();
+        
+        $total      = $m_berita->total_event();
         $data = [
-            'title'     => 'Berita, Profil dan Layanan (' . $total . ')',
+            'title'     => 'Events (' . $total . ')',
             'berita'    => $berita,
             'sub_menu'  => 'admin/sub_menu/berita',
-            'content'   => 'admin/berita/index',
+            'content'   => 'admin/event/index',
         ];
         echo view('admin/layout/wrapper', $data);
     }
@@ -99,7 +102,20 @@ class Event extends BaseController
         $m_kategori = new Kategori_model();
         $m_berita   = new Berita_model();
         $kategori   = $m_kategori->listing();
-
+        $data = [
+            'title'     => 'Tambah Berita',
+            'kategori'  => $kategori,
+            'content'   => 'admin/event/tambah',
+        ];
+        echo view('admin/layout/wrapper', $data);
+    }
+    // save add
+    public function add()
+    {
+        checklogin();
+        $m_kategori = new Kategori_model();
+        $m_berita   = new Berita_model();
+        $kategori   = $m_kategori->listing();
         // Start validasi
         if ($this->request->getMethod() === 'post' && $this->validate(
             [
@@ -154,16 +170,10 @@ class Event extends BaseController
                 'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
             ];
             $m_berita->tambah($data);
-
             return redirect()->to(base_url('admin/berita/jenis_berita/' . $this->request->getVar('jenis_berita')))->with('sukses', 'Data Berhasil di Simpan');
         }
-
-        $data = ['title' => 'Tambah Berita',
-            'kategori'   => $kategori,
-            'content'    => 'admin/berita/tambah',
-        ];
-        echo view('admin/layout/wrapper', $data);
     }
+
 
     // edit
     public function edit($id_berita)

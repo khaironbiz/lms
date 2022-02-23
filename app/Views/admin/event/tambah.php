@@ -1,16 +1,16 @@
-<form action="<?= base_url('admin/berita/tambah') ?>" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+<form action="<?= base_url('admin/event/add') ?>" method="post" accept-charset="utf-8" enctype="multipart/form-data">
 <?= csrf_field();
 ?>
 
 <div class="form-group row">
-	<label class="col-md-2">Judul Berita</label>
+	<label class="col-md-2">Judul Event</label>
 	<div class="col-md-10">
 		<input type="text" name="judul_berita" class="form-control" value="<?= set_value('judul_berita') ?>" required>
 	</div>
 </div>
 
 <div class="form-group row">
-	<label class="col-md-2">Upload Gambar Berita</label>
+	<label class="col-md-2">Gambar Event</label>
 	<div class="col-md-10">
 		<input type="file" name="gambar" class="form-control" value="<?= set_value('gambar') ?>">
 	</div>
@@ -30,9 +30,6 @@
 	</div>
 	<div class="col-md-2">
 		<select name="jenis_berita" class="form-control">
-			<option value="Berita">Berita</option>
-			<option value="Layanan">Layanan</option>
-			<option value="Profil">Profil</option>
 			<option value="Event">Event</option>
 		</select>
 		<small class="text-secondary">Jenis konten</small>

@@ -27,15 +27,13 @@ $menu_layanan = $menu->layanan();
                 <strong>Email:</strong> <?= $site['email'] ?><br>
               </p>
               <div class="social-links mt-3">
-                <a href="<?= $site['twitter'] ?>" class="twitter"><i class="fab fa-twitter"></i></a>
-                <a href="<?= $site['facebook'] ?>" class="facebook"><i class="fab fa-facebook"></i></a>
-                <a href="<?= $site['instagram'] ?>" class="instagram"><i class="fab fa-instagram"></i></a>
-                <a href="<?= $site['youtube'] ?>" class="google-plus"><i class="fab fa-youtube"></i></a>
-
+                <a href="<?= $site['twitter'] ?>" class="twitter" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="<?= $site['facebook'] ?>" class="facebook" target="_blank"><i class="fab fa-facebook"></i></a>
+                <a href="<?= $site['instagram'] ?>" class="instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="<?= $site['youtube'] ?>" class="google-plus" target="_blank"><i class="fab fa-youtube"></i></a>
               </div>
             </div>
           </div>
-
           <div class="col-lg-2 col-md-6 footer-links">
             <h4>About Us</h4>
             <ul>
@@ -45,7 +43,6 @@ $menu_layanan = $menu->layanan();
               <li><i class="bx bx-chevron-right"></i> <a href="<?= base_url('staff') ?>">Staff &amp; Team Kami</a></li>
             </ul>
           </div>
-
           <div class="col-lg-3 col-md-6 footer-links">
             <h4>Our Services</h4>
             <ul>
@@ -54,7 +51,6 @@ $menu_layanan = $menu->layanan();
               <?php } ?>
             </ul>
           </div>
-
           <div class="col-lg-4 col-md-6 footer-newsletter">
             <h4>Find Us on Map</h4>
             <style type="text/css" media="screen">
