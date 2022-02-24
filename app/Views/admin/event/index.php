@@ -25,7 +25,6 @@ echo view($sub_menu)
 		$no 		= 1;
 		$m_kelas    = new Kelas_model();
 		foreach ($berita as $berita) { 
-			$id_event 	= $berita['id_berita'];
 			$id_event   = $berita['id_berita'];
 			$kelas      = $m_kelas->event($id_event);
 		?>

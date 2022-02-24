@@ -1,7 +1,5 @@
 <?php
 use App\Models\Konfigurasi_model;
-
-$session     = \Config\Services::session();
 $konfigurasi = new Konfigurasi_model();
 $site        = $konfigurasi->listing();
 ?>

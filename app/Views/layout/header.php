@@ -1,6 +1,5 @@
 <?php use App\Models\Konfigurasi_model;
 use App\Models\Menu_model;
-
 $konfigurasi  = new Konfigurasi_model();
 $menu         = new Menu_model();
 $site         = $konfigurasi->listing();
@@ -15,7 +14,13 @@ $menu_layanan = $menu->layanan();
         <i class="fa fa-home"></i> <?= tagline(); ?>
       </div>
       <div class="d-flex align-items-center">
-        <i class="bi bi-phone"></i> <?= telepon() ?>
+        <?php
+        if($session->get('nama') !='') {
+        ?>
+        <i class="fa fa-user" aria-hidden="true"></i><a href="<?= base_url('admin/dasbor')?>" class="btn btn-warning btn-sm"><?= $session->get('nama');?></a> 
+        <?php
+        }
+        ?>
       </div>
     </div>
   </div>
@@ -64,10 +69,18 @@ $menu_layanan = $menu->layanan();
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
-
-      <a href="<?= base_url('login') ?>" class="appointment-btn scrollto">
-        Login <span class="d-none d-md-inline">Admin</span>
-      </a>
-
+      <?php
+      $id_user = $session->get('id_user');
+      if($id_user>0){
+        
+      ?>
+      <a href="<?= base_url('login/logout') ?>" class="appointment-btn scrollto">Logout</a>
+      <?php
+      }else{
+      ?>
+      <a href="<?= base_url('login') ?>" class="appointment-btn scrollto">Login</a>
+      <?php
+      }
+      ?>
     </div>
   </header><!-- End Header -->

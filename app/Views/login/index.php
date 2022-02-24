@@ -48,7 +48,7 @@ $site        = $konfigurasi->listing();
       <hr>
       <p class="login-box-msg"><?= $site['namaweb']?></p>
       <?= '<span class="text-danger">' . \Config\Services::validation()->listErrors() . '</span>'; ?>
-      <?= form_open(base_url('login')); ?>
+      <?= form_open(base_url('login/login')); ?>
       <?= csrf_field() ?>
         <div class="input-group mb-3">
           <input type="text" name="username" class="form-control" placeholder="Username">

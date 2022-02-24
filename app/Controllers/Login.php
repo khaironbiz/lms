@@ -19,7 +19,23 @@ class Login extends BaseController
         $m_konfigurasi = new Konfigurasi_model();
         $m_user        = new User_model();
         $konfigurasi   = $m_konfigurasi->listing();
+        $data = [
+            'title'         => 'Member Area',
+            'description'   => $konfigurasi['namaweb'] . ', ' . $konfigurasi['tentang'],
+            'keywords'      => $konfigurasi['namaweb'] . ', ' . $konfigurasi['keywords'],
+            'session'       => $session,
+        ];
+        echo view('login/index', $data);
 
+        // End proses
+    }
+    // login
+    public function login()
+    {
+        $session       = \Config\Services::session();
+        $m_konfigurasi = new Konfigurasi_model();
+        $m_user        = new User_model();
+        $konfigurasi   = $m_konfigurasi->listing();
         // Start validasi
         if ($this->request->getMethod() === 'post' && $this->validate(
             [
@@ -39,24 +55,14 @@ class Login extends BaseController
                 $this->session->set('akses_level', $user['akses_level']);
                 $this->session->set('nama', $user['nama']);
                 $this->session->setFlashdata('sukses', 'Hai ' . $user['nama'] . ', Anda berhasil login');
-
-                return redirect()->to(base_url('admin/dasbor'));
+                //return redirect()->to(base_url('admin/dasbor'));
+                return redirect()->to(base_url());
             }
             // jika username password salah
             $this->session->setFlashdata('warning', 'Username atau password salah');
-
             return redirect()->to(base_url('login'));
         }
         // End validasi
-        $data = [
-            'title'         => 'Member Area',
-            'description'   => $konfigurasi['namaweb'] . ', ' . $konfigurasi['tentang'],
-            'keywords'      => $konfigurasi['namaweb'] . ', ' . $konfigurasi['keywords'],
-            'session'       => $session,
-        ];
-        echo view('login/index', $data);
-
-        // End proses
     }
 
     // lupa

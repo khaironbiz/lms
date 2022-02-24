@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\Berita_model;
 use App\Models\Kategori_model;
 use App\Models\Konfigurasi_model;
+use App\Models\Kelas_model;
 
 class Berita extends BaseController
 {
@@ -16,11 +17,12 @@ class Berita extends BaseController
         $konfigurasi   = $m_konfigurasi->listing();
         $berita        = $m_berita->home();
 
-        $data = ['title'  => 'Berita ' . $konfigurasi['namaweb'],
-            'description' => 'Berita ' . $konfigurasi['namaweb'],
-            'keywords'    => 'Berita ' . $konfigurasi['namaweb'],
-            'berita'      => $berita,
-            'content'     => 'berita/index',
+        $data = [
+            'title'         => 'Berita ' . $konfigurasi['namaweb'],
+            'description'   => 'Berita ' . $konfigurasi['namaweb'],
+            'keywords'      => 'Berita ' . $konfigurasi['namaweb'],
+            'berita'        => $berita,
+            'content'       => 'berita/index',
         ];
         echo view('layout/wrapper', $data);
     }
@@ -28,14 +30,20 @@ class Berita extends BaseController
     // read
     public function read($slug_berita)
     {
-        $m_konfigurasi = new Konfigurasi_model();
-        $m_berita      = new Berita_model();
-        $konfigurasi   = $m_konfigurasi->listing();
-        $berita        = $m_berita->read($slug_berita);
-
+        checklogin();
+        $session        = \Config\Services::session();
+        $m_konfigurasi  = new Konfigurasi_model();
+        $m_berita       = new Berita_model();
+        $m_kelas        = new Kelas_model();
+        $konfigurasi    = $m_konfigurasi->listing();
+        $berita         = $m_berita->read($slug_berita);
+        $sidebar        = $m_berita->sidebar();
+        $id_event       = $berita['id_berita'];
+		$kelas          = $m_kelas->event($id_event);
         // Update hits
-        $data = ['id_berita' => $berita['id_berita'],
-            'hits'           => $berita['hits'] + 1,
+        $data = [
+            'id_berita' => $berita['id_berita'],
+            'hits'      => $berita['hits'] + 1,
         ];
         $m_berita->edit($data);
         // Update hits
@@ -45,6 +53,8 @@ class Berita extends BaseController
             'description'   => $berita['judul_berita'],
             'keywords'      => $berita['judul_berita'],
             'berita'        => $berita,
+            'sidebar'       => $sidebar,
+            'kelas'         => $kelas,
             'content'       => 'berita/read',
         ];
         echo view('layout/wrapper', $data);
