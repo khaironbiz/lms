@@ -4,11 +4,11 @@ namespace App\Controllers\Admin;
 
 use App\Models\Berita_model;
 use App\Models\Kategori_model;
+use App\Models\Kategori_kelas_model;
 use App\Models\User_model;
 use App\Models\Kelas_model;
-use App\Models\Kategori_kelas_model;
 
-class Event extends BaseController
+class Kelas extends BaseController
 {
     // index
     public function index()
@@ -18,18 +18,17 @@ class Event extends BaseController
         $m_kategori         = new Kategori_model();
         $m_kelas            = new Kelas_model();
         $m_kategori_kelas   = new Kategori_kelas_model();
-        $m_user             = new User_model();
-        $berita             = $m_berita->event();
-        $pic                = $m_user->listing();
         $kategori_kelas     = $m_kategori_kelas->listing();
+        $berita             = $m_berita->event();
+        $kelas              = $m_kelas->listing();
         $total              = $m_berita->total_event();
         $data = [
-            'title'             => 'Events (' . $total . ')',
-            'berita'            => $berita,
-            'pic'               => $pic,
-            'kategori_kelas'    => $kategori_kelas,
-            'sub_menu'          => 'admin/sub_menu/berita',
-            'content'           => 'admin/event/index',
+            'title'         => 'Kelas (' . $total . ')',
+            'berita'        => $berita,
+            'kelas'         => $kelas,
+            'kategori_kelas'=> $kategori_kelas,
+            'sub_menu'      => 'admin/sub_menu/berita',
+            'content'       => 'admin/kelas/index',
         ];
         echo view('admin/layout/wrapper', $data);
     }
@@ -58,7 +57,6 @@ class Event extends BaseController
         $m_kategori = new Kategori_model();
         $berita     = $m_berita->jenis_berita_all($jenis_berita);
         $total      = $m_berita->total_jenis_berita($jenis_berita);
-
         $data = [
             'title'     => $jenis_berita . ' (' . $total . ')',
             'berita'    => $berita,
@@ -179,33 +177,6 @@ class Event extends BaseController
             ];
             $m_berita->tambah($data);
             return redirect()->to(base_url('admin/berita/jenis_berita/' . $this->request->getVar('jenis_berita')))->with('sukses', 'Data Berhasil di Simpan');
-        }
-    }
-    // save add
-    public function add_kelas()
-    {
-        checklogin();
-        $m_kelas        = new Kelas_model();
-        $data_validasi  = [
-                'nama_kelas'        => 'required',
-                'kategori_kelas'    => 'required',
-            ];
-        // Start validasi
-        if ($this->request->getMethod() === 'post' && $this->validate($data_validasi)){
-            $data = [
-                'pic_kelas'         => $this->session->get('id_user'),
-                'id_event'          => $this->request->getVar('id_event'),
-                'nama_kelas'        => $this->request->getVar('nama_kelas'),
-                'kategori_kelas'    => $this->request->getVar('kategori_kelas'),
-                'tanggal_mulai'     => $this->request->getVar('tanggal_mulai'),
-                'tanggal_selesai'   => $this->request->getVar('tanggal_selesai'),
-                'kuota'             => $this->request->getVar('kuota'),
-                'status'            => $this->request->getVar('status'),
-                'harga_dasar'       => $this->request->getVar('harga_dasar'),
-                'harga_jual'        => $this->request->getVar('harga_jual'),
-            ];
-            $m_kelas->tambah($data);
-            return redirect()->to(base_url('admin/event'))->with('sukses', 'Data Berhasil di Simpan');
         }
     }
     // edit

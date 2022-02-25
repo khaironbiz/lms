@@ -8,16 +8,16 @@ class Kelas_model extends Model
 {
     protected $table         = 'kelas';
     protected $primaryKey    = 'id_kelas';
-    protected $allowedFields = [];
+    protected $allowedFields = ['pic_kelas','id_event','nama_kelas','kategori_kelas','tanggal_mulai','tanggal_selesai','kuota','status','harga_dasar','harga_jual'];
 
     // Listing
     public function listing()
     {
-        $builder = $this->db->table('berita');
-        $builder->select('berita.*, kategori.nama_kategori, kategori.slug_kategori, users.nama');
-        $builder->join('kategori', 'kategori.id_kategori = berita.id_kategori', 'LEFT');
-        $builder->join('users', 'users.id_user = berita.id_user', 'LEFT');
-        $builder->orderBy('berita.id_berita', 'DESC');
+        $builder = $this->db->table('kelas');
+        $builder->select('kelas.*, berita.judul_berita, users.nama');
+        $builder->join('berita', 'berita.id_berita = kelas.id_event', 'LEFT');
+        $builder->join('users', 'users.id_user = kelas.pic_kelas', 'LEFT');
+        $builder->orderBy('kelas.id_event', 'DESC');
         $query = $builder->get();
         return $query->getResultArray();
     }

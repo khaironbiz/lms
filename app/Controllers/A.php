@@ -5,10 +5,10 @@ namespace App\Controllers;
 use App\Models\Url_model;
 use App\Models\Konfigurasi_model;
 
-class Bit extends BaseController
+class A extends BaseController
 {
     // index
-    public function ly($sort)
+    public function b($sort)
     {
         $m_url          = new url_model();
         $m_konfigurasi  = new Konfigurasi_model();
@@ -20,8 +20,8 @@ class Bit extends BaseController
             return redirect()->to($url_asli);
         }else{
             $data = [
-            'title'         => 'Page Not Found',
-            'description'   => 'Page Not Found ',
+            'title'         => 'URL yang anda cari tidak ditemukan ',
+            'description'   => 'URL yang anda cari tidak terdaftar ',
             'keywords'      => 'Berita ' . $konfigurasi['namaweb'],
             'content'       => 'not_found/index',
         ];

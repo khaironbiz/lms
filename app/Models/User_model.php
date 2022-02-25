@@ -41,10 +41,12 @@ class User_model extends Model
     public function listing()
     {
         $builder = $this->db->table('users');
-        $builder->orderBy('users.id_user', 'DESC');
+        $builder->orderBy('id_user', 'ASC');
         $query = $builder->get();
         return $query->getResultArray();
     }
+
+    
     // total
     public function total()
     {
