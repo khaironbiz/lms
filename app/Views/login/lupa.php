@@ -31,36 +31,46 @@ $site        = $konfigurasi->listing();
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body class="hold-transition login-page" style="background-color: #2596be;">
-<div class="login-box" style="min-width: 35% !important; ">
+<div class="login-box" style="min-width: 25% !important; ">
+    <!-- /.login-logo -->
+    <div class="card">
+        <div class="card-body login-card-body" style="border-radius: 10px;">
+            <div class="login-logo">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <img src="<?= base_url('assets/upload/image/' . $site['icon']) ?>" class="img img-fluid" width="150px">
+                    </div>
 
-  <!-- /.login-logo -->
-  <div class="card">
-    <div class="card-body login-card-body" style="border-radius: 10px;">
-
-      <div class="login-logo">
-        <div class="row">
-          <div class="col-md-3">
-            <img src="<?= base_url('assets/upload/image/' . $site['icon']) ?>" class="img img-fluid">
-          </div>
-          <div class="col-md-9 text-left">
-            <h1><?= $site['namaweb'] ?></h1>
-            <h2><?= $site['tagline'] ?></h2>
-          </div>
+                </div>
+            </div>
+            <hr>
+            <h4 class="login-box-msg">Reset Password</h4>
+            <p class="login-box-msg"><?= $site['namaweb']?></p>
+            <?= '<span class="text-danger">' . \Config\Services::validation()->listErrors() . '</span>'; ?>
+            <?= form_open(base_url('login/password_request')); ?>
+            <?= csrf_field() ?>
+            <div class="input-group mb-3">
+                <input type="email" name="email" class="form-control" placeholder="Email">
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-envelope"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-4">
+                    <button type="submit" class="btn btn-primary btn-block">Reset Password</button>
+                </div>
+                <!-- /.col -->
+            </div>
+            <?= form_close(); ?>
+            <hr>
+            <p class="mb-1 text-center">
+                <a href="<?= base_url('login') ?>">Login</a> | <a href="<?= base_url() ?>" class="text-center">Home</a>
+            </p>
         </div>
-      </div>
-      <hr>
-      <div class="alert alert-warning text-center">
-        <h4>Oops... Mohon maaf</h4>
-        <hr>
-        <p>Halaman ini hanya tersedia untuk versi Premium. <br>Silakan Hubungi Java Web Media <a href="https://javawebmedia.com">www.javawebmedia.com</a></p>
-      </div>
-      <hr>
-      <p class="mb-1 text-center">
-        <a href="<?= base_url('login') ?>">Login</a> | <a href="<?= base_url() ?>" class="text-center">Home</a>
-      </p>
+        <!-- /.login-card-body -->
     </div>
-    <!-- /.login-card-body -->
-  </div>
 </div>
 <!-- /.login-box -->
 

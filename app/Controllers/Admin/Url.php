@@ -19,18 +19,15 @@ class Url extends BaseController
             'url'       => $url,
             'content'   => 'admin/url_short/index',
         ];
-        $to         = "khaironbiz@gmail.com";
-        $subject    = "Kirim Email dengan fungsi";
-        $token      = uniqid();
-        $message    = "ini adalah cara untuk mengirim email $token";
-        $this->sendMail($to,$subject,$message,2);
+
         echo view('admin/layout/wrapper', $data);
     }
-    //tambah
+    //tambah data
     public function tambah(){
         checklogin();
+        $id_user    = $this->session->get('id_user');
         $m_url      = new Url_model();
-        $url        = $m_url->listing();
+        $url        = $m_url->listing($id_user);
         $total      = $m_url->total();
         // Start validasi
         if ($this->request->getMethod() === 'post' && $this->validate(
@@ -54,46 +51,13 @@ class Url extends BaseController
             // masuk database
             $this->session->setFlashdata('sukses', 'Data telah ditambah');
             return redirect()->to(base_url('a/b/'.$short));
+        }else{
+            $this->session->setFlashdata('Gagal', 'Data Gagal ditambahkan');
+            return redirect()->to(base_url('admin/url/'));
         }
         //return redirect()->to(base_url('a/b/'.$short));
     }
-    //send email
-    private function sendMail($to,$subject,$message,$server=1) {
-        $email = \Config\Services::email();
 
-        if($server==1){
-            $email_pengirim = "server@hpii.or.id";
-            $email_password = "@Pentagon250909#";
-            $smtp_host      = "smtp.hostinger.com";
-            $nama_pengirim  = "Himpunan Perawat Informatika Indonesia";
-        }else if($server==2){
-            $email_pengirim = "hpii.ppni@gmail.com";
-            $email_password = "@Mail250909#";
-            $smtp_host      = "smtp.gmail.com";
-            $nama_pengirim  = "Himpunan Perawat Informatika Indonesia";
-        }
-        $config["protocol"]     = "smtp";
-        $config["SMTPHost"]     = $smtp_host;
-        $config["SMTPUser"]     = $email_pengirim;
-        $config["SMTPPass"]     = $email_password;
-        $config["SMTPPort"]     = 465;
-        $config["SMTPCrypto"]   = "ssl";
-        $email->initialize($config);
-        $email->setTo($to);
-
-        $email->setFrom($email_pengirim, $nama_pengirim);
-        $email->setSubject($subject);
-        $email->setMessage($message);
-        if ($email->send())
-        {
-            echo 'Email successfully sent';
-        }
-        else
-        {
-            $data = $email->printDebugger(['headers']);
-            print_r($data);
-        }
-    }
     // edit
     public function edit($has_kategori_kelas)
     {

@@ -36,7 +36,6 @@ $site        = $konfigurasi->listing();
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body" style="border-radius: 10px;">
-
       <div class="login-logo">
         <div class="row justify-content-center">
           <div class="col-md-6">

@@ -37,6 +37,23 @@ class User_model extends Model
                 'password'      => sha1($password), ])
             ->first();
     }
+    //ambil password
+    public function reset_password($email)
+    {
+        return $this->asArray()
+            ->where(['email' => $email, ])
+            ->first();
+    }
+    // count email
+    public function count_email($email)
+    {
+        $builder = $this->db->table('users');
+        $builder->where('email', $email);
+        $builder->select('COUNT(*) AS count');
+        $builder->orderBy('users.id_user', 'DESC');
+        $query = $builder->get();
+        return $query->getRowArray();
+    }
     // listing
     public function listing()
     {
