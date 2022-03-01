@@ -33,7 +33,7 @@ class Email extends BaseConfig
      *
      * @var string
      */
-    public $protocol = 'mail';
+    public $protocol = 'smtp';
 
     /**
      * The server path to Sendmail.
@@ -48,21 +48,21 @@ class Email extends BaseConfig
      *
      * @var string
      */
-    public $SMTPHost = 'smtp.gmail.com';
+    public $SMTPHost = 'smtp.hostinger.com';
 
     /**
      * SMTP Username
      *
      * @var string
      */
-    public $SMTPUser ='hpii.ppni@gmail.com';
+    public $SMTPUser = 'server@hpii.or.id';
 
     /**
      * SMTP Password
      *
      * @var string
      */
-    public $SMTPPass ='@Mail250909#';
+    public $SMTPPass ='@Pentagon250909#';
 
     /**
      * SMTP Port
@@ -90,7 +90,7 @@ class Email extends BaseConfig
      *
      * @var string
      */
-    public $SMTPCrypto = 'ssl';
+    public $SMTPCrypto = 'tls';
 
     /**
      * Enable word-wrap
@@ -111,7 +111,7 @@ class Email extends BaseConfig
      *
      * @var string
      */
-    public $mailType = 'text';
+    public $mailType = 'html';
 
     /**
      * Character set (utf-8, iso-8859-1, etc.)
