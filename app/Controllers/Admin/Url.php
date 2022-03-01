@@ -53,6 +53,31 @@ class Url extends BaseController
         }
         //return redirect()->to(base_url('a/b/'.$short));
     }
+    //send email
+    function sendMail() {
+//        $to         = $this->request->getVar('mailTo');
+//        $subject    = $this->request->getVar('subject');
+//        $message    = $this->request->getVar('message');
+        $to         = "khaironbiz@gmail.com";
+        $subject    = "Test Email";
+        $message    = "Hai ini adalah test email";
+
+        $email = \Config\Services::email();
+        $email->setTo($to);
+        $email->setFrom('hpii.ppni@gmail.com', 'Himpunan Perawat Informatika Indonesia');
+
+        $email->setSubject($subject);
+        $email->setMessage($message);
+        if ($email->send())
+        {
+            echo 'Email successfully sent';
+        }
+        else
+        {
+            $data = $email->printDebugger(['headers']);
+            print_r($data);
+        }
+    }
     // edit
     public function edit($has_kategori_kelas)
     {
