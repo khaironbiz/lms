@@ -4,20 +4,16 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Token_model extends Model
+class Provinsi_model extends Model
 {
     
-    protected $table                = 'token';
-    protected $primaryKey           = 'id_token';
+    protected $table                = 'prov';
+    protected $primaryKey           = 'id_provinsi';
     protected $returnType           = 'array';
     protected $useSoftDeletes       = false;
     protected $allowedFields        = [
-                                        'jenis_token',
-                                        'token',
-                                        'created_by',
-                                        'created_at',
-                                        'exp_date',
-                                        'read_at'
+                                        'id_prov',
+                                        'nama_prov',
                                     ];
     protected $validationRules      = [];
     protected $validationMessages   = [];
@@ -25,6 +21,14 @@ class Token_model extends Model
 
 
     // Listing
+    public function listing()
+    {
+        $builder = $this->db->table('prov');
+        $builder->orderBy('prov.nama_prov', 'ASC');
+        $query = $builder->get();
+
+        return $query->getResultArray();
+    }
     public function detail($token)
     {
         $builder = $this->db->table('token');
@@ -33,7 +37,7 @@ class Token_model extends Model
         $builder->join('users', 'users.id_user = token.created_by', 'LEFT');
         $builder->orderBy('token.id_token', 'DESC');
         $query = $builder->get();
-        return $query->getRowArray();
+        return $query->getResultArray();
     }
     // read
     public function reset($token)

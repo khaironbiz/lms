@@ -56,17 +56,19 @@ class User extends BaseController
         )) {
             // masuk database
             if (strlen($this->request->getPost('password')) >= 6 && strlen($this->request->getPost('password')) <= 32) {
-                $data = ['nama'   => $this->request->getPost('nama'),
-                    'email'       => $this->request->getPost('email'),
-                    'username'    => $this->request->getPost('username'),
-                    'password'    => sha1($this->request->getPost('password')),
-                    'akses_level' => $this->request->getPost('akses_level'),
+                $data = [
+                    'nama'          => $this->request->getPost('nama'),
+                    'email'         => $this->request->getPost('email'),
+                    'username'      => $this->request->getPost('username'),
+                    'password'      => sha1($this->request->getPost('password')),
+                    'akses_level'   => $this->request->getPost('akses_level'),
                 ];
             } else {
-                $data = ['nama'   => $this->request->getPost('nama'),
-                    'email'       => $this->request->getPost('email'),
-                    'username'    => $this->request->getPost('username'),
-                    'akses_level' => $this->request->getPost('akses_level'),
+                $data = [
+                    'nama'          => $this->request->getPost('nama'),
+                    'email'         => $this->request->getPost('email'),
+                    'username'      => $this->request->getPost('username'),
+                    'akses_level'   => $this->request->getPost('akses_level'),
                 ];
             }
             $m_user->update($id_user, $data);
@@ -74,9 +76,10 @@ class User extends BaseController
             $this->session->setFlashdata('sukses', 'Data telah diedit');
             return redirect()->to(base_url('admin/user'));
         }
-        $data = ['title' => 'Edit Pengguna: ' . $user['nama'],
-            'user'       => $user,
-            'content'    => 'admin/user/edit',
+        $data = [
+            'title'     => 'Edit Pengguna: ' . $user['nama'],
+            'user'      => $user,
+            'content'   => 'admin/user/edit',
         ];
         echo view('admin/layout/wrapper', $data);
     }
