@@ -32,10 +32,10 @@ class Database extends Config
      */
     public $default = [
         'DSN'      => '',
-        'hostname' => '103.16.133.234',
-        'username' => 'phpmyadmin',
-        'password' => 'inifgrup',
-        'database' => 'khairon_lms',
+        'hostname' => 'localhost',
+        'username' => 'root',
+        'password' => '',
+        'database' => 'hpii_baru',
         'DBDriver' => 'MySQLi',
         'DBPrefix' => '',
         'pConnect' => false,

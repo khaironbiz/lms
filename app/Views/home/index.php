@@ -83,13 +83,13 @@ foreach ($profil as $profil) { ?>
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
-          <h2>About <?= $konfigurasi['namaweb'] ?></h2>
+          <h2><?= $konfigurasi['namaweb'] ?></h2>
          <?= $konfigurasi['deskripsi'] ?>
         </div>
 
         <div class="row">
           <div class="col-lg-4" data-aos="fade-right">
-            <img src="<?= icon() ?>" class="img-fluid" alt="">
+            <img src="<?=  base_url('assets/upload/image/'.$konfigurasi['icon']) ?>" class="img-fluid" alt="">
           </div>
           <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
             <?= $konfigurasi['tentang'] ?>

@@ -4,22 +4,23 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Kelas_model extends Model
+class Materi_model extends Model
 {
-    protected $table         = 'kelas';
-    protected $primaryKey    = 'id_kelas';
+    protected $table         = 'materi';
+    protected $primaryKey    = 'id_materi';
     protected $allowedFields = [
-                                'pic_kelas',
                                 'id_event',
-                                'nama_kelas',
-                                'kategori_kelas',
-                                'tanggal_mulai',
-                                'tanggal_selesai',
-                                'kuota',
-                                'status',
-                                'harga_dasar',
-                                'harga_jual', 
-                                'has_kelas',];
+                                'id_kelas',
+                                'materi',
+                                'pemateri',
+                                'jpl',
+                                'waktu_mulai',
+                                'waktu_selesai',
+                                'created_by',
+                                'created_at',
+                                'deleted_at',
+                                'has_kelas',
+                            ];
 
     // Listing
     public function listing()
@@ -33,15 +34,12 @@ class Kelas_model extends Model
         return $query->getResultArray();
     }
     // Event
-    public function event($id_event)
+    public function kelas($id_kelas)
     {
-        $builder = $this->db->table('kelas');
-        $builder->select('kelas.*, berita.judul_berita');
-        $builder->join('berita', 'berita.id_berita = kelas.id_event', 'LEFT');
-        $builder->where([
-                    'kelas.id_event'  => $id_event,
-                    'kelas.status'    => '1']);
-        $builder->orderBy('kelas.id_kelas', 'DESC');
+        $builder = $this->db->table('materi');
+        $builder->select('materi.*');
+        $builder->where(['materi.id_kelas'  => $id_kelas]);
+        $builder->orderBy('materi.waktu_mulai', 'ASC');
         $query = $builder->get();
         return $query->getResultArray();
     }

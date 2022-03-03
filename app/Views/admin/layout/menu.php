@@ -260,19 +260,17 @@ $site        = $konfigurasi->listing();
               </div>
               <!-- /.card-header -->
               <div class="card-body" style="min-height: 500px;">
+                <?php
+                  $validation = \Config\Services::validation();
+                  $errors = $validation->getErrors();
+                    if (! empty($errors)) {
+                        echo '<span class="text-danger">' . $validation->listErrors() . '</span>';
+                    }
+                ?>
 
-
-<?php
-$validation = \Config\Services::validation();
-    $errors = $validation->getErrors();
-    if (! empty($errors)) {
-        echo '<span class="text-danger">' . $validation->listErrors() . '</span>';
-    }
-?>
-
-<?php if (session('msg')) : ?>
-     <div class="alert alert-info alert-dismissible">
-         <?= session('msg') ?>
-         <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
-     </div>
- <?php endif ?>
+                <?php if (session('msg')) : ?>
+                    <div class="alert alert-info alert-dismissible">
+                        <?= session('msg') ?>
+                        <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
+                    </div>
+                <?php endif ?>

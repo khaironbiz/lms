@@ -3,7 +3,7 @@ $konfigurasi = new Konfigurasi_model();
 $site        = $konfigurasi->listing();
 ?>
 <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+  <nav class="main-header navbar navbar-expand navbar-dark navbar-dark">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
@@ -33,7 +33,7 @@ $site        = $konfigurasi->listing();
       </li>
       <li class="nav-item">
         <a href="<?= base_url('admin/akun') ?>" class="nav-link">
-          <i class="fa fa-user"></i> <?= $session->get('nama') ?> (<?= $session->get('akses_level') ?>)</a>
+          <i class="fa fa-user"></i> <?= $session->get('nama') ?></a>
       </li>
       <li class="nav-item">
         <a href="<?= base_url('login/logout') ?>" class="nav-link text-danger">

@@ -203,10 +203,32 @@ class Event extends BaseController
                 'status'            => $this->request->getVar('status'),
                 'harga_dasar'       => $this->request->getVar('harga_dasar'),
                 'harga_jual'        => $this->request->getVar('harga_jual'),
+                'has_kelas'         => md5(uniqid()),
             ];
-            $m_kelas->tambah($data);
+            $m_kelas->save($data);
             return redirect()->to(base_url('admin/event'))->with('sukses', 'Data Berhasil di Simpan');
         }
+    }
+    // dwtail
+    public function detail($id_berita)
+    {
+        checklogin();
+        $m_kategori         = new Kategori_model();
+        $m_berita           = new Berita_model();
+        $m_kelas            = new Kelas_model();
+        $m_kategori_kelas   = new Kategori_kelas_model();
+        $kelas              = $m_kelas->event($id_berita);
+        $kategori           = $m_kategori->listing();
+        $berita             = $m_berita->detail($id_berita);
+        $data               = [
+                            'title'     => $berita['judul_berita'],
+                            'kategori'  => $kategori,
+                            'berita'    => $berita,
+                            'kelas'     => $kelas,
+                            'materi'    => $materi,
+                            'content'   => 'admin/event/detail',
+        ];
+        echo view('admin/layout/wrapper', $data);
     }
     // edit
     public function edit($id_berita)

@@ -45,7 +45,7 @@ function icon()
     $m_konfigurasi = new Konfigurasi_model();
     $konfigurasi   = $m_konfigurasi->listing();
 
-    return base_url('assets/upload/image/' . $konfigurasi['icon']);
+    return base_url('assets/upload/image/thumbs/' . $konfigurasi['icon']);
 }
 
 // metatext
