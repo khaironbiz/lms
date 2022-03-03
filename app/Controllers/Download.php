@@ -36,6 +36,6 @@ class Download extends BaseController
         ];
         $m_download->edit($data);
         // Update hits
-        return $this->response->download('../assets/upload/file/' . $download['gambar'], null);
+        return $this->response->download('assets/upload/file/' . $download['gambar'], null);
     }
 }

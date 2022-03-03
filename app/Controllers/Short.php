@@ -5,10 +5,10 @@ namespace App\Controllers;
 use App\Models\Url_model;
 use App\Models\Konfigurasi_model;
 
-class A extends BaseController
+class Short extends BaseController
 {
     // index
-    public function b($sort)
+    public function index($sort)
     {
         $m_url          = new url_model();
         $m_konfigurasi  = new Konfigurasi_model();

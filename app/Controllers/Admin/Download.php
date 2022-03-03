@@ -46,7 +46,7 @@ class Download extends BaseController
                 // Image upload
                 $avatar   = $this->request->getFile('gambar');
                 $namabaru = str_replace(' ', '-', $avatar->getName());
-                $avatar->move(WRITEPATH . '../assets/upload/file/', $namabaru);
+                $avatar->move('assets/upload/file/', $namabaru);
                 // masuk database
                 $data = [
                     'id_user'              => $this->session->get('id_user'),
@@ -106,7 +106,7 @@ class Download extends BaseController
                 // Image upload
                 $avatar   = $this->request->getFile('gambar');
                 $namabaru = str_replace(' ', '-', $avatar->getName());
-                $avatar->move(WRITEPATH . '../assets/upload/file/', $namabaru);
+                $avatar->move('assets/upload/file/', $namabaru);
                 // masuk database
                 $data = [
                     'id_download'          => $id_download,
@@ -153,7 +153,7 @@ class Download extends BaseController
         $kategori_download   = $m_kategori_download->listing();
         $download            = $m_download->detail($id_download);
 
-        return $this->response->download('../assets/upload/file/' . $download['gambar'], null);
+        return $this->response->download('assets/upload/file/' . $download['gambar'], null);
     }
 
     // Delete

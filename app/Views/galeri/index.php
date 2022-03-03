@@ -18,7 +18,7 @@
 
         <div class="section-title">
           <h2><?= $title ?></h2>
-          <p><?= $konfigurasi['tentang'] ?></p>
+          <p><?= $konfigurasi['namaweb'] ?></p>
         </div>
 
         <div class="gallery-slider swiper-container">

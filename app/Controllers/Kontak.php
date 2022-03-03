@@ -15,12 +15,13 @@ class Kontak extends BaseController
         $konfigurasi   = $m_konfigurasi->listing();
         $slider        = $m_galeri->slider();
 
-        $data = ['title'  => 'Kontak Kami',
-            'description' => 'Kontak Kami ' . $konfigurasi['namaweb'] . ', ' . $konfigurasi['tentang'],
-            'keywords'    => 'Kontak Kami ' . $konfigurasi['namaweb'] . ', ' . $konfigurasi['keywords'],
-            'slider'      => $slider,
-            'konfigurasi' => $konfigurasi,
-            'content'     => 'kontak/index',
+        $data = [
+            'title'         => 'Kontak Kami',
+            'description'   => 'Kontak Kami ' . $konfigurasi['namaweb'] . ', ' . $konfigurasi['tentang'],
+            'keywords'      => 'Kontak Kami ' . $konfigurasi['namaweb'] . ', ' . $konfigurasi['keywords'],
+            'slider'        => $slider,
+            'konfigurasi'   => $konfigurasi,
+            'content'       => 'kontak/index',
         ];
         echo view('layout/wrapper', $data);
     }
