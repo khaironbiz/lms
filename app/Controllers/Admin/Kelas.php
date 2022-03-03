@@ -180,18 +180,18 @@ class Kelas extends BaseController
         }
     }
     // edit
-    public function edit($id_berita)
+    public function edit($id_kelas)
     {
         checklogin();
-        $m_kategori = new Kategori_model();
-        $m_berita   = new Berita_model();
-        $kategori   = $m_kategori->listing();
-        $berita     = $m_berita->detail($id_berita);
-        $data       = [
-            'title'     => 'Edit Berita: ' . $berita['judul_berita'],
-            'kategori'  => $kategori,
-            'berita'    => $berita,
-            'content'   => 'admin/event/edit',
+        $m_kategori_kelas   = new Kategori_kelas_model();
+        $m_kelas            = new Kelas_model();
+        $kategori_kelas     = $m_kategori_kelas->listing();
+        $kelas              = $m_kelas->detail($id_kelas);
+        $data               = [
+            'title'             => $kelas['nama_kelas'],
+            'kategori_kelas'    => $kategori_kelas,
+            'kelas'             => $kelas,
+            'content'           => 'admin/kelas/edit',
         ];
         echo view('admin/layout/wrapper', $data);
     }

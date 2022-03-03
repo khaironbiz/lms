@@ -45,6 +45,18 @@ class Kelas_model extends Model
         $query = $builder->get();
         return $query->getResultArray();
     }
+    // detail
+    public function detail($has_kelas)
+    {
+        $builder = $this->db->table('kelas');
+        $builder->select('kelas.*, kategori_kelas.kategori_kelas, berita.judul_berita, users.nama');
+        $builder->join('kategori_kelas', 'kategori_kelas.id_kategori_kelas = kelas.kategori_kelas', 'LEFT');
+        $builder->join('berita', 'berita.id_berita = kelas.id_event', 'LEFT');
+        $builder->join('users', 'users.id_user = kelas.pic_kelas', 'LEFT');
+        $builder->where('kelas.has_kelas', $has_kelas);
+        $query = $builder->get();
+        return $query->getRowArray();
+    }
     // home
     public function beranda()
     {
@@ -183,18 +195,7 @@ class Kelas_model extends Model
         $query   = $builder->get();
         return $query->getNumRows();
     }
-    // detail
-    public function detail($id_berita)
-    {
-        $builder = $this->db->table('berita');
-        $builder->select('berita.*, kategori.nama_kategori, kategori.slug_kategori, users.nama');
-        $builder->join('kategori', 'kategori.id_kategori = berita.id_kategori', 'LEFT');
-        $builder->join('users', 'users.id_user = berita.id_user', 'LEFT');
-        $builder->where('berita.id_berita', $id_berita);
-        $builder->orderBy('berita.id_berita', 'DESC');
-        $query = $builder->get();
-        return $query->getRowArray();
-    }
+    
     // read
     public function read($slug_berita)
     {

@@ -6,6 +6,7 @@ use App\Models\Berita_model;
 use App\Models\Kategori_model;
 use App\Models\User_model;
 use App\Models\Kelas_model;
+use App\Models\Materi_model;
 use App\Models\Kategori_kelas_model;
 
 class Event extends BaseController
@@ -138,12 +139,12 @@ class Event extends BaseController
                 // Image upload
                 $avatar   = $this->request->getFile('gambar');
                 $namabaru = str_replace(' ', '-', $avatar->getName());
-                $avatar->move(WRITEPATH . '../assets/upload/image/', $namabaru);
+                $avatar->move('assets/upload/image/', $namabaru);
                 // Create thumb
                 $image = \Config\Services::image()
-                    ->withFile(WRITEPATH . '../assets/upload/image/' . $namabaru)
+                    ->withFile('assets/upload/image/' . $namabaru)
                     ->fit(100, 100, 'center')
-                    ->save(WRITEPATH . '../assets/upload/image/thumbs/' . $namabaru);
+                    ->save('assets/upload/image/thumbs/' . $namabaru);
                 // masuk database
                 $data = [
                     'id_user'         => $this->session->get('id_user'),
@@ -217,15 +218,17 @@ class Event extends BaseController
         $m_berita           = new Berita_model();
         $m_kelas            = new Kelas_model();
         $m_kategori_kelas   = new Kategori_kelas_model();
+        $m_user             = new User_model();
         $kelas              = $m_kelas->event($id_berita);
         $kategori           = $m_kategori->listing();
         $berita             = $m_berita->detail($id_berita);
+        $user               = $m_user->listing();
         $data               = [
                             'title'     => $berita['judul_berita'],
                             'kategori'  => $kategori,
                             'berita'    => $berita,
+                            'user'      => $user,
                             'kelas'     => $kelas,
-                            'materi'    => $materi,
                             'content'   => 'admin/event/detail',
         ];
         echo view('admin/layout/wrapper', $data);
@@ -268,12 +271,12 @@ class Event extends BaseController
                 // Image upload
                 $avatar   = $this->request->getFile('gambar');
                 $namabaru = str_replace(' ', '-', $avatar->getName());
-                $avatar->move(WRITEPATH . '../assets/upload/image/', $namabaru);
+                $avatar->move('assets/upload/image/', $namabaru);
                 // Create thumb
                 $image = \Config\Services::image()
-                    ->withFile(WRITEPATH . '../assets/upload/image/' . $namabaru)
+                    ->withFile('assets/upload/image/' . $namabaru)
                     ->fit(100, 100, 'center')
-                    ->save(WRITEPATH . '../assets/upload/image/thumbs/' . $namabaru);
+                    ->save('assets/upload/image/thumbs/' . $namabaru);
                 // masuk database
                 $data = [
                     'id_berita'       => $id_berita,
