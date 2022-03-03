@@ -66,7 +66,7 @@ $site        = $konfigurasi->listing();
             <?= form_close(); ?>
             <hr>
             <p class="mb-1 text-center">
-                <a href="<?= base_url('login') ?>">Login</a> | <a href="<?= base_url() ?>" class="text-center">Home</a>
+                <a href="<?= base_url('login') ?>">Login</a> | <a href="<?= base_url('/registrasi') ?>" class="text-center">Daftar</a> | <a href="<?= base_url() ?>" class="text-center">Home</a>
             </p>
         </div>
         <!-- /.login-card-body -->

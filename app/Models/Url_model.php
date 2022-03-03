@@ -11,7 +11,7 @@ class Url_model extends Model
     protected $primaryKey           = 'id_url';
     protected $returnType           = 'array';
     protected $useSoftDeletes       = false;
-    protected $allowedFields        = ['url_asli','short','created_by','created_at','has_url'];
+    protected $allowedFields        = ['url_asli','short','created_by','created_at','updated_at', 'has_url'];
     protected $useTimestamps        = false;
     protected $createdField         = 'created_at';
     protected $updatedField         = 'updated_at';
@@ -43,6 +43,15 @@ class Url_model extends Model
         $query = $builder->get();
         return $query->getRowArray();
     }
+    //detail
+    public function has_url($has_url)
+    {
+        $builder = $this->db->table('url');
+        $builder->select('*');
+        $builder->where('has_url', $has_url);
+        $query = $builder->get();
+        return $query->getRowArray();
+    }
     // count
     public function count($short)
     {
@@ -50,6 +59,7 @@ class Url_model extends Model
         $query   = $builder->get();
         return $query->getNumRows();
     }
+    
     // total
     public function total()
     {

@@ -47,6 +47,25 @@ class Login extends BaseController
         echo view('login/register', $data);
         // End proses
     }
+    //daftar
+    public function daftar(){
+        $session       = \Config\Services::session();
+        $m_konfigurasi = new Konfigurasi_model();
+        $m_user        = new User_model();
+        $konfigurasi   = $m_konfigurasi->listing();
+        
+        // Start validasi
+        if ($this->request->getMethod() === 'post' && $this->validate(
+            [
+                'username' => 'required|min_length[3]',
+                'password' => 'required|min_length[3]',
+            ]
+        ))
+        {
+            $nama           = $this->request->getVar('nama');
+            $jenis_kelamin  = $this->request->getVar('jenis_kelamin');
+        }
+    }
     // login
     public function login()
     {

@@ -50,9 +50,46 @@ class Url extends BaseController
             $m_url->save($data);
             // masuk database
             $this->session->setFlashdata('sukses', 'Data telah ditambah');
-            return redirect()->to(base_url('a/b/'.$short));
+            return redirect()->to(base_url('admin/url'));
         }else{
             $this->session->setFlashdata('Gagal', 'Data Gagal ditambahkan');
+            return redirect()->to(base_url('admin/url/'));
+        }
+        //return redirect()->to(base_url('a/b/'.$short));
+    }
+    //tambah data
+    public function pengkinian($has_url){
+        checklogin();
+        $session       = \Config\Services::session();
+        $id_user    = $this->session->get('id_user');
+        $m_url      = new Url_model();
+        $url        = $m_url->has_url($has_url);
+        $id_url     = $url['id_url'];
+        $short      = $this->request->getPost('short');
+        $count      = $m_url->count($short);
+        $total      = $m_url->total();
+        // var_dump($count);
+        // Start validasi
+        if ($this->request->getMethod() === 'post' && $this->validate(
+            [
+                'url_asli'  => 'required|min_length[3]|alpha_numeric',
+                'short'     => 'required|min_length[3]|is_unique[url.short]',
+            ]
+        )) {
+            // masuk database
+            
+            $url_asli       = $this->request->getPost('url_asli');
+            $data           = [ 
+                'url_asli'      => $url_asli,
+                'short'         => $short,
+                'updated_at'    => date('Y-m-d H:i:s'),
+            ];
+            $m_url->update($id_url, $data);
+            // masuk database
+            $this->session->setFlashdata('sukses', 'Data telah diupdate');
+            return redirect()->to(base_url('admin/url'));
+        }else{
+            $this->session->setFlashdata('warning', 'Data Gagal diupdate : url tidak unik ');
             return redirect()->to(base_url('admin/url/'));
         }
         //return redirect()->to(base_url('a/b/'.$short));
