@@ -217,7 +217,7 @@ class Event extends BaseController
         }
     }
     // dwtail
-    public function detail($id_berita)
+    public function detail($has_berita)
     {
         checklogin();
         $m_kategori         = new Kategori_model();
@@ -225,9 +225,10 @@ class Event extends BaseController
         $m_kelas            = new Kelas_model();
         $m_kategori_kelas   = new Kategori_kelas_model();
         $m_user             = new User_model();
-        $kelas              = $m_kelas->event($id_berita);
         $kategori           = $m_kategori->listing();
-        $berita             = $m_berita->detail($id_berita);
+        $berita             = $m_berita->has_berita($has_berita);
+        $id_berita          = $berita['id_berita'];
+        $kelas              = $m_kelas->event($id_berita);
         $user               = $m_user->listing();
         $data               = [
                             'title'     => $berita['judul_berita'],

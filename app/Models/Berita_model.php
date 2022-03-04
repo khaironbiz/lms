@@ -224,6 +224,20 @@ class Berita_model extends Model
 
         return $query->getRowArray();
     }
+    //by has berita
+    // detail
+    public function has_berita($has_berita)
+    {
+        $builder = $this->db->table('berita');
+        $builder->select('berita.*, kategori.nama_kategori, kategori.slug_kategori, users.nama');
+        $builder->join('kategori', 'kategori.id_kategori = berita.id_kategori', 'LEFT');
+        $builder->join('users', 'users.id_user = berita.id_user', 'LEFT');
+        $builder->where('berita.has_berita', $has_berita);
+        $builder->orderBy('berita.id_berita', 'DESC');
+        $query = $builder->get();
+
+        return $query->getRowArray();
+    }
 
     // read
     public function read($slug_berita)

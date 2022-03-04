@@ -158,7 +158,7 @@ echo view($sub_menu)
 			</td>
 			<td>
 				<a href="<?= base_url('berita/read/' . $berita['slug_berita']) ?>" class="btn btn-info btn-sm" target="_blank"><i class="fa fa-eye"></i> Baca</a>
-				<a href="<?= base_url('admin/event/detail/' . $berita['id_berita']) ?>" class="btn btn-success btn-sm"><i class="fa fa-eye"></i> Detail</a>
+				<a href="<?= base_url('admin/event/detail/' . $berita['has_berita']) ?>" class="btn btn-success btn-sm"><i class="fa fa-eye"></i> Detail</a>
 				<a href="<?= base_url('admin/event/edit/' . $berita['id_berita']) ?>" class="btn btn-success btn-sm"><i class="fa fa-edit"></i></a>
 				<a href="<?= base_url('admin/event/delete/' . $berita['id_berita']) ?>" class="btn btn-dark btn-sm" onclick="confirmation(event)"><i class="fa fa-trash"></i></a>
 			</td>
