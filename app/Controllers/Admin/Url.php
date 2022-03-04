@@ -32,14 +32,15 @@ class Url extends BaseController
         // Start validasi
         if ($this->request->getMethod() === 'post' && $this->validate(
             [
-                'url_asli'  => 'required|min_length[3]|is_unique[url.url_asli]',
-                'short' => 'required|min_length[3]|is_unique[url.short]',
+                'url_asli'  => 'required|min_length[3]',
+                'short' => 'required|min_length[3]|is_unique[url.short]|alpha_numeric_punct',
             ]
         )) {
             // masuk database
             
             $url_asli       = $this->request->getPost('url_asli');
             $short          = $this->request->getPost('short');
+            $count          = $m_url->count($short);
             $data           = [                
                 'url_asli'      => $url_asli,
                 'short'         => $short,
@@ -51,8 +52,10 @@ class Url extends BaseController
             // masuk database
             $this->session->setFlashdata('sukses', 'Data telah ditambah');
             return redirect()->to(base_url('admin/url'));
+            // var_dump($count);
         }else{
-            $this->session->setFlashdata('Gagal', 'Data Gagal ditambahkan');
+            // var_dump($count);
+            $this->session->setFlashdata('warning', 'Data Gagal ditambahkan, pastikan short url anda hanya angka dan huruf');
             return redirect()->to(base_url('admin/url/'));
         }
         //return redirect()->to(base_url('a/b/'.$short));
@@ -72,8 +75,8 @@ class Url extends BaseController
         // Start validasi
         if ($this->request->getMethod() === 'post' && $this->validate(
             [
-                'url_asli'  => 'required|min_length[3]|alpha_numeric',
-                'short'     => 'required|min_length[3]|is_unique[url.short]',
+                'url_asli'  => 'required|min_length[3]',
+                'short'     => 'required|min_length[3]|is_unique[url.short]|alpha_numeric_punct',
             ]
         )) {
             // masuk database

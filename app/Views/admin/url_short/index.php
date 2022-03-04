@@ -25,11 +25,12 @@ include 'tambah.php';
 		<tr>
 			<td><?= $no ?></td>
 			<td><?= $url['url_asli'] ?></td>
-			<td><?= $url['short'] ?></td>
+			<td><input type="text" id="<?= $url['has_url'] ?>" value="<?= base_url('s/'.$url['short'])?>" readonly class="form-control-plaintext"></td>
 			<td><?= $url['nama'] ?></td>
 			<td><?= $url['exp_date']?></td>
 			<td>
 				<a href="<?= base_url('s/'.$url['short'])?>" class="btn btn-sm btn-info" target=_blank>Visit</a>
+				<button class="btn btn-sm btn-primary" onclick="myFunction<?= $url['has_url'] ?>()">Copy</button>
 				<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-url-<?= $url['has_url'] ?>">
 					<i class="fa fa-edit"></i> Edit
 				</button>
@@ -71,6 +72,26 @@ include 'tambah.php';
 				</div>
 				<!-- /.modal -->
 				<?= form_close(); ?>
+
+				<!-- klik kopy -->
+				
+				<script>
+					function myFunction<?= $url['has_url'] ?>() {
+					/* Get the text field */
+					var copyText = document.getElementById("<?= $url['has_url']?>");
+
+					/* Select the text field */
+					copyText.select();
+					copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+					/* Copy the text inside the text field */
+					navigator.clipboard.writeText(copyText.value);
+					
+					/* Alert the copied text */
+					alert("Copied the text: " + copyText.value);
+					}
+				</script>
+
 			</td>
 		</tr>
 		<?php $no++; } ?>
