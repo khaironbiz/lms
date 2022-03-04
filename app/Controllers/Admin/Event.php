@@ -128,7 +128,7 @@ class Event extends BaseController
         // Start validasi
         if ($this->request->getMethod() === 'post' && $this->validate(
             [
-                'judul_berita'  => 'required',
+                'judul_berita'  => 'required|min_length[3]|is_unique[berita.judul_berita]',
                 'gambar'        => [
                     'mime_in[gambar,image/jpg,image/jpeg,image/gif,image/png]',
                     'max_size[gambar,4096]',
@@ -160,9 +160,11 @@ class Event extends BaseController
                     'gambar'          => $namabaru,
                     'tanggal_post'    => date('Y-m-d H:i:s'),
                     'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
+                    'has_berita'      => md5(uniqid()),
+                
                 ];
                 $m_berita->tambah($data);
-                return redirect()->to(base_url('admin/berita/jenis_berita/' . $this->request->getVar('jenis_berita')))->with('sukses', 'Data Berhasil di Simpan');
+                return redirect()->to(base_url('admin/event'))->with('sukses', 'Data Berhasil di Simpan');
             }
             $data = [
                 'id_user'         => $this->session->get('id_user'),
@@ -179,7 +181,9 @@ class Event extends BaseController
                 'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
             ];
             $m_berita->tambah($data);
-            return redirect()->to(base_url('admin/berita/jenis_berita/' . $this->request->getVar('jenis_berita')))->with('sukses', 'Data Berhasil di Simpan');
+            return redirect()->to(base_url('admin/event'))->with('sukses', 'Data Berhasil di Simpan');
+        }else{
+            return redirect()->to(base_url('admin/event'))->with('warning', 'Data gagal di Simpan');
         }
     }
     // save add
@@ -188,7 +192,7 @@ class Event extends BaseController
         checklogin();
         $m_kelas        = new Kelas_model();
         $data_validasi  = [
-                'nama_kelas'        => 'required',
+                'nama_kelas'        => 'required|min_length[3]',
                 'kategori_kelas'    => 'required',
             ];
         // Start validasi
@@ -208,6 +212,8 @@ class Event extends BaseController
             ];
             $m_kelas->save($data);
             return redirect()->to(base_url('admin/event'))->with('sukses', 'Data Berhasil di Simpan');
+        }else{
+            return redirect()->to(base_url('admin/event'))->with('warning', 'Data Gagal di Simpan');
         }
     }
     // dwtail
@@ -311,7 +317,9 @@ class Event extends BaseController
                 'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
             ];
             $m_berita->edit($data);
-            return redirect()->to(base_url('admin/event'))->with('sukses', 'Data Berhasil di Simpan');
+            return redirect()->to(base_url('admin/event'))->with('sukses', 'Data Berhasil disimpan');
+        }else{
+            return redirect()->to(base_url('admin/event'))->with('warning', 'Data gagal disimpan');
         }
     }
     // Delete
@@ -323,7 +331,7 @@ class Event extends BaseController
         $m_berita->delete($data);
         // masuk database
         $this->session->setFlashdata('sukses', 'Data telah dihapus');
-        return redirect()->to(base_url('admin/berita'));
+        return redirect()->to(base_url('admin/event'));
     }
     public function baru(){
         

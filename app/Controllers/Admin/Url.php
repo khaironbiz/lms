@@ -32,7 +32,7 @@ class Url extends BaseController
         // Start validasi
         if ($this->request->getMethod() === 'post' && $this->validate(
             [
-                'url_asli'  => 'required|min_length[3]',
+                'url_asli'  => 'required|min_length[3]|valid_url',
                 'short' => 'required|min_length[3]|is_unique[url.short]|alpha_numeric_punct',
             ]
         )) {
@@ -55,7 +55,7 @@ class Url extends BaseController
             // var_dump($count);
         }else{
             // var_dump($count);
-            $this->session->setFlashdata('warning', 'Data Gagal ditambahkan, pastikan short url anda hanya angka dan huruf');
+            $this->session->setFlashdata('warning', 'Data Gagal ditambahkan: url tidak unik, pastikan short url anda hanya angka dan huruf');
             return redirect()->to(base_url('admin/url/'));
         }
         //return redirect()->to(base_url('a/b/'.$short));
@@ -75,8 +75,8 @@ class Url extends BaseController
         // Start validasi
         if ($this->request->getMethod() === 'post' && $this->validate(
             [
-                'url_asli'  => 'required|min_length[3]',
-                'short'     => 'required|min_length[3]|is_unique[url.short]|alpha_numeric_punct',
+                'url_asli'  => 'required|min_length[3]|valid_url',
+                'short'     => 'required|min_length[3]|is_unique[url.short]|alpha_numeric',
             ]
         )) {
             // masuk database
@@ -92,7 +92,7 @@ class Url extends BaseController
             $this->session->setFlashdata('sukses', 'Data telah diupdate');
             return redirect()->to(base_url('admin/url'));
         }else{
-            $this->session->setFlashdata('warning', 'Data Gagal diupdate : url tidak unik ');
+            $this->session->setFlashdata('warning', 'Data Gagal diupdate : url tidak unik, pastikan short url anda hanya angka dan huru ');
             return redirect()->to(base_url('admin/url/'));
         }
         //return redirect()->to(base_url('a/b/'.$short));

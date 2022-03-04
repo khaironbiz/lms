@@ -105,7 +105,7 @@ class Berita extends BaseController
         // Start validasi
         if ($this->request->getMethod() === 'post' && $this->validate(
             [
-                'judul_berita'  => 'required',
+                'judul_berita'  => 'required|',
                 'gambar'        => [
                     'mime_in[gambar,image/jpg,image/jpeg,image/gif,image/png]',
                     'max_size[gambar,4096]',
@@ -116,12 +116,12 @@ class Berita extends BaseController
                 // Image upload
                 $avatar   = $this->request->getFile('gambar');
                 $namabaru = str_replace(' ', '-', $avatar->getName());
-                $avatar->move(WRITEPATH . '../assets/upload/image/', $namabaru);
+                $avatar->move('assets/upload/image/', $namabaru);
                 // Create thumb
                 $image = \Config\Services::image()
-                    ->withFile(WRITEPATH . '../assets/upload/image/' . $namabaru)
+                    ->withFile('assets/upload/image/' . $namabaru)
                     ->fit(100, 100, 'center')
-                    ->save(WRITEPATH . '../assets/upload/image/thumbs/' . $namabaru);
+                    ->save('assets/upload/image/thumbs/' . $namabaru);
                 // masuk database
                 $data = [
                     'id_user'         => $this->session->get('id_user'),
@@ -139,7 +139,7 @@ class Berita extends BaseController
                     'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
                 ];
                 $m_berita->tambah($data);
-                return redirect()->to(base_url('admin/berita/jenis_berita/' . $this->request->getVar('jenis_berita')))->with('sukses', 'Data Berhasil di Simpan');
+                return redirect()->to(base_url('admin/berita'))->with('sukses', 'Data Berhasil di Simpan');
             }
             $data = [
                 'id_user'         => $this->session->get('id_user'),
@@ -157,7 +157,7 @@ class Berita extends BaseController
             ];
             $m_berita->tambah($data);
 
-            return redirect()->to(base_url('admin/berita/jenis_berita/' . $this->request->getVar('jenis_berita')))->with('sukses', 'Data Berhasil di Simpan');
+            return redirect()->to(base_url('admin/berita/jenis_berita'))->with('sukses', 'Data Berhasil di Simpan');
         }
 
         $data = ['title' => 'Tambah Berita',
@@ -189,12 +189,12 @@ class Berita extends BaseController
                 // Image upload
                 $avatar   = $this->request->getFile('gambar');
                 $namabaru = str_replace(' ', '-', $avatar->getName());
-                $avatar->move(WRITEPATH . '../assets/upload/image/', $namabaru);
+                $avatar->move('assets/upload/image/', $namabaru);
                 // Create thumb
                 $image = \Config\Services::image()
-                    ->withFile(WRITEPATH . '../assets/upload/image/' . $namabaru)
+                    ->withFile('assets/upload/image/' . $namabaru)
                     ->fit(100, 100, 'center')
-                    ->save(WRITEPATH . '../assets/upload/image/thumbs/' . $namabaru);
+                    ->save('assets/upload/image/thumbs/' . $namabaru);
                 // masuk database
                 $data = [
                     'id_berita'       => $id_berita,
