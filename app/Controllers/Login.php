@@ -6,6 +6,8 @@ use App\Models\Konfigurasi_model;
 use App\Models\User_model;
 use App\Models\Token_model;
 use App\Models\Provinsi_model;
+use App\Models\Registrasi_model;
+
 class Login extends BaseController
 {
     public function __construct()
@@ -37,6 +39,51 @@ class Login extends BaseController
         $m_provinsi     = new Provinsi_model();
         $provinsi       = $m_provinsi->listing();
         $konfigurasi   = $m_konfigurasi->listing();
+        //aksi post
+        // Start validasi
+        if ($this->request->getMethod() === 'post' && $this->validate(
+            [
+                'nama'      => 'required|min_length[3]',
+                'password_1'=> 'required|min_length[3]|matches[password_2]',
+                'nik'       => 'required|exact_length[16]|numeric|is_unique[registrasi.nik]',
+                'hp'        => 'required|min_length[10]|is_unique[registrasi.hp]',
+                'nira'      => 'required|min_length[11]|is_unique[registrasi.nira]',
+                'email'     => 'required|valid_email|is_unique[registrasi.email]',
+            ]
+        ))
+        {
+            $nama           = $this->request->getVar('nama');
+            $jenis_kelamin  = $this->request->getVar('jenis_kelamin');
+            $tanggal_lahir  = $this->request->getVar('tanggal_lahir');
+            $nik            = $this->request->getVar('nik');
+            $nira           = $this->request->getVar('nira');
+            $email          = $this->request->getVar('email');
+            $hp             = $this->request->getVar('hp');
+            $dpw            = $this->request->getVar('dpw');
+            $password       = $this->request->getVar('password_1');
+            $now            = date('Y-m-d H:i:s');
+            $data = [
+                'nama'          => $nama,
+                'jenis_kelamin' => $jenis_kelamin,
+                'tanggal_lahir' => $tanggal_lahir,
+                'nik'           => $nik,
+                'nira'          => $nira,
+                'email'         => $email,
+                'password'      => sha1($password),
+                'created_at'    => $now,
+                'has_registrasi'=> md5(uniqid()),
+            ];
+            $tamabah_registrasi = $m_registrasi->save($data);
+            if($tamabah_registrasi){
+                var_dump($data);
+            }else{
+                echo"Gagal masuk database";
+                echo "<script> alert(\"Data Gagal Diproses\");history.go(-1)</script>";	
+            }
+        }
+
+        //
+
         $data = [
             'title'         => 'Registrasi',
             'description'   => $konfigurasi['namaweb'] . ', ' . $konfigurasi['tentang'],
@@ -49,21 +96,56 @@ class Login extends BaseController
     }
     //daftar
     public function daftar(){
-        $session       = \Config\Services::session();
-        $m_konfigurasi = new Konfigurasi_model();
-        $m_user        = new User_model();
-        $konfigurasi   = $m_konfigurasi->listing();
+        $session        = \Config\Services::session();
+        $m_konfigurasi  = new Konfigurasi_model();
+        $m_user         = new User_model();
+        $m_registrasi   = new Registrasi_model();
+        $konfigurasi    = $m_konfigurasi->listing();
+
         
         // Start validasi
         if ($this->request->getMethod() === 'post' && $this->validate(
             [
-                'username' => 'required|min_length[3]',
-                'password' => 'required|min_length[3]',
+                'nama'      => 'required|min_length[3]',
+                'password_1'=> 'required|min_length[3]|matches[password_2]',
+                'nik'       => 'required|exact_length[16]|numeric|is_unique[registrasi.nik]',
+                'hp'        => 'required|min_length[10]|is_unique[registrasi.hp]',
+                'nira'      => 'required|min_length[11]|is_unique[registrasi.nira]',
+                'email'     => 'required|valid_email|is_unique[registrasi.email]',
             ]
         ))
         {
             $nama           = $this->request->getVar('nama');
             $jenis_kelamin  = $this->request->getVar('jenis_kelamin');
+            $tanggal_lahir  = $this->request->getVar('tanggal_lahir');
+            $nik            = $this->request->getVar('nik');
+            $nira           = $this->request->getVar('nira');
+            $email          = $this->request->getVar('email');
+            $hp             = $this->request->getVar('hp');
+            $dpw            = $this->request->getVar('dpw');
+            $password       = $this->request->getVar('password_1');
+            $now            = date('Y-m-d H:i:s');
+            $data = [
+                'nama'          => $nama,
+                'jenis_kelamin' => $jenis_kelamin,
+                'tanggal_lahir' => $tanggal_lahir,
+                'nik'           => $nik,
+                'nira'          => $nira,
+                'email'         => $email,
+                'password'      => sha1($password),
+                'created_at'    => $now,
+                'has_registrasi'=> md5(uniqid()),
+            ];
+            $tamabah_registrasi = $m_registrasi->save($data);
+            if($tamabah_registrasi){
+                var_dump($data);
+            }else{
+                echo"Gagal masuk database";
+                echo "<script> alert(\"Data Gagal Diproses\");history.go(-1)</script>";	
+            }
+        }else{
+            echo"Tidak Lulus Validasi";
+            echo "<script> alert(\"Data tidak lulus validasi\");history.go(-1)</script>";	
         }
     }
     // login
@@ -255,7 +337,7 @@ class Login extends BaseController
     // Logout
     public function logout(){
         $this->session->destroy();
-        return redirect()->to(base_url('login?logout=sukses'));
+        return redirect()->to(base_url());
     }
     //send email
     private function sendMail($to,$subject,$message,$server=1){

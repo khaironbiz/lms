@@ -46,46 +46,50 @@ $site        = $konfigurasi->listing();
       <h4 class="login-box-msg">Registrasi Anggota</h4>
       <hr>
       <?= '<span class="text-danger">' . \Config\Services::validation()->listErrors() . '</span>'; ?>
-      <?= form_open(base_url('login/daftar')); ?>
+      <?= form_open(base_url('registrasi')); ?>
       <?= csrf_field() ?>
         <div class="mb-1 row">
             <label class="col-sm-2 col-form-label">Nama</label>
             <div class="col-sm-4">
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" name="nama" placeholder="nama" required value="<?= set_value('nama') ?>" required>
             </div>
             <label class="col-sm-2 col-form-label">Jenis Kelamin</label>
             <div class="col-sm-4">
-                <input type="text" class="form-control">
+              <select class="form-control" name="jenis_kelamin" required>
+                <option value="<?php if(isset($_POST['jenis_kelamin'])){echo set_value('jenis_kelamin');}else{}?>"><?php if(isset($_POST['jenis_kelamin'])){echo set_value('jenis_kelamin');}else{echo "--pilih--";}?></option>
+                <option value="Laki-laki">Laki-laki</option>
+                <option value="Perempuan">Perempuan</option>
+              </select>
             </div>
         </div>
         <div class="mb-1 row">
             <label class="col-sm-2 col-form-label">Tanggal Lahir</label>
             <div class="col-sm-4">
-                <input type="date" class="form-control">
+                <input type="date" class="form-control" name="tanggal_lahir" value="<?= set_value('tanggal_lahir') ?>" required>
             </div>
             <label class="col-sm-2 col-form-label">Nomor KTP</label>
             <div class="col-sm-4">
-                <input type="number" class="form-control">
+                <input type="number" class="form-control" name="nik" placeholder="nomor KTP" value="<?= set_value('nik') ?>" required>
             </div>
         </div>
         <div class="mb-1 row">
             <label class="col-sm-2 col-form-label">Email</label>
             <div class="col-sm-4">
-                <input type="email" class="form-control" name="email">
+                <input type="email" class="form-control" name="email" placeholder="email" value="<?= set_value('email') ?>" required>
             </div>
             <label class="col-sm-2 col-form-label">HP</label>
             <div class="col-sm-4">
-                <input type="number" class="form-control">
+                <input type="number" class="form-control" name="hp" placeholder="nomor HP" value="<?= set_value('hp') ?>" required>
             </div>
         </div>
         <div class="mb-1 row">
             <label class="col-sm-2 col-form-label">NIRA</label>
             <div class="col-sm-4">
-                <input type="number" class="form-control" placeholder="Nomor NIRA PPNI">
+                <input type="number" class="form-control" name="nira" placeholder="Nomor NIRA PPNI" value="<?= set_value('nira') ?>" required>
             </div>
             <label class="col-sm-2 col-form-label">DPW PPNI</label>
             <div class="col-sm-4">
-                <select class="form-control" aria-label="Default select example">
+                <select class="form-control" name="dpw" required>
                     <option value="">Pilih</option>
                     <?php
                     foreach($provinsi as $prov){
@@ -101,11 +105,11 @@ $site        = $konfigurasi->listing();
         <div class="mb-3 row">
             <label class="col-sm-2 col-form-label">Password</label>
             <div class="col-sm-4">
-                <input type="password" class="form-control" autocomplete="off">
+                <input type="password" class="form-control" autocomplete="off" name="password_1" placeholder="password_1" required>
             </div>
             <label class="col-sm-2 col-form-label">Ulangi Password</label>
             <div class="col-sm-4">
-                <input type="password" class="form-control" autocomplete="off">
+                <input type="password" class="form-control" autocomplete="off" name="password_2" placeholder="password_2" required>
             </div>
         </div>
         <hr>
