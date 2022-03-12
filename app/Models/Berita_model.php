@@ -30,7 +30,7 @@ class Berita_model extends Model
         $builder->join('kategori', 'kategori.id_kategori = berita.id_kategori', 'LEFT');
         $builder->join('users', 'users.id_user = berita.id_user', 'LEFT');
         $builder->where([
-                    'status_berita' => 'Publish',
+                    
                     'jenis_berita'  => 'Event', ]);
         $builder->orderBy('berita.tanggal_publish', 'DESC');
         $query = $builder->get();
@@ -210,7 +210,17 @@ class Berita_model extends Model
 
         return $query->getNumRows();
     }
+    //
+    // detail
+    public function by_id($id_berita)
+    {
+        $builder = $this->db->table('berita');
+        $builder->select('berita.*');
+        $builder->where('berita.id_berita', $id_berita);
+        $query = $builder->get();
 
+        return $query->getRowArray();
+    }
     // detail
     public function detail($id_berita)
     {

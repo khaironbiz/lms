@@ -3,7 +3,6 @@
 use App\Models\Kategori_kelas_model;
 include 'tambah.php'; 
 ?>
-<?= '<span class="text-danger">' . \Config\Services::validation()->listErrors() . '</span>'; ?>
 
 <table class="table table-bordered table-sm" id="example1">
 	<thead>

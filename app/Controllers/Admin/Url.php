@@ -14,6 +14,7 @@ class Url extends BaseController
         $m_url      = new Url_model();
         $url        = $m_url->listing($id_user);
         $total      = $m_url->total();
+        
         $data = [
             'title'     => 'List Url ('.$total.')',
             'url'       => $url,
@@ -30,34 +31,52 @@ class Url extends BaseController
         $url        = $m_url->listing($id_user);
         $total      = $m_url->total();
         // Start validasi
-        if ($this->request->getMethod() === 'post' && $this->validate(
-            [
-                'url_asli'  => 'required|min_length[3]|valid_url',
-                'short' => 'required|min_length[3]|is_unique[url.short]|alpha_numeric_punct',
-            ]
-        )) {
-            // masuk database
-            
-            $url_asli       = $this->request->getPost('url_asli');
-            $short          = $this->request->getPost('short');
-            $count          = $m_url->count($short);
-            $data           = [                
-                'url_asli'      => $url_asli,
-                'short'         => $short,
-                'created_by'    => $this->session->get('id_user'),
-                'created_at'    => date('Y-m-d H:i:s'),
-                'has_url'       => md5(uniqid())
-            ];
-            $m_url->save($data);
-            // masuk database
-            $this->session->setFlashdata('sukses', 'Data telah ditambah');
-            return redirect()->to(base_url('admin/url'));
-            // var_dump($count);
+        if ($this->request->getMethod() === 'post' ){
+            // 'url_asli'  => 'required|min_length[3]|valid_url',
+            // 'short' => 'required|min_length[3]|is_unique[url.short]|alpha_numeric_punct',
+            if (!$this->validate([
+                'url_asli' => [
+                    'rules' => 'required|min_length[10]|valid_url_strict[https]',
+                    'errors' => [
+                        'required'          => 'URL Asli Harus diisi',
+                        'min_length'        => 'URL Asli minimal 10 karakter',
+                        'valid_url_strict'  => 'URL yang anda input : '.$this->request->getPost('url_asli').' Tidak valid'
+                    ]
+                ],
+                'short' => [
+                    'rules'             => 'required|min_length[3]|is_unique[url.short]|alpha_numeric',
+                    'errors'            => [
+                        'required'      => '{field} Harus diisi',
+                        'min_length'    => 'Short URL minimal 3 karakter',
+                        'is_unique'     => 'Short URL sudah terdaftar, gunakan short url lain',
+                        'alpha_numeric' => 'Karakter pada short url hanya angka dan huruf'
+                    ]
+                ]
+            ])) {
+                session()->setFlashdata('error', $this->validator->listErrors());
+                return redirect()->back()->withInput();
+            }else{
+                $url_asli       = $this->request->getPost('url_asli');
+                $short          = $this->request->getPost('short');
+                $count          = $m_url->count($short);
+                $data           = [                
+                    'url_asli'      => $url_asli,
+                    'short'         => $short,
+                    'created_by'    => $this->session->get('id_user'),
+                    'created_at'    => date('Y-m-d H:i:s'),
+                    'has_url'       => md5(uniqid())
+                ];
+                $m_url->save($data);
+                // masuk database
+                $this->session->setFlashdata('sukses', 'Data telah ditambah');
+                return redirect()->to(base_url('admin/url'));
+                // var_dump($count);
+            }
         }else{
-            // var_dump($count);
-            $this->session->setFlashdata('warning', 'Data Gagal ditambahkan: url tidak unik, pastikan short url anda hanya angka dan huruf');
-            return redirect()->to(base_url('admin/url/'));
+            $this->session->setFlashdata('warning', 'INVALID AKSES');
+            return redirect()->to(base_url('admin/url'));
         }
+        
         //return redirect()->to(base_url('a/b/'.$short));
     }
     //tambah data
@@ -73,27 +92,49 @@ class Url extends BaseController
         $total      = $m_url->total();
         // var_dump($count);
         // Start validasi
-        if ($this->request->getMethod() === 'post' && $this->validate(
-            [
-                'url_asli'  => 'required|min_length[3]|valid_url',
-                'short'     => 'required|min_length[3]|is_unique[url.short]|alpha_numeric',
-            ]
-        )) {
+        if ($this->request->getMethod() === 'post' ) {
             // masuk database
+            if(! $this->validate(
+                [
+                    'url_asli'  => [
+                        'rules'     => 'required|min_length[10]|valid_url',
+                        'errors'    => [
+                            'required'      => 'URL Asli Harus diisi',
+                            'min_length'    => 'URL Asli minimal 10 Karakter',
+                        ]
+                        ],
+                    
+                    'short'     => [
+                        'rules'     => 'required|min_length[3]|is_unique[url.short]|alpha_numeric',
+                        'errors'    => [
+                            'required'      => 'Short URL Harus diisi',
+                            'min_length'    => 'Short URL minimal 3 Karakter',
+                            'is_unique'     => 'Short URL Sudah terdaftar, gunakan short url lain',
+                            'alpha_numeric' => 'Short URL Hanya memuat karakter huruf dan angka'
+                        ]
+                    ]
+                    
+                ]
+            )){
+                session()->setFlashdata('error', $this->validator->listErrors());
+                return redirect()->back()->withInput();
             
-            $url_asli       = $this->request->getPost('url_asli');
-            $data           = [ 
-                'url_asli'      => $url_asli,
-                'short'         => $short,
-                'updated_at'    => date('Y-m-d H:i:s'),
-            ];
-            $m_url->update($id_url, $data);
-            // masuk database
-            $this->session->setFlashdata('sukses', 'Data telah diupdate');
-            return redirect()->to(base_url('admin/url'));
+            }else{
+                $url_asli       = $this->request->getPost('url_asli');
+                $data           = [ 
+                    'url_asli'      => $url_asli,
+                    'short'         => $short,
+                    'updated_at'    => date('Y-m-d H:i:s'),
+                ];
+                $m_url->update($id_url, $data);
+                // masuk database
+                $this->session->setFlashdata('sukses', 'Data telah diupdate');
+                return redirect()->to(base_url('admin/url'));
+            }
+            
         }else{
-            $this->session->setFlashdata('warning', 'Data Gagal diupdate : url tidak unik, pastikan short url anda hanya angka dan huru ');
-            return redirect()->to(base_url('admin/url/'));
+            $this->session->setFlashdata('warning', 'AKSES ILEGAL');
+                return redirect()->to(base_url('admin/url'));
         }
         //return redirect()->to(base_url('a/b/'.$short));
     }

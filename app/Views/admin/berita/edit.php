@@ -33,6 +33,7 @@
 	<div class="col-md-2">
 		<select name="jenis_berita" class="form-control">
 			<option value="Berita">Berita</option>
+			<option value="Event">Event</option>
 			<option value="Layanan" <?php if ($berita['jenis_berita'] === 'Layanan') {
     echo 'selected';
 } ?>>Layanan</option>

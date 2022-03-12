@@ -116,77 +116,47 @@ class Kelas extends BaseController
         echo view('admin/layout/wrapper', $data);
     }
     // save add
-    public function add()
+    public function add_kelas($has_berita)
     {
         checklogin();
-        $m_kategori = new Kategori_model();
-        $m_berita   = new Berita_model();
-        $kategori   = $m_kategori->listing();
-        // Start validasi
-        if ($this->request->getMethod() === 'post' && $this->validate(
-            [
-                'judul_berita'  => 'required',
-                'gambar'        => [
-                    'mime_in[gambar,image/jpg,image/jpeg,image/gif,image/png]',
-                    'max_size[gambar,4096]',
-                ],
-            ]
-        )) {
-            if (! empty($_FILES['gambar']['name'])) {
-                // Image upload
-                $avatar   = $this->request->getFile('gambar');
-                $namabaru = str_replace(' ', '-', $avatar->getName());
-                $avatar->move(WRITEPATH . '../assets/upload/image/', $namabaru);
-                // Create thumb
-                $image = \Config\Services::image()
-                    ->withFile(WRITEPATH . '../assets/upload/image/' . $namabaru)
-                    ->fit(100, 100, 'center')
-                    ->save(WRITEPATH . '../assets/upload/image/thumbs/' . $namabaru);
-                // masuk database
-                $data = [
-                    'id_user'         => $this->session->get('id_user'),
-                    'id_kategori'     => $this->request->getVar('id_kategori'),
-                    'slug_berita'     => strtolower(url_title($this->request->getVar('judul_berita'))),
-                    'judul_berita'    => $this->request->getVar('judul_berita'),
-                    'ringkasan'       => $this->request->getVar('ringkasan'),
-                    'isi'             => $this->request->getVar('isi'),
-                    'status_berita'   => $this->request->getVar('status_berita'),
-                    'jenis_berita'    => $this->request->getVar('jenis_berita'),
-                    'keywords'        => $this->request->getVar('keywords'),
-                    'icon'            => $this->request->getVar('icon'),
-                    'gambar'          => $namabaru,
-                    'tanggal_post'    => date('Y-m-d H:i:s'),
-                    'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
-                ];
-                $m_berita->tambah($data);
-                return redirect()->to(base_url('admin/berita/jenis_berita/' . $this->request->getVar('jenis_berita')))->with('sukses', 'Data Berhasil di Simpan');
-            }
-            $data = [
-                'id_user'         => $this->session->get('id_user'),
-                'id_kategori'     => $this->request->getVar('id_kategori'),
-                'slug_berita'     => strtolower(url_title($this->request->getVar('judul_berita'))),
-                'judul_berita'    => $this->request->getVar('judul_berita'),
-                'ringkasan'       => $this->request->getVar('ringkasan'),
-                'isi'             => $this->request->getVar('isi'),
-                'status_berita'   => $this->request->getVar('status_berita'),
-                'jenis_berita'    => $this->request->getVar('jenis_berita'),
-                'keywords'        => $this->request->getVar('keywords'),
-                'icon'            => $this->request->getVar('icon'),
-                'tanggal_post'    => date('Y-m-d H:i:s'),
-                'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
+        $m_kelas        = new Kelas_model();
+        $data_validasi  = [
+                'nama_kelas'        => 'required|min_length[3]',
+                'kategori_kelas'    => 'required',
             ];
-            $m_berita->tambah($data);
-            return redirect()->to(base_url('admin/berita/jenis_berita/' . $this->request->getVar('jenis_berita')))->with('sukses', 'Data Berhasil di Simpan');
+        // Start validasi
+        if ($this->request->getMethod() === 'post' && $this->validate($data_validasi)){
+            $time_start     = strtotime($this->request->getVar('tanggal_mulai'));
+            $time_end       = strtotime($this->request->getVar('tanggal_selesai'));
+            $tanggal_mulai  = date('Y-m-d',$time_start);
+            $tanggal_selesai= date('Y-m-d',$time_end);
+            $data = [
+                'pic_kelas'         => $this->session->get('id_user'),
+                'id_event'          => $this->request->getVar('id_event'),
+                'nama_kelas'        => $this->request->getVar('nama_kelas'),
+                'kategori_kelas'    => $this->request->getVar('kategori_kelas'),
+                'tanggal_mulai'     => $tanggal_mulai,
+                'tanggal_selesai'   => $tanggal_selesai,
+                'kuota'             => $this->request->getVar('kuota'),
+                'status'            => $this->request->getVar('status'),
+                'harga_dasar'       => $this->request->getVar('harga_dasar'),
+                'harga_jual'        => $this->request->getVar('harga_jual'),
+                'has_kelas'         => md5(uniqid()),
+            ];
+            $m_kelas->save($data);
+            return redirect()->to(base_url('admin/event/detail/'.$has_berita))->with('sukses', 'Data Berhasil di Simpan');
+        }else{
+            return redirect()->to(base_url('admin/event'))->with('warning', 'Data Gagal di Simpan');
         }
     }
     // edit
-    public function edit($id_kelas)
+    public function edit($has_kelas)
     {
         checklogin();
         $m_kategori_kelas   = new Kategori_kelas_model();
         $m_kelas            = new Kelas_model();
         $kategori_kelas     = $m_kategori_kelas->listing();
-        $kelas              = $m_kelas->detail($id_kelas);
+        $kelas              = $m_kelas->detail($has_kelas);
         $data               = [
             'title'             => $kelas['nama_kelas'],
             'kategori_kelas'    => $kategori_kelas,

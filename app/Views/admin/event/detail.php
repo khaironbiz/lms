@@ -3,7 +3,7 @@ use App\Models\Materi_model;
 $m_materi           = new Materi_model();
 ?>
 <div class="card">
-    <img src="http://localhost/lms/assets/upload/image/<?= $berita['gambar']?>">
+    <img src="http://localhost/lms/assets/upload/image/<?= $berita['gambar']?>" style="max-width: 50%">
     <div class="card-header">
         <h4><?= $berita['judul_berita']?></h4>
         
@@ -14,11 +14,11 @@ $m_materi           = new Materi_model();
     <div class="card-header">
         <b>Kelas</b>
     </div>
-    <div class="card-body">
-            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-default<?= $berita['id_berita'] ?>">
+    <div class="card-body table-responsive">
+            <button type="button" class="btn btn-success btn-sm mb-2" data-toggle="modal" data-target="#modal-default<?= $berita['id_berita'] ?>">
 				<i class="fa fa-plus"></i> Add Kelas
 			</button>
-			<?= form_open(base_url('admin/event/add_kelas'));
+			<?= form_open(base_url('admin/kelas/add_kelas/'.$berita['has_berita']));
 				echo csrf_field();
 			?>
 			<div class="modal fade" id="modal-default<?= $berita['id_berita'] ?>">
@@ -124,10 +124,10 @@ $m_materi           = new Materi_model();
                 <td><?= $k['nama_kelas'];?></td>
                 <td><?= $k['tanggal_mulai'];?></td>
                 <td><?= $k['nama_kelas'];?></td>
-                <td><?= $k['harga_dasar'];?></td>
-                <td><?= $k['harga_jual'];?></td>
+                <td><?= number_format($k['harga_dasar'],0,",",".");?></td>
+                <td><?= number_format($k['harga_jual'],0,",",".");?></td>
                 <td>
-                    <a href="#" class="btn btn-sm btn-success">Edit</a>
+                    <a href="<?= base_url()?>/admin/kelas/edit/<?= $k['has_kelas']?>" class="btn btn-sm btn-success">Edit</a>
                     <a href="#" class="btn btn-sm btn-danger">Delete</a>
                 </td>
             </tr>
@@ -139,7 +139,7 @@ $m_materi           = new Materi_model();
     <div class="card-header">
         <b>Materi Kelas</b>
     </div>
-    <div class="card-body">
+    <div class="card-body table-responsive">
         <table class="table table-sm table-striped">
             <tr>
                 <th>No</th>
@@ -162,7 +162,7 @@ $m_materi           = new Materi_model();
                     <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-kelas-<?= $kelas['has_kelas']?>">
                         <i class="fa fa-plus"></i>
                     </button>
-                    <?= form_open(base_url('admin/materi/add'));
+                    <?= form_open(base_url('admin/materi/add/'.$berita['has_berita']));
                     echo csrf_field();
                     ?>
                     <div class="modal fade" id="modal-kelas-<?= $kelas['has_kelas']?>">

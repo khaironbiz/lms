@@ -197,13 +197,17 @@ class Event extends BaseController
             ];
         // Start validasi
         if ($this->request->getMethod() === 'post' && $this->validate($data_validasi)){
+            $time_start     = strtotime($this->request->getVar('tanggal_mulai'));
+            $time_end       = strtotime($this->request->getVar('tanggal_selesai'));
+            $tanggal_mulai  = date('Y-m-d',$time_start);
+            $tanggal_selesai= date('Y-m-d',$time_end);
             $data = [
                 'pic_kelas'         => $this->session->get('id_user'),
                 'id_event'          => $this->request->getVar('id_event'),
                 'nama_kelas'        => $this->request->getVar('nama_kelas'),
                 'kategori_kelas'    => $this->request->getVar('kategori_kelas'),
-                'tanggal_mulai'     => $this->request->getVar('tanggal_mulai'),
-                'tanggal_selesai'   => $this->request->getVar('tanggal_selesai'),
+                'tanggal_mulai'     => $tanggal_mulai,
+                'tanggal_selesai'   => $tanggal_selesai,
                 'kuota'             => $this->request->getVar('kuota'),
                 'status'            => $this->request->getVar('status'),
                 'harga_dasar'       => $this->request->getVar('harga_dasar'),
@@ -225,14 +229,14 @@ class Event extends BaseController
         $m_kelas            = new Kelas_model();
         $m_kategori_kelas   = new Kategori_kelas_model();
         $m_user             = new User_model();
-        $kategori           = $m_kategori->listing();
+        $kategori           = $m_kategori_kelas->listing();
         $berita             = $m_berita->has_berita($has_berita);
         $id_berita          = $berita['id_berita'];
         $kelas              = $m_kelas->event($id_berita);
         $user               = $m_user->listing();
         $data               = [
                             'title'     => $berita['judul_berita'],
-                            'kategori'  => $kategori,
+                            'kategori_kelas'    => $kategori,
                             'berita'    => $berita,
                             'user'      => $user,
                             'kelas'     => $kelas,

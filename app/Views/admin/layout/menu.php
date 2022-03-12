@@ -264,7 +264,17 @@ $site        = $konfigurasi->listing();
                   $validation = \Config\Services::validation();
                   $errors = $validation->getErrors();
                     if (! empty($errors)) {
-                        echo '<span class="text-danger">' . $validation->listErrors() . '</span>';
+                ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <h4>Validasi</h4>
+                    </hr />
+                    <?php echo session()->getFlashdata('error'); ?>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <?php        
+                      
                     }
                 ?>
 
@@ -274,3 +284,5 @@ $site        = $konfigurasi->listing();
                         <button type="button" class="close" data-dismiss="alert"><span>×</span></button>
                     </div>
                 <?php endif ?>
+                <?php 
+	
