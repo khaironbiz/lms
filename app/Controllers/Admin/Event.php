@@ -186,40 +186,7 @@ class Event extends BaseController
             return redirect()->to(base_url('admin/event'))->with('warning', 'Data gagal di Simpan');
         }
     }
-    // save add
-    public function add_kelas()
-    {
-        checklogin();
-        $m_kelas        = new Kelas_model();
-        $data_validasi  = [
-                'nama_kelas'        => 'required|min_length[3]',
-                'kategori_kelas'    => 'required',
-            ];
-        // Start validasi
-        if ($this->request->getMethod() === 'post' && $this->validate($data_validasi)){
-            $time_start     = strtotime($this->request->getVar('tanggal_mulai'));
-            $time_end       = strtotime($this->request->getVar('tanggal_selesai'));
-            $tanggal_mulai  = date('Y-m-d',$time_start);
-            $tanggal_selesai= date('Y-m-d',$time_end);
-            $data = [
-                'pic_kelas'         => $this->session->get('id_user'),
-                'id_event'          => $this->request->getVar('id_event'),
-                'nama_kelas'        => $this->request->getVar('nama_kelas'),
-                'kategori_kelas'    => $this->request->getVar('kategori_kelas'),
-                'tanggal_mulai'     => $tanggal_mulai,
-                'tanggal_selesai'   => $tanggal_selesai,
-                'kuota'             => $this->request->getVar('kuota'),
-                'status'            => $this->request->getVar('status'),
-                'harga_dasar'       => $this->request->getVar('harga_dasar'),
-                'harga_jual'        => $this->request->getVar('harga_jual'),
-                'has_kelas'         => md5(uniqid()),
-            ];
-            $m_kelas->save($data);
-            return redirect()->to(base_url('admin/event'))->with('sukses', 'Data Berhasil di Simpan');
-        }else{
-            return redirect()->to(base_url('admin/event'))->with('warning', 'Data Gagal di Simpan');
-        }
-    }
+    
     // dwtail
     public function detail($has_berita)
     {
