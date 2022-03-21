@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col-md-3 mb-3">
+	<div class="col-md-2 mb-1">
 		<?php
 		if ($user['gambar'] === '') {
 			$gambar_profil =  icon();
@@ -7,10 +7,9 @@
 			$gambar_profil = base_url('assets/upload/image/' . $user['gambar']);
 			}
 		?>
-		<img src="<?= $gambar_profil?>" class="img img-thumbnail">
-		<p><?= icon()?></p>
+		<img src="<?= $gambar_profil?>" class="img img-thumbnail w-100">
 	</div>
-	<div class="col-md-9">
+	<div class="col-md-10">
 		<form action="<?= base_url('admin/akun') ?>" method="post" accept-charset="utf-8" enctype="multipart/form-data">
 			<?= csrf_field();
             ?>

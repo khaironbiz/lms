@@ -12,8 +12,8 @@ $menu_profil  = $menu->profil();
 $menu_layanan = $menu->layanan();
 ?>
 <!-- ======= Footer ======= -->
-  <footer id="footer">
-    <div class="footer-top">
+  <footer id="footer" class="bg-info text-dark">
+    <div class="footer-top ">
       <div class="container-fluid">
         <div class="row">
           <div class="col-lg-3 col-md-6">
@@ -72,7 +72,7 @@ $menu_layanan = $menu->layanan();
         <!-- You can delete the links only if you purchased the pro version. -->
         <!-- Licensing information: https://bootstrapmade.com/license/ -->
         <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/medicio-free-bootstrap-theme/ -->
-        Designed with <i class="bi bi-heart-fill"></i> by <a href="https://nurse.my.id/">Khairon</a> 
+        Designed with <i class="bi bi-heart-fill"></i> by <a href="https://nurse.my.id/" class="text-white">Khairon</a> 
       </div>
     </div>
   </footer><!-- End Footer -->
