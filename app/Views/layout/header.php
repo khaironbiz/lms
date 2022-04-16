@@ -42,14 +42,8 @@ $menu_layanan = $menu->layanan();
               
             </ul>
           </li>
-
-          <li class="dropdown"><a href="<?= base_url('berita') ?>"><span>Berita</span> <i class="bi bi-chevron-down"></i></a>
-            <ul>
-              <?php foreach ($menu_berita as $menu_berita) { ?>
-              <li><a href="<?= base_url('berita/kategori/' . $menu_berita['slug_kategori']) ?>"><?= $menu_berita['nama_kategori'] ?></a></li>
-              <?php } ?>
-            </ul>
-          </li>
+          <li><a class="nav-link scrollto" href="<?= base_url('berita') ?>">Berita</a></li>
+          <li><a class="nav-link scrollto" href="<?= base_url('berita/event') ?>">Event</a></li>
           <li class="dropdown"><a href="#"><span>Layanan</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <?php foreach ($menu_layanan as $menu_layanan) { ?>

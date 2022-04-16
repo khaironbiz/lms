@@ -6,6 +6,7 @@ use App\Models\Berita_model;
 use App\Models\Kategori_model;
 use App\Models\Konfigurasi_model;
 use App\Models\Kelas_model;
+use App\Models\Materi_model;
 
 class Berita extends BaseController
 {
@@ -18,7 +19,7 @@ class Berita extends BaseController
         $berita        = $m_berita->home();
 
         $data = [
-            'title'         => 'Berita ' . $konfigurasi['namaweb'],
+            'title'         => 'Berita',
             'description'   => 'Berita ' . $konfigurasi['namaweb'],
             'keywords'      => 'Berita ' . $konfigurasi['namaweb'],
             'berita'        => $berita,
@@ -26,7 +27,23 @@ class Berita extends BaseController
         ];
         echo view('layout/wrapper', $data);
     }
+    // event
+    public function event()
+    {
+        $m_konfigurasi = new Konfigurasi_model();
+        $m_berita      = new Berita_model();
+        $konfigurasi   = $m_konfigurasi->listing();
+        $berita        = $m_berita->event();
 
+        $data = [
+            'title'         => 'Event ',
+            'description'   => 'Berita ' . $konfigurasi['namaweb'],
+            'keywords'      => 'Berita ' . $konfigurasi['namaweb'],
+            'berita'        => $berita,
+            'content'       => 'berita/index',
+        ];
+        echo view('layout/wrapper', $data);
+    }
     // read
     public function read($slug_berita)
     {
@@ -35,11 +52,14 @@ class Berita extends BaseController
         $m_konfigurasi  = new Konfigurasi_model();
         $m_berita       = new Berita_model();
         $m_kelas        = new Kelas_model();
+        $m_materi       = new Materi_model();
         $konfigurasi    = $m_konfigurasi->listing();
         $berita         = $m_berita->read($slug_berita);
         $sidebar        = $m_berita->sidebar();
         $id_event       = $berita['id_berita'];
 		$kelas          = $m_kelas->event($id_event);
+        $id_kelas       = $kelas['id_kelas'];
+        $materi         = $m_materi->event($id_event);
         // Update hits
         $data = [
             'id_berita' => $berita['id_berita'],
@@ -55,6 +75,7 @@ class Berita extends BaseController
             'berita'        => $berita,
             'sidebar'       => $sidebar,
             'kelas'         => $kelas,
+            'materi'        => $materi,
             'content'       => 'berita/read',
         ];
         echo view('layout/wrapper', $data);

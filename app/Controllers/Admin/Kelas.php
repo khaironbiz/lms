@@ -27,7 +27,7 @@ class Kelas extends BaseController
             'berita'        => $berita,
             'kelas'         => $kelas,
             'kategori_kelas'=> $kategori_kelas,
-            'sub_menu'      => 'admin/sub_menu/berita',
+            'sub_menu'      => 'admin/sub_menu/event',
             'content'       => 'admin/kelas/index',
         ];
         echo view('admin/layout/wrapper', $data);
@@ -166,7 +166,7 @@ class Kelas extends BaseController
         echo view('admin/layout/wrapper', $data);
     }
     // UPDATE
-    public function update($id_berita)
+    public function update($has_kelas)
     {
         checklogin();
         $m_kategori = new Kategori_model();

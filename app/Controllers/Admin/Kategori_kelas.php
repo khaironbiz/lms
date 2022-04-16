@@ -17,7 +17,7 @@ class Kategori_kelas extends BaseController
         $data = [
             'title'             => 'Kategori kelas: ' . $total['total'],
             'kategori_kelas'    => $kategori_kelas,
-            'sub_menu'          => 'admin/sub_menu/berita',
+            'sub_menu'          => 'admin/sub_menu/event',
             'content'           => 'admin/kategori_kelas/index',
         ];
         echo view('admin/layout/wrapper', $data);
@@ -71,6 +71,7 @@ class Kategori_kelas extends BaseController
                 'kategori_kelas'        => $this->request->getPost('kategori_kelas'),
                 'slug_kategori_kelas'   => $slug,
                 'updated_at'            => date('Y-m-d H:i:s'),
+                'sub_menu'              => 'admin/sub_menu/event',
                 'urutan'                => $this->request->getPost('urutan'),
             ];
             

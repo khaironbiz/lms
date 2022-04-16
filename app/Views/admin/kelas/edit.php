@@ -1,42 +1,53 @@
 <form action="<?= base_url('admin/kelas/update/' . $kelas['id_kelas']) ?>" method="post" accept-charset="utf-8" enctype="multipart/form-data">
 <?= csrf_field();
 ?>
+
 <div class="row">
-	<div class="col-md-6">
-		<div class="form-group row">
-			<label class="col-md-2">Event</label>
+	<?php
+	if($kelas['poster'] !=''):
+	?>
+	<img src="<?= base_url()?>/assets/upload/image/<?= $kelas['poster']?>" class="img-fluid" alt="...">
+	<?php
+	endif
+	?>
+</div>
+
+<div class="row mt-3">
+	<div class="col-md-12">
+		<div class="row">
+			<label class="col-md-2 mt-1">Event</label>
 			<div class="col-md-10">
 				<input type="text" name="event" class="form-control form-control-sm" value="<?= $kelas['judul_berita'] ?>" readonly>
 			</div>
 		</div>
-		<div class="form-group row">
-			<label class="col-md-2">Nama Kegiatan</label>
+		<div class="row">
+			<label class="col-md-2 mt-1">Nama Kegiatan</label>
 			<div class="col-md-10">
 				<input type="text" name="nama_kelas" class="form-control form-control-sm" value="<?= $kelas['nama_kelas'] ?>" required>
 			</div>
 		</div>
-		<div class="form-group row">
-			<label class="col-md-2">Tanggal Mulai</label>
+		<div class="row">
+			<label class="col-md-2 mt-1">Tanggal Mulai</label>
 			<div class="col-md-4">
-				<input type="text" name="tanggal_mulai" class="form-control form-control-sm tanggal" value="<?= $kelas['tanggal_mulai'] ?>" required>
+				<input type="text" name="tanggal_mulai" class="form-control form-control-sm tanggal" value="<?= date('d-m-Y',strtotime($kelas['tanggal_mulai'])) ?>" required>
 			</div>
-			<label class="col-2">Tanggal Selesai</label>
+			<label class="col-2 mt-1">Tanggal Selesai</label>
 			<div class="col-md-4">
-				<input type="text" name="tanggal_selesai" class="form-control form-control-sm tanggal" value="<?= $kelas['tanggal_selesai'] ?>" required>
+				<input type="text" name="tanggal_selesai" class="form-control form-control-sm tanggal" value="<?= date('d-m-Y',strtotime($kelas['tanggal_selesai'])) ?>" required>
 			</div>
 		</div>
-		<div class="form-group row">
-			<label class="col-md-2">Harga Dasar</label>
+		<div class="row">
+			<label class="col-md-2 mt-1">Harga Dasar</label>
 			<div class="col-md-4">
 				<input type="number" name="harga_dasar" class="form-control form-control-sm" placeholder="Harga Dasar" value="<?= $kelas['harga_dasar'] ?>" required>
 			</div>
-			<label class="col-2">Harga Jual</label>
+			<label class="col-2 mt-1">Harga Jual</label>
 			<div class="col-md-4">
 				<input type="number" name="harga_jual" class="form-control form-control-sm" placeholder="Harga Jual" value="<?= $kelas['harga_jual'] ?>" required>
 			</div>
 		</div>
-		<div class="form-group row">
-			<label class="col-md-2">Kategori</label>
+		<div class="row">
+			<label class="col-md-2 mt-1">Kategori</label>
 			<div class="col-md-4">
 				<select class="form-control form-control-sm" name="kategori_kelas" riquired>
 					<option value=''>Pilih</option>
@@ -49,7 +60,7 @@
 					?>
 				</select>
 			</div>
-			<label class="col-md-2">Status</label>
+			<label class="col-md-2 mt-1">Status</label>
 			<div class="col-md-4">
 				<select class="form-control form-control-sm" required name="status">
 					<option value="1">Publish</option>
@@ -57,10 +68,14 @@
 				</select>
 			</div>					
 		</div>
-		<div class="form-group row">
-			<label class="col-md-2">Kuota</label>
+		<div class="row">
+			<label class="col-md-2 mt-1">Kuota</label>
 			<div class="col-md-4">
-				<input type="number" name="kuota" class="form-control form-control-sm" placeholder="Kuota" value="<?= set_value('kuota') ?>" required>
+				<input type="number" name="kuota" class="form-control form-control-sm" placeholder="Kuota" value="<?= $kelas['kuota'] ?>" required>
+			</div>
+			<label class="col-md-2 mt-1">Poster</label>
+			<div class="col-md-4">
+				<input type="file" name="kuota" class="form-control form-control-sm" placeholder="poster" required>
 			</div>
 		</div>
 		<div class="modal-footer justify-content-between">

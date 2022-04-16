@@ -8,15 +8,7 @@
       <li class="nav-item active">
         <a class="nav-link" href="<?= base_url('admin/kategori')?>">Kategori Berita<span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="<?= base_url('admin/event')?>">Event<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="<?= base_url('admin/kelas')?>">Kelas<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="<?= base_url('admin/kategori_kelas')?>">Kategori Kelas<span class="sr-only">(current)</span></a>
-      </li>
+      
     </ul>
   </div>
 </nav>

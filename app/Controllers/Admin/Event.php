@@ -29,7 +29,7 @@ class Event extends BaseController
             'berita'            => $berita,
             'pic'               => $pic,
             'kategori_kelas'    => $kategori_kelas,
-            'sub_menu'          => 'admin/sub_menu/berita',
+            'sub_menu'          => 'admin/sub_menu/event',
             'content'           => 'admin/event/index',
         ];
         echo view('admin/layout/wrapper', $data);
@@ -112,7 +112,7 @@ class Event extends BaseController
         $m_berita   = new Berita_model();
         $kategori   = $m_kategori->listing();
         $data = [
-            'title'     => 'Tambah Berita',
+            'title'     => 'Tambah Event',
             'kategori'  => $kategori,
             'content'   => 'admin/event/tambah',
         ];

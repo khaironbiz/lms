@@ -102,16 +102,7 @@ $site        = $konfigurasi->listing();
             
             </div>
         </div>
-        <div class="mb-3 row">
-            <label class="col-sm-2 col-form-label">Password</label>
-            <div class="col-sm-4">
-                <input type="password" class="form-control" autocomplete="off" name="password_1" placeholder="password_1" required>
-            </div>
-            <label class="col-sm-2 col-form-label">Ulangi Password</label>
-            <div class="col-sm-4">
-                <input type="password" class="form-control" autocomplete="off" name="password_2" placeholder="password_2" required>
-            </div>
-        </div>
+        
         <hr>
         <div class="row justify-content-center">
           

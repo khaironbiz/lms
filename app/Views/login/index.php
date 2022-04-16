@@ -38,8 +38,8 @@ $site        = $konfigurasi->listing();
     <div class="card-body login-card-body" style="border-radius: 10px;">
       <div class="login-logo">
         <div class="row justify-content-center">
-          <div class="col-md-6">
-            <img src="<?= base_url('assets/upload/image/' . $site['icon']) ?>" class="img img-fluid" width="150px">
+          <div class="col-md-4">
+            <img src="<?= base_url('assets/upload/image/' . $site['icon']) ?>" class="img img-fluid w-100">
           </div>
           
         </div>

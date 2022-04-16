@@ -17,17 +17,8 @@
 </div>
 
 <div class="form-group row">
-	<label class="col-md-2">Kategori, Jenis &amp; Status</label>
-	<div class="col-md-2">
-		<select name="id_kategori" class="form-control">
-			<?php foreach ($kategori as $kategori) { ?>
-			<option value="<?= $kategori['id_kategori'] ?>">
-				<?= $kategori['nama_kategori'] ?>
-			</option>
-			<?php } ?>
-		</select>
-		<small class="text-secondary">Kategori</small>
-	</div>
+	<label class="col-md-2">Kategori</label>
+	
 	<div class="col-md-2">
 		<select name="jenis_berita" class="form-control">
 			<option value="Event">Event</option>

@@ -26,6 +26,7 @@ $session = \Config\Services::session();
           <?php
           if($berita['jenis_berita']=="Event"){
           ?>
+          <!-- kelas --->
           <div class="card mt-3">
             <div class="card-header"><b>Kelas</b></div>
             <div class="card-body">
@@ -70,30 +71,45 @@ $session = \Config\Services::session();
               ?>
                 
               </table>
-              
             </div>
+            <!-- materi --->
             <div class="card-header"><b>Materi Kegiatan</b></div>
             <div class="card-body">
               <table class="table">
                 <tr>
                   <th>No</th>
                   <th>Uraian</th>
-                  <th>Pembicara</th>
-                  <th>Bobot</th>
+                  <th>Waktu</th>
+                  <th>Acara</th>
                 </tr>
                 <?php
-                
+                $list_kelas = 1;
+                foreach ($materi as $mat) :
+                  $waktu_mulai = date('H:i', strtotime($mat['waktu_mulai']));
+                  $waktu_selesai = date('H:i', strtotime($mat['waktu_selesai']));
                 ?>
                 <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
+                  <td><?= $list_kelas ?></td>
+                  <td class="w-75">
+                    <?= $mat['materi'] ?><br>
+                    <b>By <?= $mat['nama'] ?></b><br>
+                  </td>
+                  
+                  <td class="w-20"><?= $waktu_mulai."-".$waktu_selesai?>
+                    
+                  </td>
+                  <td class="w-10">
+                    <?= $mat['nama_kelas']?>
+                  </td>
                 </tr>
+                <?php
+                  $list_kelas++;
+                endforeach
+                ?>
               </table>
             </div>
             <div class="card-footer">
-              <button>Daftar</button><br>
+              
             </div>
           </div>
           <?php

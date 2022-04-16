@@ -1,5 +1,6 @@
 <?= form_open(base_url('admin/kategori_kelas/edit/' . $kategori_kelas['has_kategori_kelas']));
 echo csrf_field();
+
 ?>
 
 <div class="form-group row">

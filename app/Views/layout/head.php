@@ -33,7 +33,8 @@ $site        = $konfigurasi->listing();
   <link href="<?= base_url() ?>/assets/template/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
   <link href="<?= base_url() ?>/assets/template/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="<?= base_url() ?>/assets/template/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
+  <link href="https://hpii.or.id/assets/tema/assets/css/animate.css" rel="stylesheet">
+  
   <!-- Template Main CSS File -->
   <link href="<?= base_url() ?>/assets/template/assets/css/style.css" rel="stylesheet">
 
