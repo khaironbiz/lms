@@ -207,6 +207,7 @@ class Event extends BaseController
                             'berita'    => $berita,
                             'user'      => $user,
                             'kelas'     => $kelas,
+                            'sub_menu'  => 'admin/sub_menu/event',
                             'content'   => 'admin/event/detail',
         ];
         echo view('admin/layout/wrapper', $data);

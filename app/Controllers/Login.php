@@ -176,12 +176,12 @@ class Login extends BaseController
                 $this->session->setFlashdata('sukses', 'Hai ' . $user['nama'] . ', Anda berhasil login');
                 //return redirect()->to(base_url('admin/dasbor'));
                 $to         = "khaironbiz@gmail.com";
-                $subject    = "Login Sukses";
+                $subject    = "Notif login akun HPII";
                 $alamat_ip  = $_SERVER['REMOTE_ADDR'];
                 $time_login = date('Y-m-d H:i:s');
                 $browser    = $this->get_browser_name($_SERVER['HTTP_USER_AGENT']);
-                $message    = "
-                                <p>Anda Berhasil Login</p>
+                $message    = "Hai <b>$user[nama]</b>
+                                <p>Anda Berhasil Login, berikut detail aktifitas login anda: </p>
                                 <p>Browser   : $browser</p>
                                 <p>IP Address : $alamat_ip</p>
                                 <p>Waktu Login  : $time_login</p>

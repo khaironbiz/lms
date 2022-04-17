@@ -1,7 +1,10 @@
 <?php
 use App\Models\Materi_model;
 $m_materi           = new Materi_model();
+echo view($sub_menu)
+
 ?>
+
 <div class="card">
     <img src="http://localhost/lms/assets/upload/image/<?= $berita['gambar']?>" class="img-fluid">
     <div class="card-header">
@@ -121,7 +124,7 @@ $m_materi           = new Materi_model();
                 <td><?= $no++?></td>
                 <td><?= $k['nama_kelas'];?></td>
                 <td><?= $k['tanggal_mulai'];?></td>
-                <td><?= $k['nama_kelas'];?></td>
+                <td></td>
                 <td><?= number_format($k['harga_dasar'],0,",",".");?></td>
                 <td><?= number_format($k['harga_jual'],0,",",".");?></td>
                 <td>
@@ -145,7 +148,6 @@ $m_materi           = new Materi_model();
                 <th>No</th>
                 <th>Jam</th>
                 <th>Tema</th>
-                <th>Bahan Ajar</th>
                 <th>Aksi</th>
             </tr>
             <?php
@@ -156,7 +158,7 @@ $m_materi           = new Materi_model();
             ?>
             <tr>
                 <td><?= $nomor++?></td>
-                <td colspan="3" class="text-primary"><b><?= $kelas['nama_kelas']?></b></td>
+                <td colspan="2" class="text-primary"><b><?= $kelas['nama_kelas']?></b></td>
                 <td>
                     <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-kelas-<?= $kelas['has_kelas']?>">
                         <i class="fa fa-plus"></i>
@@ -244,8 +246,11 @@ $m_materi           = new Materi_model();
             <tr>
                 <td></td>
                 <td><?= date('H:i',$mulai)?> - <?= date('H:i',$selesai)?></td>
-                <td><?= $m['materi']?><br><b><?= $m['nama']?></b></td>
-                <td></td>
+                <td>
+                    <?= $m['materi']?><br>
+                    Oleh : <b><?= $m['nama']?></b><br>
+                    Bahan Ajar : <br>
+                </td>
                 <td>
                     <button type="button" class="btn btn-sm btn-success mt-2" data-toggle="modal" data-target="#modal-<?= $m['has_materi']?>">
                         <i class="fa fa-edit"></i>

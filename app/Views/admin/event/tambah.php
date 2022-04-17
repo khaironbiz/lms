@@ -3,14 +3,14 @@
 ?>
 
 <div class="form-group row">
-	<label class="col-md-2">Judul Event</label>
+	<label class="col-md-2">Nama Event</label>
 	<div class="col-md-10">
 		<input type="text" name="judul_berita" class="form-control" value="<?= set_value('judul_berita') ?>" required>
 	</div>
 </div>
 
 <div class="form-group row">
-	<label class="col-md-2">Gambar Event</label>
+	<label class="col-md-2">Banner</label>
 	<div class="col-md-10">
 		<input type="file" name="gambar" class="form-control" value="<?= set_value('gambar') ?>">
 	</div>
@@ -39,7 +39,7 @@
 </div>
 
 <div class="form-group row">
-	<label class="col-md-2">Tanggal dan jam Publikasi</label>
+	<label class="col-md-2">Waktu Publikasi</label>
 	<div class="col-md-4">
 		<input type="text" name="tanggal_publish" class="form-control tanggal" value="<?php if (isset($_POST['tanggal_publis'])) {
     echo set_value('tanggal_publish');
@@ -66,7 +66,7 @@
 </div>
 
 <div class="form-group row">
-	<label class="col-md-2">Isi Berita</label>
+	<label class="col-md-2">Deskripsi</label>
 	<div class="col-md-10">
 		<textarea name="isi" class="form-control konten"><?= set_value('isi') ?></textarea>
 	</div>

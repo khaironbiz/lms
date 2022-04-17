@@ -266,14 +266,14 @@ $site        = $konfigurasi->listing();
                 <h3 class="card-title"><?= $title ?></h3>
               </div>
               <!-- /.card-header -->
-              <div class="card-body" style="min-height: 500px;">
+              <div class="card-body">
                 <?php
                   $validation = \Config\Services::validation();
                   $errors = $validation->getErrors();
                     if (! empty($errors)) {
                 ?>
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <h4>Validasi</h4>
+                    <h5>gagal validasi</h5>
                     </hr />
                     <?php echo session()->getFlashdata('error'); ?>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">

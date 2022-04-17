@@ -3,33 +3,22 @@
 ?>
 
 <div class="form-group row">
-	<label class="col-md-2">Judul Berita</label>
+	<label class="col-md-2">Nama Event</label>
 	<div class="col-md-10">
 		<input type="text" name="judul_berita" class="form-control" value="<?= $berita['judul_berita'] ?>" required>
 	</div>
 </div>
 
 <div class="form-group row">
-	<label class="col-md-2">Upload Gambar Berita</label>
+	<label class="col-md-2">Banner</label>
 	<div class="col-md-10">
 		<input type="file" name="gambar" class="form-control" value="<?= $berita['gambar'] ?>">
 	</div>
 </div>
 
 <div class="form-group row">
-	<label class="col-md-2">Kategori, Jenis &amp; Status</label>
-	<div class="col-md-2">
-		<select name="id_kategori" class="form-control">
-			<?php foreach ($kategori as $kategori) { ?>
-			<option value="<?= $kategori['id_kategori'] ?>" <?php if ($berita['id_kategori'] === $kategori['id_kategori']) {
-    echo 'selected';
-} ?>>
-				<?= $kategori['nama_kategori'] ?>
-			</option>
-			<?php } ?>
-		</select>
-		<small class="text-secondary">Kategori</small>
-	</div>
+	<label class="col-md-2">Kategori</label>
+	
 	<div class="col-md-2">
 		<select name="jenis_berita" class="form-control">
 			<option value="Event">Event</option>
@@ -52,7 +41,7 @@
 </div>
 
 <div class="form-group row">
-	<label class="col-md-2">Tanggal dan jam Publikasi</label>
+	<label class="col-md-2">Waktu Publikasi</label>
 	<div class="col-md-4">
 		<input type="text" name="tanggal_publish" class="form-control tanggal" value="<?php if (isset($_POST['tanggal_publis'])) {
     echo set_value('tanggal_publish');
@@ -79,14 +68,14 @@
 </div>
 
 <div class="form-group row">
-	<label class="col-md-2">Isi Berita</label>
+	<label class="col-md-2">Deskripsi</label>
 	<div class="col-md-10">
 		<textarea name="isi" class="form-control konten"><?= $berita['isi'] ?></textarea>
 	</div>
 </div>
 
 <div class="form-group row">
-	<label class="col-md-2">Keyword Berita (untuk SEO Google)</label>
+	<label class="col-md-2">Keyword</label>
 	<div class="col-md-10">
 		<textarea name="keywords" class="form-control"><?= $berita['keywords'] ?></textarea>
 	</div>
