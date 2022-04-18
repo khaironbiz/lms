@@ -1,4 +1,5 @@
 <?php 
+
 $session = \Config\Services::session();
 ?>
 <main id="main">
@@ -34,84 +35,31 @@ $session = \Config\Services::session();
                 <tr>
                   <th>No</th>
                   <th>Kegiatan</th>
-                  <th>SKP</th>
                   <th>Harga</th>
                   <th>Aksi</th>
                 </tr>
                 <?php
                 $no = 1;
                 foreach($kelas as $k){
-                  //$lama_kegiatan  = $k['tanggal_selesai']-$k['tanggal_mulai']
-                ?>
-                <?php
-                    $birthDate  = new DateTime($k['tanggal_mulai']);
-                    $today      = new DateTime($k['tanggal_selesai']);
-                    if ($birthDate > $today) { 
-                        exit("0 tahun 0 bulan 0 hari");
-                    }
-                    $y = $today->diff($birthDate)->y;
-                    $m = $today->diff($birthDate)->m;
-                    $d = $today->diff($birthDate)->d;
-                    //return $y." tahun ".$m." bulan ".$d." hari";
-                    $lama = $d+1;
                   
                 ?>
+                
                 <tr>
                   <td><?= $no++; ?></td>
                   <td><?= $k['nama_kelas']?></td>
-                  <td></td>
                   <td><?= number_format($k['harga_jual'])?></td>
                   <td>
                     <button class="btn btn-success btn-sm">Daftar</button>
-                    <button class="btn btn-primary btn-sm">Detail</button>
+                    <a href="<?= base_url('berita/kelas/'.$k['has_kelas'])?>" class="btn btn-sm btn-success">Detail</a>
                   </td>
                 </tr>
               <?php
               }
               ?>
-                
               </table>
-            </div>
-            <!-- materi --->
-            <div class="card-header"><b>Materi Kegiatan</b></div>
-            <div class="card-body">
-              <table class="table">
-                <tr>
-                  <th>No</th>
-                  <th>Uraian</th>
-                  <th>Waktu</th>
-                  <th>Acara</th>
-                </tr>
-                <?php
-                $list_kelas = 1;
-                foreach ($materi as $mat) :
-                  $waktu_mulai = date('H:i', strtotime($mat['waktu_mulai']));
-                  $waktu_selesai = date('H:i', strtotime($mat['waktu_selesai']));
-                ?>
-                <tr>
-                  <td><?= $list_kelas ?></td>
-                  <td class="w-75">
-                    <?= $mat['materi'] ?><br>
-                    <b>By <?= $mat['nama'] ?></b><br>
-                  </td>
-                  
-                  <td class="w-20"><?= $waktu_mulai."-".$waktu_selesai?>
-                    
-                  </td>
-                  <td class="w-10">
-                    <?= $mat['nama_kelas']?>
-                  </td>
-                </tr>
-                <?php
-                  $list_kelas++;
-                endforeach
-                ?>
-              </table>
-            </div>
-            <div class="card-footer">
-              
             </div>
           </div>
+          
           <?php
           }
           ?>

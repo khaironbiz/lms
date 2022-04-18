@@ -109,57 +109,120 @@ class Profesi extends BaseController{
         $profesi        = $m_profesi->listing();
         // Start validasi
         if ($this->request->getMethod() === 'post' ){
-            
-            if (!$this->validate([
-                'id_profesi'    => [
-                    'rules'     => 'required|is_unique[organisasi_profesi.id_profesi]',
-                    'errors'    => [
-                        'required'          => 'Nama Profesi harus dipilih',
-                        'is_unique'         => 'Profesi ini sudah terdaftar di database organisasi profesi, periksa kembali!!!!!!!!!',
-                    ]
-                    ],
-                'nama_op'  => [
-                    'rules'     => 'required|min_length[5]|alpha_space',
-                    'errors'    => [
-                        'required'      => 'nama organisasi harus diisi',
-                        'min_length'    => 'nama organisasi minimal 5 karakter',
-                        'alpha_space'    => 'nama organisasi hanya berupa huruf'
-                    ]
-                    ] 
-            ])) {
-                session()->setFlashdata('error', $this->validator->listErrors());
-                return redirect()->back()->withInput();
-            }else{
-                $id_profesi     = $this->request->getPost('id_profesi');
-                $nama_op        = $this->request->getPost('nama_op');
-                $singkatan_op   = $this->request->getPost('singkatan_op');
-                $pimpinan_op    = $this->request->getPost('pimpinan_op');
-                $alamat_op      = $this->request->getPost('alamat_op');
-                $web_op         = $this->request->getPost('web_op');
-                $email_op       = $this->request->getPost('email_op');
-                $hp_op          = $this->request->getPost('hp_op');
-                $data           = [                
-                    'id_profesi'    => $id_profesi,
-                    'nama_op'       => $nama_op,
-                    'pimpinan_op'   => $pimpinan_op,
-                    'alamat_op'     => $alamat_op,
-                    'created_by'    => $this->session->get('id_user'),
-                    'created_at'    => date('Y-m-d H:i:s'),
-                    'has_op'       => md5(uniqid())
-                ];
-                var_dump($data);
-                // masuk database
-                $tambah_op = $m_op->tambah($data);
-                if($tambah_op = true){
-                    $this->session->setFlashdata('sukses', 'Data telah ditambah');
-                    return redirect()->to(base_url('admin/profesi/organisasi'));
+            $aksi = $this->request->getPost('aksi');
+            if($aksi ==="create_op"){
+                if (!$this->validate([
+                    'id_profesi'    => [
+                        'rules'     => 'required|is_unique[organisasi_profesi.id_profesi]',
+                        'errors'    => [
+                            'required'          => 'Nama Profesi harus dipilih',
+                            'is_unique'         => 'Profesi ini sudah terdaftar di database organisasi profesi, periksa kembali!!!!!!!!!',
+                        ]
+                        ],
+                    'nama_op'  => [
+                        'rules'     => 'required|min_length[5]|alpha_space',
+                        'errors'    => [
+                            'required'      => 'nama organisasi harus diisi',
+                            'min_length'    => 'nama organisasi minimal 5 karakter',
+                            'alpha_space'    => 'nama organisasi hanya berupa huruf'
+                        ]
+                        ] 
+                    ])) {
+                        session()->setFlashdata('error', $this->validator->listErrors());
+                        return redirect()->back()->withInput();
                 }else{
-                    $this->session->setFlashdata('warning', 'Data gagal ditambah');
-                    return redirect()->to(base_url('admin/profesi/organisasi'));
+                    $id_profesi     = $this->request->getPost('id_profesi');
+                    $nama_op        = $this->request->getPost('nama_op');
+                    $singkatan_op   = $this->request->getPost('singkatan_op');
+                    $pimpinan_op    = $this->request->getPost('pimpinan_op');
+                    $alamat_op      = $this->request->getPost('alamat_op');
+                    $web_op         = $this->request->getPost('web_op');
+                    $email_op       = $this->request->getPost('email_op');
+                    $hp_op          = $this->request->getPost('hp_op');
+                    $data           = [                
+                        'id_profesi'    => $id_profesi,
+                        'nama_op'       => $nama_op,
+                        'singkatan_op'  => $singkatan_op,
+                        'pimpinan_op'   => $pimpinan_op,
+                        'alamat_op'     => $alamat_op,
+                        'web_op'        => $web_op,
+                        'email_op'      => $email_op,
+                        'hp_op'         => $hp_op,
+                        'created_by'    => $this->session->get('id_user'),
+                        'created_at'    => date('Y-m-d H:i:s'),
+                        'has_op'       => md5(uniqid())
+                    ];
+                    var_dump($data);
+                    // masuk database
+                    $tambah_op = $m_op->tambah($data);
+                    if($tambah_op = true){
+                        $this->session->setFlashdata('sukses', 'Data telah ditambah');
+                        return redirect()->to(base_url('admin/profesi/organisasi'));
+                    }else{
+                        $this->session->setFlashdata('warning', 'Data gagal ditambah');
+                        return redirect()->to(base_url('admin/profesi/organisasi'));
+                    }
+                    
+                    // var_dump($count);
                 }
-                
-                // var_dump($count);
+            }elseif($aksi ==="edit_op"){
+                if (!$this->validate([
+                    'has_op'    => [
+                        'rules'     => 'required',
+                        'errors'    => [
+                            'required'          => 'Nama Profesi harus dipilih',
+                        ]
+                        ],
+                    'nama_op'  => [
+                        'rules'     => 'required|min_length[5]|alpha_space',
+                        'errors'    => [
+                            'required'      => 'nama organisasi harus diisi',
+                            'min_length'    => 'nama organisasi minimal 5 karakter',
+                            'alpha_space'    => 'nama organisasi hanya berupa huruf'
+                        ]
+                        ] 
+                    ])) {
+                        session()->setFlashdata('error', $this->validator->listErrors());
+                        return redirect()->back()->withInput();
+                }else{
+                    $has_op         = $this->request->getPost('has_op');
+                    $nama_op        = $this->request->getPost('nama_op');
+                    $singkatan_op   = $this->request->getPost('singkatan_op');
+                    $pimpinan_op    = $this->request->getPost('pimpinan_op');
+                    $alamat_op      = $this->request->getPost('alamat_op');
+                    $web_op         = $this->request->getPost('web_op');
+                    $email_op       = $this->request->getPost('email_op');
+                    $hp_op          = $this->request->getPost('hp_op');
+                    $data           = [                
+                        
+                        'nama_op'       => $nama_op,
+                        'singkatan_op'  => $singkatan_op,
+                        'pimpinan_op'   => $pimpinan_op,
+                        'alamat_op'     => $alamat_op,
+                        'web_op'        => $web_op,
+                        'email_op'      => $email_op,
+                        'hp_op'         => $hp_op,
+                        'updated_at'    => date('Y-m-d H:i:s'),
+                        'has_op'        => $has_op
+                    ];
+                    var_dump($data);
+                    // masuk database
+                    $edit_op = $m_op->edit($data);
+                    if($edit_op = true){
+                        $this->session->setFlashdata('sukses', 'Data telah dirubah');
+                        return redirect()->to(base_url('admin/profesi/organisasi'));
+                    }else{
+                        $this->session->setFlashdata('warning', 'Data gagal dirubah');
+                        return redirect()->to(base_url('admin/profesi/organisasi'));
+                    }
+                    
+                    // var_dump($count);
+                }
+            }else{
+                echo "Anda Tersesat";
             }
+            
+            
         }else{
             $data = [
                 'title'     => 'Daftar Organisasi Profesi',

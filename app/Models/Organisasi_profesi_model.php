@@ -38,7 +38,7 @@ class Organisasi_profesi_model extends Model
     public function listing()
     {
         $builder = $this->db->table('organisasi_profesi');
-        $builder->select('organisasi_profesi.*, profesi.*');
+        $builder->select('organisasi_profesi.*, profesi.nama_profesi');
         $builder->join('profesi', 'profesi.id_profesi = organisasi_profesi.id_profesi', 'LEFT');
         $query = $builder->get();
         return $query->getResultArray();
@@ -47,13 +47,23 @@ class Organisasi_profesi_model extends Model
     public function by_id_pofesi($id_profesi)
     {
         $builder = $this->db->table('organisasi_profesi');
-        $builder->select('organisasi_profesi.*, profesi.*');
+        $builder->select('organisasi_profesi.*, profesi.nama_profesi');
         $builder->join('profesi', 'profesi.id_profesi = organisasi_profesi.id_profesi', 'LEFT');
         $builder->where('id_profesi', $id_profesi);
         $query = $builder->get();
         return $query->getRow();
     }
     //detail
+    public function by_has_op($has_op)
+    {
+        $builder = $this->db->table('organisasi_profesi');
+        $builder->select('organisasi_profesi.*, profesi.nama_profesi');
+        $builder->join('profesi', 'profesi.id_profesi = organisasi_profesi.id_profesi', 'LEFT');
+        $builder->where('has_op', $has_op);
+        $query = $builder->get();
+        return $query->getRow();
+    }
+    
     public function has_op($has_op)
     {
         $builder = $this->db->table('organisasi_profesi');
@@ -90,6 +100,13 @@ class Organisasi_profesi_model extends Model
     {
         $builder = $this->db->table('organisasi_profesi');
         $builder->insert($data);
+    }
+    // tambah
+    public function edit($data)
+    {
+        $builder = $this->db->table('organisasi_profesi');
+        $builder->where('has_op', $data['has_op']);
+        $builder->update($data);
     }
 
 }

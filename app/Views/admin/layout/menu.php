@@ -58,6 +58,12 @@ $site        = $konfigurasi->listing();
             </a>
             
           </li>
+          <li class="nav-item">
+            <a href="<?= base_url('admin/organisasi_profesi')?>" class="nav-link">
+              <i class="nav-icon fas fa-newspaper"></i> Profesi
+            </a>
+            
+          </li>
           <!-- Galeri -->
           <li class="nav-item">
             <a href="#" class="nav-link">

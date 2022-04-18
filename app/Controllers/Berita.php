@@ -58,7 +58,6 @@ class Berita extends BaseController
         $sidebar        = $m_berita->sidebar();
         $id_event       = $berita['id_berita'];
 		$kelas          = $m_kelas->event($id_event);
-        $id_kelas       = $kelas['id_kelas'];
         $materi         = $m_materi->event($id_event);
         // Update hits
         $data = [
@@ -66,8 +65,6 @@ class Berita extends BaseController
             'hits'      => $berita['hits'] + 1,
         ];
         $m_berita->edit($data);
-        // Update hits
-
         $data = [
             'title'         => $berita['judul_berita'],
             'description'   => $berita['judul_berita'],
@@ -75,8 +72,32 @@ class Berita extends BaseController
             'berita'        => $berita,
             'sidebar'       => $sidebar,
             'kelas'         => $kelas,
-            'materi'        => $materi,
+            'materi'        => $materi, 
             'content'       => 'berita/read',
+        ];
+        echo view('layout/wrapper', $data);
+    }
+
+    //kelas
+    public function kelas($has_kelas)
+    {
+        checklogin();
+        $session        = \Config\Services::session();
+        $m_kelas        = new Kelas_model();
+        $m_materi       = new Materi_model();
+		$kelas          = $m_kelas->by_has_kelas($has_kelas);
+        // Update hits
+        $data = [
+            'id_kelas'  => $kelas->id_kelas,
+            'hit_kelas' => $kelas->hit_kelas + 1,
+        ];
+        $m_kelas->edit($data);
+        $data = [
+            'title'         => $kelas->nama_kelas,
+            'description'   => $kelas->nama_kelas,
+            'keywords'      => $kelas->nama_kelas,
+            'kelas'         => $kelas,
+            'content'       => 'kelas/detail',
         ];
         echo view('layout/wrapper', $data);
     }

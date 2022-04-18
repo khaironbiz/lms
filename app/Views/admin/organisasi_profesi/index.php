@@ -3,7 +3,7 @@
 		<i class="fa fa-plus"></i> Tambah
 	</button>
 </p>
-<?= form_open(base_url('admin/profesi/organisasi'));
+<?= form_open(base_url('admin/organisasi_profesi/create'));
 echo csrf_field();
 ?>
 <div class="modal fade" id="modal-default">
@@ -35,6 +35,7 @@ echo csrf_field();
 					<label class="col-md-3">Nama Organisasi</label>
 					<div class="col-md-9 row">
 						<input type="text" name="nama_op" class="form-control form-control-sm" required>
+						<input type="hidden" name="aksi" class="form-control form-control-sm" value="reate_op" required>
 					</div>
 				</div>
 				<div class="row mt-2">
@@ -93,7 +94,6 @@ echo csrf_field();
 			<th>Nama Profesi</th>
 			<th>Nama Organisasi</th>
 			<th>Alamat</th>
-			<th>Kontak</th>
 			<th>Aksi</th>
 		</tr>
 	</thead>
@@ -101,52 +101,21 @@ echo csrf_field();
 		<?php $no = 1;
 		
 		foreach ($op as $op) { 
-			
+			$data_telah_dihapus = strtotime($op['deleted_at']);
 		?>
-		<tr>
+		<tr <?php if($data_telah_dihapus >1){echo "class='bg-danger'"; } ?>>
 			<td><?= $no ?></td>
-			<td><?= $op['nama_profesi'] ?></td>
-			<td></td>
-			<td></td>
-			<td></td>
+			<td><?= $op['nama_profesi']?></td>
 			<td>
-				<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-default<?= $profesi['has_profesi'] ?>">
-						<i class="fa fa-edit"></i> Edit
-				</button>
-				<?= form_open(base_url('admin/profesi'));
-				echo csrf_field();
-				?>
-				<div class="modal fade" id="modal-default<?= $profesi['has_profesi'] ?>">
-					<div class="modal-dialog modal-lg">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h4 class="modal-title">Edit Profesi</h4>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-body">
-								<div class="row mt-2">
-									<label class="col-md-3">Nama Profesi</label>
-									<div class="col-md-9 row">
-										<input type="text" name="nama_profesi" class="form-control form-control-sm" value="<?= $profesi['nama_profesi'] ?>" required>
-										<input type="text" name="has_profesi" class="form-control form-control-sm" value="<?= $profesi['has_profesi'] ?>" required>
-										<input type="hidden" name="aksi" class="form-control form-control-sm" value="edit_profesi" required>
-									</div>
-								</div>
-								
-							</div>
-							<div class="modal-footer justify-content-between">
-								<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-								<button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Simpan</button>
-							</div>
-						</div>
-						<!-- /.modal-content -->
-					</div>
-					<!-- /.modal-dialog -->
-				</div>
-				<!-- /.modal -->
-				<?= form_close(); ?>
+				<?= $op['nama_op']." (".$op['singkatan_op'].")"?><br>
+				<b><?= $op['pimpinan_op'] ?></b>
+			</td>
+			<td>
+				<?= $op['alamat_op'] ?><br>
+				<?= $op['web_op'].", ".$op['email_op'].", ".$op['hp_op'] ?>
+			</td>
+			<td>
+				<a href="<?= base_url('admin/organisasi_profesi/detail/'.$op['has_op'])?>" class="btn btn-sm btn-success">Detail</a>
 			</td>
 			
 		</tr>

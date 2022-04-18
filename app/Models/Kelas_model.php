@@ -45,6 +45,18 @@ class Kelas_model extends Model
         $query = $builder->get();
         return $query->getResultArray();
     }
+    // kelas by has
+    public function by_has_kelas($has_kelas)
+    {
+        $builder = $this->db->table('kelas');
+        $builder->select('kelas.*');
+        $builder->where([
+                    'kelas.has_kelas'   => $has_kelas,
+                    'kelas.status'      => '1']);
+        $builder->orderBy('kelas.id_kelas', 'DESC');
+        $query = $builder->get();
+        return $query->getRow();
+    }
     // detail
     public function detail($has_kelas)
     {
@@ -218,8 +230,8 @@ class Kelas_model extends Model
     // tambah
     public function edit($data)
     {
-        $builder = $this->db->table('berita');
-        $builder->where('id_berita', $data['id_berita']);
+        $builder = $this->db->table('kelas');
+        $builder->where('id_kelas', $data['id_kelas']);
         $builder->update($data);
     }
 }
