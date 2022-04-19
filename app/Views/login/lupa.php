@@ -31,16 +31,15 @@ $site        = $konfigurasi->listing();
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body class="hold-transition login-page" style="background-color: #2596be;">
-<div class="login-box" style="min-width: 25% !important; ">
+<div class="login-box" style="min-width: 35% !important; ">
     <!-- /.login-logo -->
     <div class="card">
         <div class="card-body login-card-body" style="border-radius: 10px;">
             <div class="login-logo">
                 <div class="row justify-content-center">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <img src="<?= base_url('assets/upload/image/' . $site['icon']) ?>" class="img img-fluid" width="150px">
                     </div>
-
                 </div>
             </div>
             <hr>
@@ -58,7 +57,7 @@ $site        = $konfigurasi->listing();
                 </div>
             </div>
             <div class="row justify-content-center">
-                <div class="col-4">
+                <div class="col-6 col-md-4">
                     <button type="submit" class="btn btn-primary btn-block">Reset Password</button>
                 </div>
                 <!-- /.col -->

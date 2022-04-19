@@ -81,9 +81,7 @@ class Login extends BaseController
                 echo "<script> alert(\"Data Gagal Diproses\");history.go(-1)</script>";	
             }
         }
-
         //
-
         $data = [
             'title'         => 'Registrasi',
             'description'   => $konfigurasi['namaweb'] . ', ' . $konfigurasi['tentang'],
@@ -101,13 +99,12 @@ class Login extends BaseController
         $m_user         = new User_model();
         $m_registrasi   = new Registrasi_model();
         $konfigurasi    = $m_konfigurasi->listing();
-
         
         // Start validasi
         if ($this->request->getMethod() === 'post' && $this->validate(
             [
                 'nama'      => 'required|min_length[3]',
-                'password_1'=> 'required|min_length[3]|matches[password_2]',
+                // 'password_1'=> 'required|min_length[3]|matches[password_2]',
                 'nik'       => 'required|exact_length[16]|numeric|is_unique[registrasi.nik]',
                 'hp'        => 'required|min_length[10]|is_unique[registrasi.hp]',
                 'nira'      => 'required|min_length[11]|is_unique[registrasi.nira]',
@@ -123,7 +120,7 @@ class Login extends BaseController
             $email          = $this->request->getVar('email');
             $hp             = $this->request->getVar('hp');
             $dpw            = $this->request->getVar('dpw');
-            $password       = $this->request->getVar('password_1');
+            // $password       = $this->request->getVar('password_1');
             $now            = date('Y-m-d H:i:s');
             $data = [
                 'nama'          => $nama,
@@ -132,7 +129,7 @@ class Login extends BaseController
                 'nik'           => $nik,
                 'nira'          => $nira,
                 'email'         => $email,
-                'password'      => sha1($password),
+                // 'password'      => sha1($password),
                 'created_at'    => $now,
                 'has_registrasi'=> md5(uniqid()),
             ];
