@@ -1,4 +1,7 @@
 <div class="card">
+	<div class="card-header">
+		<b>Tingkat Nasional</b>
+	</div>
 	<div class="card-body">
 		<div class="row">
 			<label class="col-sm-2 col-form-label">Nama Profesi</label>
@@ -95,6 +98,11 @@
 										<input type="text" name="hp_op" class="form-control form-control-sm" value="<?= $op->hp_op ?>">
 									</div>
 								</div>
+								<div class="row mt-2">
+									<div class="col-md-12">
+										<input type="checkbox" required> Dengan ini saya setuju menghapus data Organisasi <b><?= $op->nama_op ?></b>
+									</div>
+								</div>
 							</div>
 							<div class="modal-footer justify-content-between">
 								<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
@@ -179,6 +187,7 @@
 										<input type="text" name="hp_op" class="form-control form-control-sm" value="<?= $op->hp_op ?>">
 									</div>
 								</div>
+								
 							</div>
 							<div class="modal-footer justify-content-between">
 								<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
@@ -197,4 +206,39 @@
 	<?php
 	}
 	?>
+</div>
+<div class="card">
+	<div class="card-header">
+		<b>Tingkat Provinsi</b>
+	</div>
+	<div class="card-body table-responsive">
+		<a href="" class="btn btn-sm btn-primary mb-2">Tambah Data</a>
+		<table class="table table-sm table-hover" id="example1">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Provinsi</th>
+					<th>Pimpinan</th>
+					<th>Alamat</th>
+					<th>Aksi</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php
+					$no=1;
+					while($no <=100){
+				?>
+				<tr>
+					<td><?= $no++?></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<?php
+					}
+				?>
+			</tbody>
+		</table>
+	</div>
 </div>

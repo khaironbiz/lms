@@ -104,7 +104,7 @@ class Organisasi_profesi extends BaseController{
         $op             = $m_op->by_has_op($has_op);
         $profesi        = $m_profesi->listing();
         $data = [
-                'title'     => 'Organisasi Profesi '.$op->nama_profesi,
+                'title'     => $op->nama_op,
                 'op'        => $op,
                 'profesi'   => $profesi,
                 'content'   => 'admin/organisasi_profesi/detail',

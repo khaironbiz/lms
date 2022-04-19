@@ -122,3 +122,4 @@ echo csrf_field();
 		<?php $no++; } ?>
 	</tbody>
 </table>
+<a href="<?= base_url()?>/admin/profesi" class="btn btn-sm btn-primary">Master Profesi</a>
