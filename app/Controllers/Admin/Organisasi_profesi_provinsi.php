@@ -2,49 +2,67 @@
 
 namespace App\Controllers\Admin;
 
+use App\Models\Provinsi_model;
 use App\Models\Profesi_model;
 use App\Models\Organisasi_profesi_model;
+use App\Models\Organisasi_profesi_provinsi_model;
 
-class Organisasi_profesi extends BaseController{
+class Organisasi_profesi_provinsi extends BaseController{
     
     public function index(){
         checklogin();
         $id_user        = $this->session->get('id_user');
-        $m_profesi      = new Profesi_model();
         $m_op           = new Organisasi_profesi_model();
+        $m_op_provinsi  = new Organisasi_profesi_provinsi_model();
+        $m_provinsi     = new Provinsi_model();
         $op             = $m_op->listing();
-        $profesi        = $m_profesi->listing();
+        $op_provinsi    = $m_op_provinsi->listing();
+        $provinsi       = $m_provinsi->listing();
         $data = [
-                'title'     => 'Daftar Organisasi Profesi',
-                'op'        => $op,
-                'profesi'   => $profesi,
-                'content'   => 'admin/organisasi_profesi/index',
-            ];
-            echo view('admin/layout/wrapper', $data);
+            'title'         => 'Daftar Organisasi Profesi',
+            'op'            => $op,
+            'op_provinsi'   => $op_provinsi,
+            'provinsi'      => $provinsi, 
+            'content'       => 'admin/organisasi_profesi_provinsi/index',
+        ];
+        echo view('admin/layout/wrapper', $data);
+    }
+    public function provinsi($id_provinsi){
+        checklogin();
+        $id_user        = $this->session->get('id_user');
+        $m_op           = new Organisasi_profesi_model();
+        $m_op_provinsi  = new Organisasi_profesi_provinsi_model();
+        $op             = $m_op->listing();
+        $op_provinsi    = $m_op_provinsi->provinsi($id_provinsi);
+        $data = [
+            'title'         => 'Daftar Organisasi Profesi',
+            'op'            => $op,
+            'op_provinsi'   => $op_provinsi,
+            'content'       => 'admin/organisasi_profesi_provinsi/index',
+        ];
+        echo view('admin/layout/wrapper', $data);
     }
     //create
     public function create(){
         checklogin();
         $id_user        = $this->session->get('id_user');
         $m_op           = new Organisasi_profesi_model();
+        $m_op_provinsi  = new Organisasi_profesi_provinsi_model();
         if ($this->request->getMethod() === 'post' ){
             if (!$this->validate(
                 [
-                    'id_profesi'    => [
-                        'rules'     => 'required|is_unique[organisasi_profesi.id_profesi]',
+                    'id_op'     => [
+                        'rules'     => 'required',
                         'errors'    => [
-                            'required'          => 'Nama Profesi harus dipilih',
-                            'is_unique'         => 'Profesi ini sudah terdaftar di database organisasi profesi, periksa kembali!!!!!!!!!',
+                            'required'      => 'Nama Organisasi Profesi harus dipilih'
                         ]
-                        ],
-                    'nama_op'  => [
-                        'rules'     => 'required|min_length[5]|alpha_space',
+                    ],
+                    'id_provinsi'  => [
+                        'rules'     => 'required',
                         'errors'    => [
-                            'required'      => 'nama organisasi harus diisi',
-                            'min_length'    => 'nama organisasi minimal 5 karakter',
-                            'alpha_space'    => 'nama organisasi hanya berupa huruf'
+                            'required'      => 'nama organisasi harus diisi'
                         ]
-                        ] 
+                    ] 
                 ]
             )
             )
@@ -53,38 +71,38 @@ class Organisasi_profesi extends BaseController{
                 return redirect()->back()->withInput();
             }else
             {
-                $id_profesi     = $this->request->getPost('id_profesi');
-                $nama_op        = $this->request->getPost('nama_op');
-                $singkatan_op   = $this->request->getPost('singkatan_op');
-                $pimpinan_op    = $this->request->getPost('pimpinan_op');
-                $alamat_op      = $this->request->getPost('alamat_op');
-                $web_op         = $this->request->getPost('web_op');
-                $email_op       = $this->request->getPost('email_op');
-                $hp_op          = $this->request->getPost('hp_op');
+                $id_op                  = $this->request->getPost('id_op');
+                $id_provinsi            = $this->request->getPost('id_provinsi');
+                $pimpinan_op_provinsi   = $this->request->getPost('pimpinan_op_provinsi');
+                $alamat_op_provinsi     = $this->request->getPost('alamat_op_provinsi');
+                $web_op_provinsi        = $this->request->getPost('web_op_provinsi');
+                $email_op_provinsi      = $this->request->getPost('email_op_provinsi');
+                $hp_op_provinsi         = $this->request->getPost('hp_op_provinsi');
+                $telp_op_provinsi       = $this->request->getPost('telp_op_provinsi');
                 $data           = [                
-                    'id_profesi'    => $id_profesi,
-                    'nama_op'       => $nama_op,
-                    'singkatan_op'  => $singkatan_op,
-                    'pimpinan_op'   => $pimpinan_op,
-                    'alamat_op'     => $alamat_op,
-                    'web_op'        => $web_op,
-                    'email_op'      => $email_op,
-                    'hp_op'         => $hp_op,
-                    'created_by'    => $this->session->get('id_user'),
-                    'created_at'    => date('Y-m-d H:i:s'),
-                    'has_op'       => md5(uniqid())
+                    'id_op'                 => $id_op,
+                    'id_provinsi'           => $id_provinsi,
+                    'pimpinan_op_provinsi'  => $pimpinan_op_provinsi,
+                    'alamat_op_provinsi'    => $alamat_op_provinsi,
+                    'web_op_provinsi'       => $web_op_provinsi,
+                    'email_op_provinsi'     => $email_op_provinsi,
+                    'hp_op_provinsi'        => $hp_op_provinsi,
+                    'telp_op_provinsi'      => $telp_op_provinsi,
+                    'created_by'            => $this->session->get('id_user'),
+                    'created_at'            => date('Y-m-d H:i:s'),
+                    'has_op_provinsi'       => md5(uniqid())
                 ];
                 var_dump($data);
                 // masuk database
-                $tambah_op = $m_op->tambah($data);
-                if($tambah_op = true)
+                $tambah_op_provinsi = $m_op_provinsi->tambah($data);
+                if($tambah_op_provinsi = true)
                 {
                     $this->session->setFlashdata('sukses', 'Data telah ditambah');
-                    return redirect()->to(base_url('admin/organisasi_profesi'));
+                    return redirect()->to(base_url('admin/organisasi_profesi_provinsi'));
                 }else
                 {
                     $this->session->setFlashdata('warning', 'Data gagal ditambah');
-                    return redirect()->to(base_url('admin/organisasi_profesi'));
+                    return redirect()->to(base_url('admin/organisasi_profesi_provinsi'));
                 }
             }
             
@@ -94,18 +112,19 @@ class Organisasi_profesi extends BaseController{
         }
     }
     //detail
-    public function detail($has_op){
+    public function detail($has_op_provinsi){
         checklogin();
         $id_user        = $this->session->get('id_user');
         $m_profesi      = new Profesi_model();
         $m_op           = new Organisasi_profesi_model();
-        $op             = $m_op->by_has_op($has_op);
+        $m_opp          = new Organisasi_profesi_provinsi_model();
+        $opp            = $m_opp->detail($has_op_provinsi);
         $profesi        = $m_profesi->listing();
         $data = [
-                'title'     => $op->nama_op,
-                'op'        => $op,
+                'title'     => $opp->nama_op,
+                'opp'       => $opp,
                 'profesi'   => $profesi,
-                'content'   => 'admin/organisasi_profesi/detail',
+                'content'   => 'admin/organisasi_profesi_provinsi/detail',
             ];
             echo view('admin/layout/wrapper', $data);
     }

@@ -26,7 +26,7 @@ include 'tambah.php';
 						<button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal-default<?= $profesi['has_profesi'] ?>">
 								<i class="fa fa-edit"></i> Edit
 						</button>
-						<?= form_open(base_url('admin/profesi'));
+						<?= form_open(base_url('admin/profesi/update/'.$profesi['has_profesi']));
 						echo csrf_field();
 						?>
 						<div class="modal fade" id="modal-default<?= $profesi['has_profesi'] ?>">
@@ -43,8 +43,7 @@ include 'tambah.php';
 											<label class="col-md-3">Nama Profesi</label>
 											<div class="col-md-9 row">
 												<input type="text" name="nama_profesi" class="form-control form-control-sm" value="<?= $profesi['nama_profesi'] ?>" required>
-												<input type="text" name="has_profesi" class="form-control form-control-sm" value="<?= $profesi['has_profesi'] ?>" required>
-												<input type="hidden" name="aksi" class="form-control form-control-sm" value="edit_profesi" required>
+												
 											</div>
 										</div>
 										

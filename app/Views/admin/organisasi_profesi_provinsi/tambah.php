@@ -3,7 +3,7 @@
 		<i class="fa fa-plus"></i> Tambah
 	</button>
 </p>
-<?= form_open(base_url('admin/profesi/create'));
+<?= form_open(base_url('admin/profesi'));
 echo csrf_field();
 ?>
 <div class="modal fade" id="modal-default">
@@ -20,7 +20,7 @@ echo csrf_field();
 					<label class="col-md-3">Nama Profesi</label>
 					<div class="col-md-9 row">
 						<input type="text" name="nama_profesi" class="form-control form-control-sm" placeholder="nama profesi" value="<?= set_value('nama_profesi') ?>" required>
-						
+						<input type="hidden" name="aksi" class="form-control form-control-sm" value="add_profesi" required>
 					</div>
 				</div>
 				
