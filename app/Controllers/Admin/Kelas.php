@@ -33,18 +33,16 @@ class Kelas extends BaseController
         echo view('admin/layout/wrapper', $data);
     }
     // kategori
-    public function kategori($id_kategori)
+    public function detail($has_kelas)
     {
         checklogin();
-        $m_berita   = new Berita_model();
-        $m_kategori = new Kategori_model();
-        $kategori   = $m_kategori->detail($id_kategori);
-        $berita     = $m_berita->kategori_all($id_kategori);
-        $total      = $m_berita->total_kategori($id_kategori);
+        $m_kelas    = new Kelas_model();
+        $kelas      = $m_kelas->by_has_kelas($has_kelas);
 
-        $data = ['title' => $kategori['nama_kategori'] . ' (' . $total . ')',
-            'berita'     => $berita,
-            'content'    => 'admin/berita/index',
+        $data = [
+            'title'     => $kelas->nama_kelas,
+            'kelas'     => $kelas,
+            'content'   => 'admin/kelas/detail',
         ];
         echo view('admin/layout/wrapper', $data);
     }

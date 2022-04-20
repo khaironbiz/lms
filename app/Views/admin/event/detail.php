@@ -130,6 +130,7 @@ echo view($sub_menu)
                 <td>
                     <a href="<?= base_url()?>/admin/kelas/edit/<?= $k['has_kelas']?>" class="btn btn-sm btn-success">Edit</a>
                     <a href="#" class="btn btn-sm btn-danger">Delete</a>
+                    <a href="<?= base_url()?>/admin/kelas/detail/<?= $k['has_kelas']?>" class="btn btn-sm btn-primary">Detail</a>
                     
                 </td>
             </tr>

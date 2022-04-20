@@ -11,7 +11,13 @@ class Dasbor_model extends Model
     {
         $builder = $this->db->table('berita');
         $query   = $builder->get();
-
+        return $query->getNumRows();
+    }
+    public function event()
+    {
+        $builder = $this->db->table('berita');
+        $builder->where(['jenis_berita'  => 'Event' ]);
+        $query   = $builder->get();
         return $query->getNumRows();
     }
 
@@ -28,6 +34,30 @@ class Dasbor_model extends Model
     public function client()
     {
         $builder = $this->db->table('client');
+        $query   = $builder->get();
+
+        return $query->getNumRows();
+    }
+    // url
+    public function url()
+    {
+        $builder = $this->db->table('url');
+        $query   = $builder->get();
+
+        return $query->getNumRows();
+    }
+    // organisasi
+    public function op()
+    {
+        $builder = $this->db->table('organisasi_profesi');
+        $query   = $builder->get();
+
+        return $query->getNumRows();
+    }
+    // statistik
+    public function hits()
+    {
+        $builder = $this->db->table('user_logs');
         $query   = $builder->get();
 
         return $query->getNumRows();

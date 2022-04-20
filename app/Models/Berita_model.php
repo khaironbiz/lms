@@ -44,8 +44,6 @@ class Berita_model extends Model
         $builder = $this->db->table('berita');
         $builder->where(['jenis_berita'  => 'Event' ]);
         $query   = $builder->get();
-
-
         return $query->getNumRows();
     }
     // home
