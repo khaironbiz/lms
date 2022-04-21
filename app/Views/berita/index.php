@@ -26,7 +26,7 @@
                 <?= $berita['ringkasan'] ?>
               </p>
               <p>
-                <a href="<?= base_url('berita/read/' . $berita['slug_berita']) ?>" class="btn btn-success">
+                <a href="<?= base_url('berita/read/' . $berita['slug_berita']) ?>" class="btn btn-default">
                   <i class="fa fa-chevron-right"></i>  Baca...
                 </a>
               </p>

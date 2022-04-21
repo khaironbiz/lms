@@ -14,7 +14,7 @@ $m_dasbor = new Dasbor_model();
 
  <!-- Info boxes -->
 <div class="row">
-  <div class="col-6 col-md-2">
+  <div class="col-6 col-md-4 col-xl-3 col-xxl-2">
     <div class="info-box">
       <span class="info-box-icon bg-info elevation-1"><a href="<?= base_url('admin/berita')?>"><i class="fas fa-newspaper"></i></a></span>
       <div class="info-box-content">
@@ -30,7 +30,7 @@ $m_dasbor = new Dasbor_model();
   </div>
   
   <!-- /.col -->
-  <div class="col-6 col-md-2">
+  <div class="col-6 col-md-4 col-xl-3 col-xxl-2">
     <div class="info-box mb-3">
       <span class="info-box-icon bg-success elevation-1"><a href="<?= base_url('admin/event')?>"><i class="fas fa-book"></i></a></span>
       <div class="info-box-content">
@@ -43,7 +43,7 @@ $m_dasbor = new Dasbor_model();
   </div>
   <!-- /.col -->
   <!-- /.col -->
-  <div class="col-6 col-md-2">
+  <div class="col-6 col-md-4 col-xl-3 col-xxl-2">
     <div class="info-box mb-3">
       <span class="info-box-icon bg-success elevation-1"><a href="<?= base_url('admin/event')?>"><i class="fas fa-laptop-house"></i></a></span>
       <div class="info-box-content">
@@ -56,7 +56,7 @@ $m_dasbor = new Dasbor_model();
   </div>
   <!-- /.col -->
   <!-- /.col -->
-  <div class="col-6 col-md-2">
+  <div class="col-6 col-md-4 col-xl-3 col-xxl-2">
     <div class="info-box mb-3">
       <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-address-card"></i></span>
       <div class="info-box-content">
@@ -72,7 +72,7 @@ $m_dasbor = new Dasbor_model();
   <!-- fix for small devices only -->
   <div class="clearfix hidden-md-up"></div>
 
-  <div class="col-6 col-md-2">
+  <div class="col-6 col-md-4 col-xl-3 col-xxl-2">
     <div class="info-box mb-3">
       <span class="info-box-icon bg-success elevation-1"><a href="<?= base_url('admin/user')?>"><i class="fas fa-users"></i></a></span>
 
@@ -86,7 +86,7 @@ $m_dasbor = new Dasbor_model();
   </div>
   
   <!-- /.col -->
-  <div class="col-6 col-md-2">
+  <div class="col-6 col-md-4 col-xl-3 col-xxl-2">
     <div class="info-box mb-3">
       <span class="info-box-icon bg-warning elevation-1"><a href="<?= base_url('admin/url')?>"><i class="fas fa-globe"></i></a></span>
       <div class="info-box-content">
@@ -99,7 +99,7 @@ $m_dasbor = new Dasbor_model();
   </div>
   <!-- /.col -->
   <!-- /.col -->
-  <div class="col-6 col-md-2">
+  <div class="col-6 col-md-4 col-xl-3 col-xxl-2">
     <div class="info-box mb-3">
       <span class="info-box-icon bg-info elevation-1"><a href="<?= base_url('admin/url')?>"><i class="fas fa-graduation-cap"></i></a></span>
       <div class="info-box-content">
@@ -113,7 +113,7 @@ $m_dasbor = new Dasbor_model();
   <!-- /.col -->
 
 <!-- /.col -->
-  <div class="col-6 col-md-2">
+  <div class="col-6 col-md-4 col-xl-3 col-xxl-2">
     <div class="info-box mb-3">
       <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-download"></i></span>
 
@@ -126,7 +126,7 @@ $m_dasbor = new Dasbor_model();
     <!-- /.info-box -->
   </div>
   <!-- /.col -->
-  <div class="col-6 col-md-2">
+  <div class="col-6 col-md-4 col-xl-3 col-xxl-2">
     <div class="info-box">
       <span class="info-box-icon bg-info elevation-1"><i class="fas fa-images"></i></span>
 
@@ -142,7 +142,7 @@ $m_dasbor = new Dasbor_model();
     <!-- /.info-box -->
   </div>
   <!-- /.col -->
-  <div class="col-6 col-md-2">
+  <div class="col-6 col-md-4 col-xl-3 col-xxl-2">
     <div class="info-box mb-3">
       <span class="info-box-icon bg-danger elevation-1"><i class="fab fa-youtube"></i></span>
 
@@ -159,7 +159,7 @@ $m_dasbor = new Dasbor_model();
   <!-- fix for small devices only -->
   <div class="clearfix hidden-md-up"></div>
 
-  <div class="col-6 col-md-2">
+  <div class="col-6 col-md-4 col-xl-3 col-xxl-2">
     <div class="info-box mb-3">
       <span class="info-box-icon bg-success elevation-1"><i class="fas fa-tags"></i></span>
 
@@ -172,7 +172,7 @@ $m_dasbor = new Dasbor_model();
     <!-- /.info-box -->
   </div>
   <!-- /.col -->
-  <div class="col-6 col-md-2">
+  <div class="col-6 col-md-4 col-xl-3 col-xxl-2">
     <div class="info-box mb-3">
       <span class="info-box-icon bg-warning elevation-1"><a href="<?= base_url('admin/url')?>"><i class="fab fa-whmcs"></i></i></a></span>
       <div class="info-box-content">
@@ -184,7 +184,7 @@ $m_dasbor = new Dasbor_model();
     <!-- /.info-box -->
   </div>
   <!-- /.col -->
-  <div class="col-6 col-md-2">
+  <div class="col-6 col-md-4 col-xl-3 col-xxl-2">
     <div class="info-box mb-3">
       <span class="info-box-icon bg-warning elevation-1"><a href="<?= base_url('admin/url')?>"><i class="fab fa-whmcs"></i></i></a></span>
       <div class="info-box-content">
