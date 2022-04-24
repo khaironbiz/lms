@@ -332,4 +332,15 @@ echo view($sub_menu)
             ?>
         </table>
     </div>
+    <div class="card-footer row">
+        <div class="col-6">
+            <a href="<?= base_url('admin/event/delete/' . $berita['id_berita']) ?>" class="btn btn-danger btn-sm mt-1" onclick="confirmation(event)"><i class="fa fa-trash"></i></a>
+		
+        </div>
+        <div class="col-6 text-right">
+            <a href="<?= base_url('admin/event/edit/' . $berita['id_berita']) ?>" class="btn btn-success btn-sm mt-1"><i class="fa fa-edit"></i></a>
+        
+        </div>
+        	
+    </div>
 </div>

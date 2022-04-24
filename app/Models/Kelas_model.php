@@ -231,7 +231,7 @@ class Kelas_model extends Model
     public function edit($data)
     {
         $builder = $this->db->table('kelas');
-        $builder->where('id_kelas', $data['id_kelas']);
+        $builder->where('has_kelas', $data['has_kelas']);
         $builder->update($data);
     }
 }

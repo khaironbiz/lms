@@ -44,6 +44,7 @@ class User_model extends Model
             ->where(['email' => $email, ])
             ->first();
     }
+    
     // count email
     public function count_email($email)
     {
@@ -72,6 +73,14 @@ class User_model extends Model
         $builder->orderBy('users.id_user', 'DESC');
         $query = $builder->get();
         return $query->getRowArray();
+    }
+    // detail
+    public function by_id($id_user)
+    {
+        $builder = $this->db->table('users');
+        $builder->where('id_user', $id_user);
+        $query = $builder->get();
+        return $query->getRow();
     }
     // detail
     public function detail($id_user)

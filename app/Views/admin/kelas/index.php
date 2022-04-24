@@ -3,14 +3,15 @@ use App\Models\Kelas_model;
 echo view($sub_menu);
 ?>
 <div class="table-responsive">
-	<table class="table table-bordered" id="example1">
+	<table class="table table-sm table-bordered" id="example1">
 		<thead>
 			<tr>
 				<th>No</th>
 				<th>Kelas</th>
-				<th>Materi</th>
-				<th>SKP</th>
-				<th>Harga</th>
+				<th>Topik</th>
+				<th>Akreditasi</th>
+				<th>Harga Dasar</th>
+				<th>Harga Jual</th>
 				<th>Aksi</th>
 			</tr>
 		</thead>
@@ -29,7 +30,8 @@ echo view($sub_menu);
 					</small>
 				</td>
 				<td></td>
-				<td><?= $kelas['harga_jual']?></td>
+				<td></td>
+				<td class="text-right"><?= number_format($kelas['harga_jual'])?></td>
 				<td>
 					<?php 
 					include 'tambah.php';  

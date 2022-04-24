@@ -25,7 +25,7 @@ class Event extends BaseController
         $kategori_kelas     = $m_kategori_kelas->listing();
         $total              = $m_berita->total_event();
         $data = [
-            'title'             => 'Events (' . $total . ')',
+            'title'             => 'Events',
             'berita'            => $berita,
             'pic'               => $pic,
             'kategori_kelas'    => $kategori_kelas,
@@ -202,7 +202,7 @@ class Event extends BaseController
         $kelas              = $m_kelas->event($id_berita);
         $user               = $m_user->listing();
         $data               = [
-                            'title'     => $berita['judul_berita'],
+                            'title'             => "Detail Event",
                             'kategori_kelas'    => $kategori,
                             'berita'    => $berita,
                             'user'      => $user,
@@ -221,7 +221,7 @@ class Event extends BaseController
         $kategori   = $m_kategori->listing();
         $berita     = $m_berita->detail($id_berita);
         $data       = [
-            'title'     => 'Edit Berita: ' . $berita['judul_berita'],
+            'title'     => 'Edit',
             'kategori'  => $kategori,
             'berita'    => $berita,
             'content'   => 'admin/event/edit',

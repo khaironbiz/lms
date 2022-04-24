@@ -1,4 +1,4 @@
-<form action="<?= base_url('admin/kelas/update/' . $kelas['id_kelas']) ?>" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+<form action="<?= base_url('admin/kelas/update/' . $kelas['has_kelas']) ?>" method="post" accept-charset="utf-8" enctype="multipart/form-data">
 <?= csrf_field();
 ?>
 
@@ -73,9 +73,33 @@
 			<div class="col-md-4">
 				<input type="number" name="kuota" class="form-control form-control-sm" placeholder="Kuota" value="<?= $kelas['kuota'] ?>" required>
 			</div>
-			<label class="col-md-2 mt-1">Poster</label>
+			<label class="col-md-2 mt-1">Metode</label>
 			<div class="col-md-4">
-				<input type="file" name="kuota" class="form-control form-control-sm" placeholder="poster" required>
+				<select name="metode_pembelajaran" class="form-control form-control-sm" required>
+					<option value=""></option>
+					<option value="0">Daring</option>
+					<option value="1">Luring</option>					
+					<option value="2">Gabungan Daring dan Luring</option>
+				</select>
+			</div>
+		</div>
+		<div class="row">
+			<label class="col-md-2 mt-1">PIC</label>
+			<div class="col-md-4">
+				<select name="pic" class="form-control form-control-sm" required>
+					<option value="<?= $kelas['pic_kelas']?>"><?= nama_user($kelas['pic_kelas'])?></option>
+					<?php
+						foreach($user as $u):
+					?>
+					<option><?= $u['nama']?></option>
+					<?php
+					endforeach
+					?>
+				</select>
+			</div>
+			<label class="col-md-2 mt-1">poster</label>
+			<div class="col-md-4">
+				<input type="file" name="gambar" class="form-control form-control-sm" placeholder="poster">
 			</div>
 		</div>
 		<div class="modal-footer justify-content-between">

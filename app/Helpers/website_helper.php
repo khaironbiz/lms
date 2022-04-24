@@ -11,7 +11,13 @@ function namaweb()
 
     return $konfigurasi['namaweb'];
 }
+function nama_user($id_user)
+{
+    $m_user = new User_model();
+    $user   = $m_user->by_id($id_user);
 
+    return $user->nama;
+}
 // title
 function title()
 {

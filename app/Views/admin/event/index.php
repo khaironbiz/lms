@@ -16,7 +16,6 @@ echo view($sub_menu)
 			<th>Gambar</th>
 			<th class="w-50">Judul</th>
 			<th>Kelas</th>
-			<th>Aksi</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -46,6 +45,8 @@ echo view($sub_menu)
 					<br><i class="fa fa-calendar-check"></i> Publish: <?= tanggal_bulan_menit($berita['tanggal_publish']) ?>
 					<br><i class="fa fa-calendar"></i> Updated: <?= tanggal_bulan_menit($berita['tanggal']) ?>
 					<br><i class="fa fa-user"></i> <a href="<?= base_url('admin/berita/author/' . $berita['id_user']) ?>"><?= $berita['nama'] ?></a>
+					<br><a href="<?= base_url('admin/event/detail/' . $berita['has_berita']) ?>" class="btn btn-success btn-sm mt-1"><i class="fa fa-eye"></i></a>
+					
 				</small>
 			</td>
 			<td>
@@ -62,11 +63,7 @@ echo view($sub_menu)
 					
 				</small>
 			</td>
-			<td>
-				<a href="<?= base_url('admin/event/detail/' . $berita['has_berita']) ?>" class="btn btn-success btn-sm"><i class="fa fa-eye"></i></a>
-				<a href="<?= base_url('admin/event/edit/' . $berita['id_berita']) ?>" class="btn btn-success btn-sm"><i class="fa fa-edit"></i></a>
-				<a href="<?= base_url('admin/event/delete/' . $berita['id_berita']) ?>" class="btn btn-dark btn-sm" onclick="confirmation(event)"><i class="fa fa-trash"></i></a>
-			</td>
+			
 		</tr>
 		<?php $no++; } ?>
 	</tbody>
