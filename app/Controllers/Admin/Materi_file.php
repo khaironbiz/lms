@@ -5,41 +5,59 @@ namespace App\Controllers\Admin;
 use App\Models\Berita_model;
 use App\Models\Kategori_model;
 use App\Models\Materi_model;
+use App\Models\Materi_file_model;
 use App\Models\User_model;
 use App\Models\Kelas_model;
 
-class Materi extends BaseController
+class Materi_file extends BaseController
 {
     // index
     public function index()
     {
         checklogin();
-        $m_berita           = new Berita_model();
-        $m_kategori         = new Kategori_model();
-        $m_kelas            = new Kelas_model();
-        $m_kategori_kelas   = new Kategori_kelas_model();
-        $kategori_kelas     = $m_kategori_kelas->listing();
-        $berita             = $m_berita->event();
-        $kelas              = $m_kelas->listing();
-        $total              = $m_berita->total_event();
+        $m_materi_file      = new Materi_file_model();
+        $materi_file        = $m_materi_file->listing();
         $data = [
-            'title'         => 'Kelas (' . $total . ')',
-            'berita'        => $berita,
-            'kelas'         => $kelas,
-            'kategori_kelas'=> $kategori_kelas,
-            'sub_menu'      => 'admin/sub_menu/berita',
-            'content'       => 'admin/kelas/index',
+            'title'         => 'Daftar Kumpulan Materi Pembelajaran',
+            'materi_file'   => $materi_file,
+            'content'       => 'admin/materi_file/index',
+        ];
+        echo view('admin/layout/wrapper', $data);
+    }
+    public function file($has_materi)
+    {
+        checklogin();
+        $m_materi           = new Materi_model();
+        $materi             = $m_materi->has_materi($has_materi);
+        $m_materi_file      = new Materi_file_model();
+        $materi_file        = $m_materi_file->file();
+        $data = [
+            'title'         => 'Tambah Bahan Ajar Materi : '.$materi['materi'],
+            'materi_file'   => $materi_file,
+            'materi'        => $materi, 
+            'content'       => 'admin/materi_file/add-file',
+        ];
+        echo view('admin/layout/wrapper', $data);
+    }
+    public function video()
+    {
+        checklogin();
+        $m_materi_file      = new Materi_file_model();
+        $materi_file        = $m_materi_file->video();
+        $data = [
+            'title'         => 'Daftar Kumpulan Materi Pembelajaran',
+            'materi_file'   => $materi_file,
+            'content'       => 'admin/materi_file/index',
         ];
         echo view('admin/layout/wrapper', $data);
     }
     // kategori
-    public function detail($has_materi)
+    public function detail($has_materi_file)
     {
         checklogin();
         $m_materi   = new Materi_model();
         $m_kategori = new Kategori_model();
         $materi     = $m_materi->has_materi($has_materi);
-
         $data = [
             'title'     => "Detail Materi ".$materi['materi'],
             'materi'    => $materi,
@@ -47,6 +65,7 @@ class Materi extends BaseController
         ];
         echo view('admin/layout/wrapper', $data);
     }
+    
     // save add
     public function add()
     {

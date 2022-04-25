@@ -50,6 +50,7 @@ class Kelas_model extends Model
     {
         $builder = $this->db->table('kelas');
         $builder->select('kelas.*');
+        
         $builder->where([
                     'kelas.has_kelas'   => $has_kelas,
                     'kelas.status'      => '1']);

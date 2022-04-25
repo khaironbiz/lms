@@ -209,7 +209,7 @@ $(document).ready(function(){
       "buttons": ["csv", "excel", "pdf"],
       "responsive": true,
       "paging": true,
-      "lengthMenu": [[100, 250, 500, -1], [100, 250, 500, "All"]],
+      "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
       "lengthChange": true,
       "autoWidth": false
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');

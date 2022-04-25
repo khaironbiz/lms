@@ -7,6 +7,8 @@ use App\Models\Kategori_model;
 use App\Models\Kategori_kelas_model;
 use App\Models\User_model;
 use App\Models\Kelas_model;
+use App\Models\Materi_model;
+use App\Models\Materi_file_model;
 
 class Kelas extends BaseController
 {
@@ -38,10 +40,16 @@ class Kelas extends BaseController
         checklogin();
         $m_kelas    = new Kelas_model();
         $kelas      = $m_kelas->by_has_kelas($has_kelas);
-
+        $id_kelas   = $kelas->id_kelas;
+        $m_user     = new User_model();
+        $user       = $m_user->listing();
+        $m_materi   = new Materi_model();
+        $materi     = $m_materi->kelas($id_kelas);
         $data = [
             'title'     => $kelas->nama_kelas,
             'kelas'     => $kelas,
+            'user'      => $user,
+            'materi'    => $materi,
             'content'   => 'admin/kelas/detail',
         ];
         echo view('admin/layout/wrapper', $data);
