@@ -7,20 +7,93 @@ echo view($sub_menu)
 
 <div class="card ">
     <div class="card-header">
-        <b><?= $berita['judul_berita']?></b>
+        <div class="row">
+            <div class="col-md-9">
+                <b><?= $berita['judul_berita']?></b>
+            </div>
+            <div class="col-md-3 text-right">
+                <a href="<?= base_url('admin/event/delete/' . $berita['id_berita']) ?>" class="btn btn-danger btn-sm mt-1" onclick="confirmation(event)"><i class="fa fa-trash"></i></a>
+                <a href="<?= base_url('admin/event/edit/' . $berita['id_berita']) ?>" class="btn btn-success btn-sm mt-1"><i class="fa fa-edit"></i></a>
+            </div>
+        </div>
     </div>
     <div class="card-body row">
         
         
         <div class="col-xl-8">
-            
-            <?= $berita['isi']?>
+            <div class="row">
+                <?= $berita['isi']?>
+            </div>
+            <div class="row">
+                <?php
+                    foreach($kelas as $k):
+                ?>
+                <!-- <style>
+                    .card-kecil {
+                    background-image: url("http://localhost/lms/assets/upload/image/<?= $berita['gambar']?>"); 
+                    background-size: 100%;
+                    
+                    }  
+                </style> -->
+                <div class="col-md-6">
+                    
+                    <div class="card card-kecil bg-light">
+                        <div class="card-header">
+                            <b><?= $k['nama_kelas']?></b>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <label class="col-sm-4">Tanggal Kegiatan</label>
+                                <div class="col-sm-8">
+                                    <?= date('d-m-Y',strtotime($k['tanggal_mulai']))?>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-4">Harga Dasar</label>
+                                <div class="col-sm-8">
+                                    <?= number_format($k['harga_dasar'])?>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-4">Harga Jual</label>
+                                <div class="col-sm-8">
+                                    <?= number_format($k['harga_jual'])?>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-4">Kuota</label>
+                                <div class="col-sm-8">
+                                    <?= number_format($k['kuota'])?>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-4">Pendaftar</label>
+                                <div class="col-sm-8">
+                                    
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-4">Sisa</label>
+                                <div class="col-sm-8">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="<?= base_url()?>/admin/kelas/detail/<?= $k['has_kelas']?>" class="btn btn-sm btn-primary">Detail</a>
+                        </div>
+                    </div>
+                </div>
+                <?php
+                    endforeach
+                ?>
+            </div>
         </div>
 
         <div class="col-xl-4 table-responsive">
             <img src="http://localhost/lms/assets/upload/image/<?= $berita['gambar']?>" class="img-fluid">
             <hr>
-            
+            <b>Kelas</b><br>
             <button type="button" class="btn btn-success btn-sm mb-2" data-toggle="modal" data-target="#modal-default<?= $berita['id_berita'] ?>">
 			<i class="fa fa-plus"></i> Add Kelas
             </button>
@@ -109,36 +182,7 @@ echo view($sub_menu)
                 </div>
                 <!-- /.modal -->
             <?= form_close(); ?>
-            <b>Kelas</b>
-            <table class="table table-sm table-striped">
-                <tr>
-                    <th>No</th>
-                    <th>Nama Kelas</th>
-                    <th>Harga Jual</th>
-                    <th>Aksi</th>
-                </tr>
-                <?php
-                $no = 1;
-                foreach($kelas as $k){
-                ?>
-                <tr>
-                    <td><?= $no++?></td>
-                    <td><?= $k['nama_kelas'];?><br><?= $k['tanggal_mulai'];?></td>
-                    <td>
-                        H. Dasar : <?= number_format($k['harga_dasar'],0,",",".");?><br>
-                        H. Jual : <?= number_format($k['harga_jual'],0,",",".");?>
-                    </td>
-                    
-                    <td>
-                        
-                        <a href="<?= base_url()?>/admin/kelas/detail/<?= $k['has_kelas']?>" class="btn btn-sm btn-primary">Detail</a>
-                        
-                    </td>
-                </tr>
-                <?php
-                }
-                ?>
-            </table>
+            
         </div>
     
     </div>
@@ -152,7 +196,6 @@ echo view($sub_menu)
                 <th>No</th>
                 <th>Jam</th>
                 <th>Tema</th>
-                <th>Aksi</th>
             </tr>
             <?php
             $nomor=1;
@@ -163,9 +206,6 @@ echo view($sub_menu)
             <tr>
                 <td><?= $nomor++?></td>
                 <td colspan="2" class="text-primary"><b><?= $kelas['nama_kelas']?></b></td>
-                <td>
-                    
-                </td>
             </tr>
             <?php
             foreach($materi as $m){
@@ -179,77 +219,6 @@ echo view($sub_menu)
                     <?= $m['materi']?><br>
                     Oleh : <b><?= $m['nama']?></b><br>
                 </td>
-                <td>
-                    <button type="button" class="btn btn-sm btn-success mt-2" data-toggle="modal" data-target="#modal-<?= $m['has_materi']?>">
-                        <i class="fa fa-edit"></i>
-                    </button>
-                    <?= form_open(base_url('admin/materi/update/'."/".$m['has_materi']));
-                    echo csrf_field();
-                    ?>
-                    <div class="modal fade" id="modal-<?= $m['has_materi']?>">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Update Materi</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-group row">
-                                        <label class="col-3">Materi</label>
-                                        <div class="col-9 row">
-                                            <input type="text" class="form-control form-control-sm" value="<?= $m['materi']?>" required name="materi">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-3">Pemateri</label>
-                                        <div class="col-9 row">
-                                            <select class="form-control form-control-sm" name="pemateri">
-                                                <option value="<?= $m['pemateri']?>"><?= $m['nama']?></option>
-                                                <?php
-                                                foreach($user as $u){
-                                                ?>
-                                                <option value="<?= $u['id_user']?>"><?= $u['nama']?></option>
-                                                <?php
-                                                }
-                                                ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-md-3">Waktu</label>
-                                        <div class="col-md-9 row">
-                                            <input type="text" class="form-control form-control-sm tanggal col-sm-3" value="<?= date('d-m-Y', $mulai)?>" name="tanggal_mulai">
-                                            <input type="text" class="form-control form-control-sm jam col-sm-2" value="<?= date('H:i', $mulai)?>" name="jam_mulai">
-                                            <label class="col-sm-2">SD</label>
-                                            <input type="text" class="form-control form-control-sm tanggal col-sm-3" value="<?= date('d-m-Y', $selesai)?>" name="tanggal_selesai">
-                                            <input type="text" class="form-control form-control-sm jam col-sm-2" value="<?= date('H:i', $selesai)?>" name="jam_selesai">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-md-3">Blokir</label>
-                                        <div class="col-md-9 row">
-                                            <select class="form-control form-control-sm" name="blokir">
-                                                <option value="0">Tidak</option>
-                                                <option value="1">Ya</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer justify-content-between">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-                                    <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Simpan</button>
-                                </div>
-                            </div>
-                            <!-- /.modal-content -->
-                        </div>
-                        <!-- /.modal-dialog -->
-                    </div>
-                    <!-- /.modal -->
-                    <?= form_close(); ?>
-                    
-                </td>
             </tr>
             <?php
             }
@@ -259,15 +228,5 @@ echo view($sub_menu)
             ?>
         </table>
     </div>
-    <div class="card-footer row">
-        <div class="col-6">
-            <a href="<?= base_url('admin/event/delete/' . $berita['id_berita']) ?>" class="btn btn-danger btn-sm mt-1" onclick="confirmation(event)"><i class="fa fa-trash"></i></a>
-		
-        </div>
-        <div class="col-6 text-right">
-            <a href="<?= base_url('admin/event/edit/' . $berita['id_berita']) ?>" class="btn btn-success btn-sm mt-1"><i class="fa fa-edit"></i></a>
-        
-        </div>
-        	
-    </div>
+    
 </div>

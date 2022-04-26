@@ -39,10 +39,13 @@ class Materi extends BaseController
         $m_materi   = new Materi_model();
         $m_kategori = new Kategori_model();
         $materi     = $m_materi->has_materi($has_materi);
+        $m_user     = new User_model();
+        $user       = $m_user->listing();
 
         $data = [
             'title'     => "Detail Materi ".$materi['materi'],
             'materi'    => $materi,
+            'user'      => $user,
             'content'   => 'admin/materi/detail',
         ];
         echo view('admin/layout/wrapper', $data);
@@ -80,7 +83,7 @@ class Materi extends BaseController
                 'has_materi'    => md5(uniqid()),
             ];
             $m_materi->save($data);
-            return redirect()->to(base_url('admin/event/detail/'."/".$has_event))->with('sukses', 'Data Berhasil di Simpan');;
+            return redirect()->to(base_url('admin/kelas/detail/'."/".$has_kelas))->with('sukses', 'Data Berhasil di Simpan');;
             // echo $waktu_mulai;
         }
     }
@@ -91,7 +94,7 @@ class Materi extends BaseController
         $m_kelas    = new kelas_model();
         $m_materi   = new Materi_model();
         $m_berita   = new Berita_model();
-        $kategori   = $m_kategori->listing();
+        $materi   = $m_kategori->listing();
         // Start validasi
         if ($this->request->getMethod() === 'post' && $this->validate(
             [
@@ -115,7 +118,7 @@ class Materi extends BaseController
                 'blokir'        => $this->request->getVar('blokir'),
             ];
             $m_materi->update($id_materi, $data);
-            return redirect()->to(base_url('admin/event/detail/'."/".$berita['has_berita']))->with('sukses', 'Data Berhasil di Simpan');;
+            return redirect()->to(base_url('admin/materi/detail/'."/".$has_materi))->with('sukses', 'Data Berhasil di Simpan');;
         //    var_dump($materi) ;
         }
     }

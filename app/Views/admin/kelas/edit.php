@@ -3,17 +3,16 @@
 ?>
 
 <div class="row">
-	<?php
-	if($kelas['poster'] !=''):
-	?>
-	<img src="<?= base_url()?>/assets/upload/image/<?= $kelas['poster']?>" class="img-fluid" alt="...">
-	<?php
-	endif
-	?>
-</div>
-
-<div class="row mt-3">
-	<div class="col-md-12">
+	<div class="col-md-4">
+		<?php
+		if($kelas['poster'] !=''):
+		?>
+		<img src="<?= base_url()?>/assets/upload/image/<?= $kelas['poster']?>" class="img-fluid" alt="...">
+		<?php
+		endif
+		?>
+	</div>
+	<div class="col-md-8">
 		<div class="row">
 			<label class="col-md-2 mt-1">Event</label>
 			<div class="col-md-10">
@@ -108,6 +107,5 @@
 	</div>
 	
 </div>
-	
 
 <?= form_close(); ?>

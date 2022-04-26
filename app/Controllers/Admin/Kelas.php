@@ -8,6 +8,7 @@ use App\Models\Kategori_kelas_model;
 use App\Models\User_model;
 use App\Models\Kelas_model;
 use App\Models\Materi_model;
+use App\Models\Organisasi_profesi_model;
 use App\Models\Materi_file_model;
 
 class Kelas extends BaseController
@@ -45,11 +46,14 @@ class Kelas extends BaseController
         $user       = $m_user->listing();
         $m_materi   = new Materi_model();
         $materi     = $m_materi->kelas($id_kelas);
+        $m_op       = new Organisasi_profesi_model();
+        $op         = $m_op->listing();
         $data = [
             'title'     => $kelas->nama_kelas,
             'kelas'     => $kelas,
             'user'      => $user,
             'materi'    => $materi,
+            'op'        => $op,
             'content'   => 'admin/kelas/detail',
         ];
         echo view('admin/layout/wrapper', $data);
@@ -183,65 +187,77 @@ class Kelas extends BaseController
         $kategori_kelas     = $m_kategori_kelas->listing();
         $kelas              = $m_kelas->detail($has_kelas);
         // Start validasi
-        if ($this->request->getMethod() === 'post' && $this->validate(
-            [
-                'nama_kelas' => 'required',
-                'gambar' => [
-                    'mime_in[gambar,image/jpg,image/jpeg,image/gif,image/png]',
-                    'max_size[gambar,4096]',
-                ],
-            ]
-        )) {
-            if (! empty($_FILES['gambar']['name'])) {
-                // Image upload
-                $avatar   = $this->request->getFile('gambar');
-                $namabaru = str_replace(' ', '-', $avatar->getName());
-                $avatar->move('assets/upload/image/', $namabaru);
-                // Create thumb
-                $image = \Config\Services::image()
+        if ($this->request->getMethod() === 'post')
+        {
+            if (! empty($_FILES['gambar']['name']))
+            {
+                $data_validasi = [
+                    'nama_kelas' => 'required',
+                    'gambar' => [
+                        'mime_in[gambar,image/jpg,image/jpeg,image/gif,image/png]',
+                        'max_size[gambar,4096]',
+                    ],
+                ];
+                if($this->validate($data_validasi)) 
+                {
+                    // Image upload
+                    $avatar   = $this->request->getFile('gambar');
+                    $namabaru = str_replace(' ', '-', $avatar->getName());
+                    $avatar->move('assets/upload/image/', $namabaru);
+                    // Create thumb
+                    $image = \Config\Services::image()
                     ->withFile('assets/upload/image/' . $namabaru)
                     ->fit(100, 100, 'center')
                     ->save('assets/upload/image/thumbs/' . $namabaru);
-                // masuk database
-                $data = [
-                    'created_by'            => $this->session->get('id_user'),
-                    'nama_kelas'            => $this->request->getVar('nama_kelas'),
-                    'tanggal_mulai'         => date('Y-m-d', strtotime($this->request->getVar('tanggal_mulai'))),
-                    'tanggal_selesai'       => date('Y-m-d', strtotime($this->request->getVar('tanggal_selesai'))),
-                    'kategori_kelas'        => $this->request->getVar('kategori_kelas'),
-                    'kuota'                 => $this->request->getVar('kuota'),
-                    'harga_dasar'           => $this->request->getVar('harga_dasar'),
-                    'harga_jual'            => $this->request->getVar('harga_jual'),
-                    'status'                => $this->request->getVar('status'),
-                    'metode_pembelajaran'   => $this->request->getVar('metode_pembelajaran'),
-                    'poster'                => $namabaru,
-                    'has_kelas'             => $has_kelas
-                ];
-                var_dump($data);
-                $m_kelas->edit($data);
-                return redirect()->to(base_url('admin/kelas/detail/'.$has_kelas))->with('sukses', 'Data Berhasil di Simpan dengan gambar baru');
+                    // masuk database
+                    $data = [
+                        
+                        'nama_kelas'            => $this->request->getVar('nama_kelas'),
+                        'tanggal_mulai'         => date('Y-m-d', strtotime($this->request->getVar('tanggal_mulai'))),
+                        'tanggal_selesai'       => date('Y-m-d', strtotime($this->request->getVar('tanggal_selesai'))),
+                        'kategori_kelas'        => $this->request->getVar('kategori_kelas'),
+                        'kuota'                 => $this->request->getVar('kuota'),
+                        'harga_dasar'           => $this->request->getVar('harga_dasar'),
+                        'harga_jual'            => $this->request->getVar('harga_jual'),
+                        'status'                => $this->request->getVar('status'),
+                        'metode_pembelajaran'   => $this->request->getVar('metode_pembelajaran'),
+                        'poster'                => $namabaru,
+                        'has_kelas'             => $has_kelas
+                    ];
+                    var_dump($data);
+                    $m_kelas->edit($data);
+                    return redirect()->to(base_url('admin/kelas/detail/'.$has_kelas))->with('sukses', 'Data Berhasil di Simpan dengan gambar baru');
+                }else{
+                    session()->setFlashdata('error', $this->validator->listErrors());
+                    return redirect()->back()->withInput();
+                }
             }else{
-                $data = [
-                    'created_by'            => $this->session->get('id_user'),
-                    'nama_kelas'            => $this->request->getVar('nama_kelas'),
-                    'tanggal_mulai'         => date('Y-m-d', strtotime($this->request->getVar('tanggal_mulai'))),
-                    'tanggal_selesai'       => date('Y-m-d', strtotime($this->request->getVar('tanggal_selesai'))),
-                    'kategori_kelas'        => $this->request->getVar('kategori_kelas'),
-                    'kuota'                 => $this->request->getVar('kuota'),
-                    'harga_dasar'           => $this->request->getVar('harga_dasar'),
-                    'harga_jual'            => $this->request->getVar('harga_jual'),
-                    'status'                => $this->request->getVar('status'),
-                    'metode_pembelajaran'   => $this->request->getVar('metode_pembelajaran'),
-                    'has_kelas'             => $has_kelas
+                $data_validasi = [
+                    'nama_kelas' => 'required',
                 ];
-                var_dump($data);
-                $m_kelas->edit($data);
-                return redirect()->to(base_url('admin/kelas/detail/'.$has_kelas))->with('sukses', 'Data Berhasil di Simpan tanpa gambar');
+                if($this->validate($data_validasi))
+                {
+                    $data = [
+                        
+                        'nama_kelas'            => $this->request->getVar('nama_kelas'),
+                        'tanggal_mulai'         => date('Y-m-d', strtotime($this->request->getVar('tanggal_mulai'))),
+                        'tanggal_selesai'       => date('Y-m-d', strtotime($this->request->getVar('tanggal_selesai'))),
+                        'kategori_kelas'        => $this->request->getVar('kategori_kelas'),
+                        'kuota'                 => $this->request->getVar('kuota'),
+                        'harga_dasar'           => $this->request->getVar('harga_dasar'),
+                        'harga_jual'            => $this->request->getVar('harga_jual'),
+                        'status'                => $this->request->getVar('status'),
+                        'metode_pembelajaran'   => $this->request->getVar('metode_pembelajaran'),
+                        'has_kelas'             => $has_kelas
+                    ];
+                    var_dump($data);
+                    $m_kelas->edit($data);
+                    return redirect()->to(base_url('admin/kelas/detail/'.$has_kelas))->with('sukses', 'Data Berhasil di Simpan tanpa gambar');
+                }else{
+                    session()->setFlashdata('error', $this->validator->listErrors());
+                    return redirect()->back()->withInput();
+                }
             }
-            
-        }else{
-            session()->setFlashdata('error', $this->validator->listErrors());
-            return redirect()->back()->withInput();
         }
     }
     // Delete

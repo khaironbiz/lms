@@ -1,9 +1,11 @@
 <?php
     use App\Models\Materi_file_model;
+    $tanggal_mulai      = $kelas->tanggal_mulai;
+    $tanggal_selesai    = $kelas->tanggal_selesai;
 ?>
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-8">
         <div class="card">
             <div class="card-header">
                 <div class="row">
@@ -17,17 +19,45 @@
                 </div>
                 
             </div>
-            <img src="<?= base_url()?>/assets/upload/image/4_1.jpg">
+            
             <div class="card-body">
-                
+                <div class="row">
+                    <label class="col-md-3">Tanggal Kegiatan</label>
+                    <div class="col-md-9"> :
+                        <?php if($tanggal_mulai == $tanggal_selesai){ echo $tanggal_mulai; }else{ echo $tanggal_mulai." sd ". $tanggal_selesai;} ;?>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-md-3">Harga Dasar</label>
+                    <div class="col-md-9"> :
+                        <?= number_format($kelas->harga_dasar);?>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-md-3">Harga Jual</label>
+                    <div class="col-md-9"> :
+                        <?= number_format($kelas->harga_jual);?>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-md-3">Kuota</label>
+                    <div class="col-md-9"> :
+                        <?= number_format($kelas->kuota);?>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-md-3">Pendaftar</label>
+                    <div class="col-md-9"> :
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-md-3">Sisa</label>
+                    <div class="col-md-9"> :
+                        
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="card">
             <div class="card-header bg-dark">
                 <div class="row">
                     <div class="col-6">
@@ -82,7 +112,7 @@
                                         <div class="form-group row">
                                             <label class="col-3">Waktu</label>
                                             <div class="col-9 row">
-                                                <input type="text" class="form-control form-control-sm tanggal col-sm-3 col-6" name="tanggal_mulai" >
+                                                <input type="text" class="form-control form-control-sm tanggal col-md-3 col-6" name="tanggal_mulai" >
                                                 <input type="text" class="form-control form-control-sm jam col-sm-2 col-6" name="jam_mulai">
                                                 <label class="col-sm-2">SD</label>
                                                 <input type="text" class="form-control form-control-sm tanggal col-sm-3 col-6" name="tanggal_selesai">
@@ -183,10 +213,105 @@
                     ?>
                 </table>
             </div>
-            
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <b>Akreditasi Profesi</b>
+            </div>
+            <img src="<?= base_url()?>/assets/upload/image/<?= $kelas->poster?>">
+            <div class="card-body">
+                <button type="button" class="btn btn-sm btn-primary mb-2" data-toggle="modal" data-target="#add-akreditasi">
+                    <i class="fa fa-plus"> SKP</i>
+                </button>
+                <?= form_open(base_url('admin/akreditasi_profesi/create/'.$kelas->has_kelas));
+                    echo csrf_field();
+                ?>
+                <div class="modal fade text-dark text-left" id="add-akreditasi">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Akreditasi Kegiatan : <?= $kelas->nama_kelas?></h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <label class="col-3">Organisasi Profesi</label>
+                                    <div class="col-9 row">
+                                        <select class="form-control form-control-sm" name="kelas">
+                                            <option value="">---pilih---</option>
+                                            <?php
+                                            foreach($op as $op):
+                                            ?>
+                                            <option value="<?= $op['id_op']?>"><?= $op['nama_op']?></option>
+                                            <?php
+                                            endforeach
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-3">Level Organisasi</label>
+                                    <div class="col-9 row">
+                                        <select class="form-control form-control-sm" name="level_op">
+                                            <option value="">---pilih---</option>
+                                            <option value="1">Pusat</option>
+                                            <option value="2">Provinsi</option>
+                                            <option value="3">Kota</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-3">Besaran SKP</label>
+                                    <div class="col-9 row">
+                                        <input type="number" class="form-control form-control-sm" name="nominal_skp">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-3">Nomor SKP</label>
+                                    <div class="col-9 row">
+                                        <input type="text" class="form-control form-control-sm" name="nomor_skp">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-3">Tanggal SKP</label>
+                                    <div class="col-9 row">
+                                        <input type="date" class="form-control form-control-sm" name="tanggal_skp">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-3">Keterangangan</label>
+                                    <div class="col-9 row">
+                                        <input type="text" class="form-control form-control-sm" name="keterangan">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                                <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Simpan</button>
+                            </div>
+                        </div>
+                                
+                    </div>
+                    
+                </div>
+                <?= form_close(); ?>
+                <table class="table table-sm table-stiped">
+                    <tr>
+                        <th>#</th>
+                        <th>Profesi</th>
+                        <th>SKP</th>
+                        <th>Keterangan</th>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
 </div>
+
 <div class="row">
     <div class="col-4">
         <a href="<?= base_url()?>/admin/kelas/edit/<?= $kelas->has_kelas;?>" class="btn btn-sm btn-primary">Back</a>
