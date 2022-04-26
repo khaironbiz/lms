@@ -241,7 +241,7 @@
                                 <div class="row">
                                     <label class="col-3">Organisasi Profesi</label>
                                     <div class="col-9 row">
-                                        <select class="form-control form-control-sm" name="kelas">
+                                        <select class="form-control form-control-sm" name="id_op">
                                             <option value="">---pilih---</option>
                                             <?php
                                             foreach($op as $op):

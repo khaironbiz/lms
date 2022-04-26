@@ -36,55 +36,23 @@ class Akreditasi_profesi extends BaseController
         checklogin();
         $id_user                = $this->session->get('id_user');
         $m_akreditasi_profesi   = new Akreditasi_profesi_model();
-        $akreditasi_profesi     = $m_url->by_has_akreditasi_profesi($has_profesi);
-        // Start validasi
-        if ($this->request->getMethod() === 'post' ){
-            // 'url_asli'  => 'required|min_length[3]|valid_url',
-            // 'short' => 'required|min_length[3]|is_unique[url.short]|alpha_numeric_punct',
-            if (!$this->validate([
-                'url_asli' => [
-                    'rules' => 'required|min_length[10]|valid_url_strict[https]',
-                    'errors' => [
-                        'required'          => 'URL Asli Harus diisi',
-                        'min_length'        => 'URL Asli minimal 10 karakter',
-                        'valid_url_strict'  => 'URL yang anda input : '.$this->request->getPost('url_asli').' Tidak valid'
-                    ]
-                ],
-                'short' => [
-                    'rules'             => 'required|min_length[3]|is_unique[url.short]|alpha_numeric',
-                    'errors'            => [
-                        'required'      => '{field} Harus diisi',
-                        'min_length'    => 'Short URL minimal 3 karakter',
-                        'is_unique'     => 'Short URL sudah terdaftar, gunakan short url lain',
-                        'alpha_numeric' => 'Karakter pada short url hanya angka dan huruf'
-                    ]
-                ]
-            ])) {
-                session()->setFlashdata('error', $this->validator->listErrors());
-                return redirect()->back()->withInput();
-            }else{
-                $url_asli       = $this->request->getPost('url_asli');
-                $short          = $this->request->getPost('short');
-                $count          = $m_url->count($short);
-                $data           = [                
-                    'url_asli'      => $url_asli,
-                    'short'         => $short,
-                    'created_by'    => $this->session->get('id_user'),
-                    'created_at'    => date('Y-m-d H:i:s'),
-                    'has_url'       => md5(uniqid())
-                ];
-                $m_url->save($data);
-                // masuk database
-                $this->session->setFlashdata('sukses', 'Data telah ditambah');
-                return redirect()->to(base_url('admin/url'));
-                // var_dump($count);
-            }
-        }else{
-            $this->session->setFlashdata('warning', 'INVALID AKSES');
-            return redirect()->to(base_url('admin/url'));
-        }
-        
-        //return redirect()->to(base_url('a/b/'.$short));
+        $m_kelas                = new Kelas_model();
+        $kelas                  = $m_kelas->detail($has_kelas);
+        $data = [
+            'id_kelas'                  => $kelas['id_kelas'],
+            'id_op'                     => $this->request->getPost('id_op'),
+            'level_op'                  => $this->request->getPost('level_op'),
+            'nominal_skp'               => $this->request->getPost('nominal_skp'),
+            'nomor_skp'                 => $this->request->getPost('nomor_skp'),
+            'tanggal_skp'               => $this->request->getPost('tanggal_skp'),
+            'keterangan'                => $this->request->getPost('keterangan'),
+            'created_by'                => $id_user,
+            'created_at'                => date('Y-m-d H:i:s'),
+            'has_akreditasi_profesi'    => md5(uniqid()),
+
+        ];
+        $m_akreditasi_profesi->insert($data);
+        var_dump($data);
     }
     //tambah data
     public function pengkinian($has_url){
