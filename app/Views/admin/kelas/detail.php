@@ -306,6 +306,14 @@
                         <th>SKP</th>
                         <th>Keterangan</th>
                     </tr>
+                    <?php
+
+                    ?>
+                    <tr>
+
+                    </tr>
+                    <?php
+                    ?>
                 </table>
             </div>
         </div>
