@@ -83,6 +83,14 @@ class User_model extends Model
         return $query->getRow();
     }
     // detail
+    public function has_user($has_user)
+    {
+        $builder = $this->db->table('users');
+        $builder->where('has_user', $has_user);
+        $query = $builder->get();
+        return $query->getRow();
+    }
+    // detail
     public function detail($id_user)
     {
         $builder = $this->db->table('users');

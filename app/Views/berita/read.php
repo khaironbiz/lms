@@ -49,9 +49,67 @@ $session = \Config\Services::session();
                   <td><?= $k['nama_kelas']?></td>
                   <td><?= number_format($k['harga_jual'])?></td>
                   <td>
-                    <button class="btn btn-success btn-sm">Daftar</button>
                     <a href="<?= base_url('berita/kelas/'.$k['has_kelas'])?>" class="btn btn-sm btn-success">Detail</a>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#daftar">
+                      Daftar
+                    </button>
+                    <!-- Modal -->
+                    <?= form_open(base_url('admin/kelas_peserta/create/'."/".$k['has_kelas']));
+                    echo csrf_field();
+                    ?>
+                    <div class="modal fade" id="daftar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Pendaftaran Kegiatan <?= $berita['id_berita']?></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <div class="row mb-1">
+                                <label for="staticEmail" class="col-md-3">Kelas</label>
+                                <div class="col-md-9">
+                                  <select class="form-control form-control-sm" name="id_kelas">
+                                    <option value="<?= $k['id_kelas']?>"><?= $k['nama_kelas']?></option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="row mb-1">
+                                <label for="staticEmail" class="col-md-3">Email</label>
+                                <div class="col-md-9">
+                                  <input type="text" class="form-control form-control-sm" name="email_peserta">
+                                </div>
+                              </div>
+                              <div class="row mb-1">
+                                <label for="inputPassword" class="col-md-3">No HP</label>
+                                <div class="col-md-9">
+                                  <input type="telp" class="form-control form-control-sm" name="hp_peserta">
+                                </div>
+                              </div>
+                              <div class="row mb-1">
+                                <label for="inputPassword" class="col-md-3">Nama di Sertifikat</label>
+                                <div class="col-md-9">
+                                  <input type="telp" class="form-control form-control-sm" name="nama_sertifikat">
+                                </div>
+                              </div>
+                              <div class="row mb-1">
+                                <label for="inputPassword" class="col-md-3">Harga</label>
+                                <div class="col-md-9">
+                                  <input type="number" class="form-control form-control-sm" name="harga" value="<?= $k['harga_jual']?>">
+                                </div>
+                              </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <?= form_close(); ?>
+                    
                   </td>
+                  
                 </tr>
               <?php
               }

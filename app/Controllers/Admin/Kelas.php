@@ -9,6 +9,7 @@ use App\Models\User_model;
 use App\Models\Kelas_model;
 use App\Models\Materi_model;
 use App\Models\Materi_file_model;
+use App\Models\kelas_peserta_model;
 use App\Models\Organisasi_profesi_model;
 use App\Models\Akreditasi_profesi_model;
 
@@ -54,17 +55,20 @@ class Kelas extends BaseController
         $op                     = $m_op->listing();
         $m_akreditasi_profesi   = new Akreditasi_profesi_model();
         $akreditasi_profesi     = $m_akreditasi_profesi->by_id_kelas($id_kelas);
+        $m_kelas_peserta        = new Kelas_peserta_model();
+        $kelas_peserta          = $m_kelas_peserta->list_by_id_kelas($id_kelas);
         
 
         $data = [
-            'title'     => $kelas->nama_kelas,
-            'kelas'     => $kelas,
-            'berita'    => $berita,
-            'user'      => $user,
-            'materi'    => $materi,
-            'op'        => $op,
-            'ap'        => $akreditasi_profesi,    
-            'content'   => 'admin/kelas/detail',
+            'title'         => $kelas->nama_kelas,
+            'kelas'         => $kelas,
+            'berita'        => $berita,
+            'user'          => $user,
+            'materi'        => $materi,
+            'op'            => $op,
+            'ap'            => $akreditasi_profesi,   
+            'kelas_peserta' => $kelas_peserta,
+            'content'       => 'admin/kelas/detail',
         ];
         echo view('admin/layout/wrapper', $data);
     }

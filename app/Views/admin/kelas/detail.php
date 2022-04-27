@@ -321,6 +321,34 @@
                     ?>
                 </table>
             </div>
+            <div class="card-header">
+                <b>Peserta <?= $kelas->id_kelas?></b>
+            </div>
+            <div class="card-body table-responsive">
+                <table class="table table-sm table-bordered" id="example1">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nama</th>
+                            <th>HP</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                            $number = 1;
+                            foreach($kelas_peserta as $peserta):
+                        ?>
+                        <tr>
+                            <td><?= $number++?></td>
+                            <td><?= $peserta['nama_sertifikat']?></td>
+                            <td><?= $peserta['hp_peserta']?></td>
+                        </tr>
+                        <?php
+                            endforeach
+                        ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
