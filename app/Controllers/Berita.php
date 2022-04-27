@@ -47,7 +47,7 @@ class Berita extends BaseController
     // read
     public function read($slug_berita)
     {
-        checklogin();
+        
         $session        = \Config\Services::session();
         $m_konfigurasi  = new Konfigurasi_model();
         $m_berita       = new Berita_model();

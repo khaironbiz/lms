@@ -47,14 +47,14 @@
                 </div>
                 <div class="row">
                     <label class="col-md-3">Pendaftar</label>
-                    <div class="col-md-9"> :
-                        
+                    <div class="col-md-9"> : 
+                        <?= number_format($count_peserta);?>
                     </div>
                 </div>
                 <div class="row">
                     <label class="col-md-3">Sisa</label>
                     <div class="col-md-9"> :
-                        
+                        <?= number_format(($kelas->kuota)-$count_peserta);?>
                     </div>
                 </div>
             </div>
@@ -321,11 +321,11 @@
                     ?>
                 </table>
             </div>
-            <div class="card-header">
-                <b>Peserta <?= $kelas->id_kelas?></b>
+            <div class="card-footer">
+                <b>Peserta</b>
             </div>
             <div class="card-body table-responsive">
-                <table class="table table-sm table-bordered" id="example1">
+                <table class="table table-sm table-bordered" id="example3">
                     <thead>
                         <tr>
                             <th>#</th>

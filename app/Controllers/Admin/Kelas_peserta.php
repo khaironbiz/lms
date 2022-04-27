@@ -108,7 +108,7 @@ class Kelas_peserta extends BaseController
                 $m_kelas_peserta->save($data);
                 // masuk database
                 $this->session->setFlashdata('sukses', 'Data telah ditambah');
-                return redirect()->to(base_url('admin/kelas_peserta'));
+                return redirect()->to(base_url('home/berita'));
                 // var_dump($data);
             }
         }else{

@@ -57,6 +57,7 @@ class Kelas extends BaseController
         $akreditasi_profesi     = $m_akreditasi_profesi->by_id_kelas($id_kelas);
         $m_kelas_peserta        = new Kelas_peserta_model();
         $kelas_peserta          = $m_kelas_peserta->list_by_id_kelas($id_kelas);
+        $count_id_kelas         = $m_kelas_peserta->count_id_kelas($id_kelas);
         
 
         $data = [
@@ -68,6 +69,7 @@ class Kelas extends BaseController
             'op'            => $op,
             'ap'            => $akreditasi_profesi,   
             'kelas_peserta' => $kelas_peserta,
+            'count_peserta' => $count_id_kelas,
             'content'       => 'admin/kelas/detail',
         ];
         echo view('admin/layout/wrapper', $data);
