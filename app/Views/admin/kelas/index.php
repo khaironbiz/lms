@@ -1,5 +1,6 @@
 <?php
 use App\Models\Akreditasi_profesi_model;
+use App\Models\Materi_model;
 echo view($sub_menu);
 ?>
 <div class="table-responsive">
@@ -8,6 +9,7 @@ echo view($sub_menu);
 			<tr>
 				<th>No</th>
 				<th>Kelas</th>
+				<th>Tanggal</th>
 				<th>Topik</th>
 				<th>Akreditasi</th>
 				<th>Harga Dasar</th>
@@ -25,6 +27,8 @@ echo view($sub_menu);
 				$id_kelas 					= $kelas['id_kelas'];
 				$m_akreditasi_profesi 		= new Akreditasi_profesi_model();
 				$count_akreditasi_profesi 	= $m_akreditasi_profesi->count_id_kelas($id_kelas);
+				$m_materi 					= new Materi_model();
+				$count_materi 				= $m_materi->count_id_kelas($id_kelas);
 			?>
 			<tr>
 				<td><?= $no ?></td>
@@ -34,8 +38,9 @@ echo view($sub_menu);
 						<?= $kelas['judul_berita']?>
 					</small>
 				</td>
+				<td><?= $kelas['tanggal_mulai']?></td>
 				<td>
-					
+					<?= $count_materi?>
 				</td>
 				<td><?= $count_akreditasi_profesi ?> Profesi</td>
 				<td class="text-right"><?= number_format($kelas['harga_dasar'])?></td>

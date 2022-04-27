@@ -8,8 +8,9 @@ use App\Models\Kategori_kelas_model;
 use App\Models\User_model;
 use App\Models\Kelas_model;
 use App\Models\Materi_model;
-use App\Models\Organisasi_profesi_model;
 use App\Models\Materi_file_model;
+use App\Models\Organisasi_profesi_model;
+use App\Models\Akreditasi_profesi_model;
 
 class Kelas extends BaseController
 {
@@ -39,21 +40,30 @@ class Kelas extends BaseController
     public function detail($has_kelas)
     {
         checklogin();
-        $m_kelas    = new Kelas_model();
-        $kelas      = $m_kelas->by_has_kelas($has_kelas);
-        $id_kelas   = $kelas->id_kelas;
-        $m_user     = new User_model();
-        $user       = $m_user->listing();
-        $m_materi   = new Materi_model();
-        $materi     = $m_materi->kelas($id_kelas);
-        $m_op       = new Organisasi_profesi_model();
-        $op         = $m_op->listing();
+        $m_kelas                = new Kelas_model();
+        $m_berita               = new Berita_model();
+        $kelas                  = $m_kelas->by_has_kelas($has_kelas);
+        $id_kelas               = $kelas->id_kelas;
+        $id_event               = $kelas->id_event;
+        $berita                 = $m_berita->by_id($id_event);
+        $m_user                 = new User_model();
+        $user                   = $m_user->listing();
+        $m_materi               = new Materi_model();
+        $materi                 = $m_materi->kelas($id_kelas);
+        $m_op                   = new Organisasi_profesi_model();
+        $op                     = $m_op->listing();
+        $m_akreditasi_profesi   = new Akreditasi_profesi_model();
+        $akreditasi_profesi     = $m_akreditasi_profesi->by_id_kelas($id_kelas);
+        
+
         $data = [
             'title'     => $kelas->nama_kelas,
             'kelas'     => $kelas,
+            'berita'    => $berita,
             'user'      => $user,
             'materi'    => $materi,
             'op'        => $op,
+            'ap'        => $akreditasi_profesi,    
             'content'   => 'admin/kelas/detail',
         ];
         echo view('admin/layout/wrapper', $data);

@@ -169,7 +169,7 @@
                         $m_materi_file  = new Materi_file_model();
                         $materi_file    = $m_materi_file->list_by_id_materi($id_materi);
                     ?>
-                    <tr>
+                    <tr <?php if( $materi['blokir'] ==1){echo "class='bg-danger'";}?>>
                         <td><?= $num++; ?></td>
                         <td>
                             <?= $tgl_mulai ?><br>
@@ -302,17 +302,22 @@
                 <table class="table table-sm table-stiped">
                     <tr>
                         <th>#</th>
-                        <th>Profesi</th>
+                        <th>Organisasi</th>
                         <th>SKP</th>
                         <th>Keterangan</th>
                     </tr>
                     <?php
-
+                    $num = 1;
+                    foreach($ap as $ap):
                     ?>
                     <tr>
-
+                        <td><?= $num++;?></td>
+                        <td><?= $ap['singkatan_op']; if($ap['level_op']==1){echo " - Pusat";}elseif($ap['level_op']==2){echo " - Provinsi";}elseif($ap['level_op']==3){echo " - Kota";} ?></td>
+                        <td><?= $ap['nominal_skp']?></td>
+                        <td><?= $ap['keterangan']?></td>
                     </tr>
                     <?php
+                    endforeach
                     ?>
                 </table>
             </div>
@@ -322,7 +327,7 @@
 
 <div class="row">
     <div class="col-4">
-        <a href="<?= base_url()?>/admin/kelas/edit/<?= $kelas->has_kelas;?>" class="btn btn-sm btn-primary">Back</a>
+        <a href="<?= base_url()?>/admin/event/detail/<?= $berita['has_berita'];?>" class="btn btn-sm btn-primary">Back</a>
     </div>
     <div class="col-4 text-center">
         

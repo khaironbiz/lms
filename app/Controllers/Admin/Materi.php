@@ -39,13 +39,16 @@ class Materi extends BaseController
         $m_materi   = new Materi_model();
         $m_kategori = new Kategori_model();
         $materi     = $m_materi->has_materi($has_materi);
+        $id_kelas   = $materi['id_kelas'];
         $m_user     = new User_model();
         $user       = $m_user->listing();
-
+        $m_kelas    = new Kelas_model();
+        $kelas      = $m_kelas->by_id_kelas($id_kelas);
         $data = [
             'title'     => "Detail Materi ".$materi['materi'],
             'materi'    => $materi,
             'user'      => $user,
+            'kelas'     => $kelas,
             'content'   => 'admin/materi/detail',
         ];
         echo view('admin/layout/wrapper', $data);
@@ -115,11 +118,56 @@ class Materi extends BaseController
                 'waktu_mulai'   => $waktu_mulai,
                 'waktu_selesai' => $waktu_selesai,
                 'updated_at'    => date('Y-m-d H:i:s'),
-                'blokir'        => $this->request->getVar('blokir'),
+                
             ];
             $m_materi->update($id_materi, $data);
             return redirect()->to(base_url('admin/materi/detail/'."/".$has_materi))->with('sukses', 'Data Berhasil di Simpan');;
         //    var_dump($materi) ;
         }
+    }
+    public function soft_delete($has_materi)
+    {
+        checklogin();
+        $m_kategori = new Kategori_model();
+        $m_kelas    = new kelas_model();
+        $m_materi   = new Materi_model();
+        $m_berita   = new Berita_model();
+        $materi   = $m_kategori->listing();
+        // Start validasi
+        if ($this->request->getMethod() === 'post' && $this->validate(
+            [
+                'materi'    => 'required|min_length[6]',
+                'blokir'    => 'required',
+            ]
+        )) {
+            
+            $waktu_mulai    = date ('Y-m-d H:i:s', strtotime($this->request->getVar('tanggal_mulai')." ".$this->request->getVar('jam_mulai')));
+            $waktu_selesai  = date ('Y-m-d H:i:s', strtotime($this->request->getVar('tanggal_selesai')." ".$this->request->getVar('jam_selesai')));
+            $materi         = $m_materi->has_materi($has_materi);
+            $id_materi      = $materi['id_materi'];
+            $id_event       = $materi['id_event'];
+            $berita         = $m_berita->by_id($id_event);
+            $data           = [
+                
+                'deleted_at'    => date('Y-m-d H:i:s'),
+                'blokir'        => $this->request->getVar('blokir'),
+            ];
+            $m_materi->update($id_materi, $data);
+            return redirect()->to(base_url('admin/materi/detail/'."/".$has_materi))->with('sukses', 'Data Berhasil dihapus');;
+        //    var_dump($materi) ;
+        }
+    }
+    
+    // Delete
+    public function delete($has_materi)
+    {
+        checklogin();
+        $m_materi   = new Materi_model();
+        $materi     = $m_materi->has_materi($has_materi);
+        $data       = ['id_materi' => $materi['id_materi']];
+        $m_materi->delete($data);
+        // masuk database
+        $this->session->setFlashdata('sukses', 'Data telah dihapus');
+        return redirect()->to(base_url('admin/kelas'));
     }
 }

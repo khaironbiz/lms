@@ -58,6 +58,18 @@ class Kelas_model extends Model
         $query = $builder->get();
         return $query->getRow();
     }
+    // kelas by id_kelas
+    public function by_id_kelas($id_kelas)
+    {
+        $builder = $this->db->table('kelas');
+        $builder->select('kelas.*');
+        $builder->where([
+                    'kelas.id_kelas'   => $id_kelas,
+                    'kelas.status'     => '1']);
+        $query = $builder->get();
+        return $query->getRow();
+    }
+    
     // detail
     public function detail($has_kelas)
     {

@@ -33,26 +33,69 @@ class Akreditasi_profesi extends BaseController
     }
     //tambah data
     public function create($has_kelas){
-        checklogin();
-        $id_user                = $this->session->get('id_user');
-        $m_akreditasi_profesi   = new Akreditasi_profesi_model();
-        $m_kelas                = new Kelas_model();
-        $kelas                  = $m_kelas->detail($has_kelas);
-        $data = [
-            'id_kelas'                  => $kelas['id_kelas'],
-            'id_op'                     => $this->request->getPost('id_op'),
-            'level_op'                  => $this->request->getPost('level_op'),
-            'nominal_skp'               => $this->request->getPost('nominal_skp'),
-            'nomor_skp'                 => $this->request->getPost('nomor_skp'),
-            'tanggal_skp'               => $this->request->getPost('tanggal_skp'),
-            'keterangan'                => $this->request->getPost('keterangan'),
-            'created_by'                => $id_user,
-            'created_at'                => date('Y-m-d H:i:s'),
-            'has_akreditasi_profesi'    => md5(uniqid()),
-
-        ];
-        $m_akreditasi_profesi->insert($data);
-        var_dump($data);
+        if ($this->request->getMethod() === 'post' ) {
+            checklogin();
+            $id_user                = $this->session->get('id_user');
+            $m_akreditasi_profesi   = new Akreditasi_profesi_model();
+            $m_kelas                = new Kelas_model();
+            $kelas                  = $m_kelas->detail($has_kelas);
+            $id_kelas               = $kelas['id_kelas'];
+            $m_akreditasi_profesi   = new Akreditasi_profesi_model();
+            $id_op                  = $this->request->getPost('id_op');
+            $duplikasi_skp          = $m_akreditasi_profesi->duplikasi_skp($id_kelas, $id_op);
+            if($duplikasi_skp>0){
+                $this->session->setFlashdata('warning', 'SKP Organisasi sudah diinput');
+                return redirect()->to(base_url('admin/kelas/detail/'.$kelas['has_kelas']));
+            }else{
+                $data_validasi      = [
+                    'id_op'  => [
+                        'rules'     => 'required',
+                        'errors'    => [
+                                'required'      => 'Organisasi profesi wajib dipilih'
+                            ]
+                        ],
+                        
+                    'level_op'  => [
+                        'rules'     => 'required',
+                        'errors'    => [
+                            'required'      => 'Level Organisasi Profesi harus dipilih',                            
+                            ]
+                        ],
+                    'nominal_skp'  => [
+                        'rules'     => 'required|numeric',
+                        'errors'    => [
+                            'required'      => 'Nominal SKP harus diisi',  
+                            'numeric'       => 'Nominal SKP harus berupa angka'                     
+                            ]
+                        ],
+                    
+                ];
+                if(! $this->validate($data_validasi)){
+                    session()->setFlashdata('error', $this->validator->listErrors());
+                    return redirect()->back()->withInput();
+                }else{
+                    $data = [
+                    'id_kelas'                  => $kelas['id_kelas'],
+                    'id_op'                     => $id_op,
+                    'level_op'                  => $this->request->getPost('level_op'),
+                    'nominal_skp'               => $this->request->getPost('nominal_skp'),
+                    'nomor_skp'                 => $this->request->getPost('nomor_skp'),
+                    'tanggal_skp'               => $this->request->getPost('tanggal_skp'),
+                    'keterangan'                => $this->request->getPost('keterangan'),
+                    'created_by'                => $id_user,
+                    'created_at'                => date('Y-m-d H:i:s'),
+                    'has_akreditasi_profesi'    => md5(uniqid()),
+                ];
+                $m_akreditasi_profesi->insert($data);
+                $this->session->setFlashdata('sukses', 'SKP Organisasi sukses diinput');
+                return redirect()->to(base_url('admin/kelas/detail/'.$kelas['has_kelas']));
+                }
+            }
+            // var_dump($data);
+        }else{
+            $this->session->setFlashdata('warning', 'AKSES ILEGAL');
+                return redirect()->to(base_url('admin/url'));
+        }
     }
     //tambah data
     public function pengkinian($has_url){

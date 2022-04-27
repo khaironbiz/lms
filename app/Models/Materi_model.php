@@ -18,6 +18,7 @@ class Materi_model extends Model
                                 'created_by',
                                 'created_at',
                                 'updated_at',
+                                'deleted_at',
                                 'blokir',
                                 'has_materi',
                             ];
@@ -55,6 +56,18 @@ class Materi_model extends Model
         return $query->getRowArray();
     }
     //materi pada kelas
+    
+    public function by_id_materi($id_materi)
+    {
+        $builder = $this->db->table('materi');
+        $builder->select('materi.*, users.nama, berita.judul_berita');
+        $builder->join('users', 'users.id_user = materi.pemateri', 'LEFT');
+        $builder->join('berita', 'berita.id_berita = materi.id_event', 'LEFT');
+        $builder->where(['materi.id_materi'  => $id_materi]);
+        $query = $builder->get();
+        return $query->getRowArray();
+    }
+    //materi pada kelas
     public function event($id_event)
     {
         $builder = $this->db->table('materi');
@@ -66,5 +79,12 @@ class Materi_model extends Model
         $builder->orderBy('materi.waktu_mulai', 'ASC');
         $query = $builder->get();
         return $query->getResultArray();
+    }
+    // total
+    public function count_id_kelas($id_kelas)
+    {
+        $builder = $this->db->table('materi')->where('id_kelas', $id_kelas);
+        $query   = $builder->get();
+        return $query->getNumRows();
     }
 }

@@ -228,5 +228,8 @@ echo view($sub_menu)
             ?>
         </table>
     </div>
+    <div class="card-footer">
+        <a href="<?= base_url()?>/admin/event" class="btn btn-sm btn-primary">Back</a>
+    </div>
     
 </div>

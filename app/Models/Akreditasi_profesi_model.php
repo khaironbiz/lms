@@ -46,11 +46,21 @@ class Akreditasi_profesi_model extends Model
     public function by_has_akreditasi_profesi($has_akreditasi_profesi)
     {
         $builder = $this->db->table('akreditasi_profesi');
-        $builder->select('akreditasi_profesi.*, organisasi_profesi.nama_op');
+        $builder->select('akreditasi_profesi.*, organisasi_profesi.nama_op, organisasi_profesi.singkatan_op');
         $builder->join('organisasi_profesi', 'organisasi_profesi.id_op = akreditasi_profesi.id_op', 'LEFT');
         $builder->where('has_akreditasi_profesi', $has_akreditasi_profesi);
         $query = $builder->get();
         return $query->getRow();
+    }
+    // read
+    public function by_id_kelas($id_kelas)
+    {
+        $builder = $this->db->table('akreditasi_profesi');
+        $builder->select('akreditasi_profesi.*, organisasi_profesi.nama_op, organisasi_profesi.singkatan_op');
+        $builder->join('organisasi_profesi', 'organisasi_profesi.id_op = akreditasi_profesi.id_op', 'LEFT');
+        $builder->where('id_kelas', $id_kelas);
+        $query = $builder->get();
+        return $query->getResultArray();
     }
     
     // count
@@ -64,6 +74,17 @@ class Akreditasi_profesi_model extends Model
     public function count_id_kelas($id_kelas)
     {
         $builder = $this->db->table('akreditasi_profesi')->where('id_kelas', $id_kelas);
+        $query   = $builder->get();
+        return $query->getNumRows();
+    }
+
+    
+    //duplikasi_skp
+    public function duplikasi_skp($id_kelas,$id_op)
+    {
+        $builder = $this->db->table('akreditasi_profesi');
+        $builder -> where('id_kelas', $id_kelas);
+        $builder -> where('id_op', $id_op);
         $query   = $builder->get();
         return $query->getNumRows();
     }
