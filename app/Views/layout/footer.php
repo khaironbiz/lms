@@ -4,7 +4,6 @@ $konfigurasi = new Konfigurasi_model();
 $site        = $konfigurasi->listing();
 // Menu
 use App\Models\Menu_model;
-
 $menu         = new Menu_model();
 $site         = $konfigurasi->listing();
 $menu_berita  = $menu->berita();
@@ -18,7 +17,7 @@ $menu_layanan = $menu->layanan();
         <div class="row">
           <div class="col-lg-3 col-md-6">
             <div class="footer-info">
-              <h3><?= $site['namaweb'] ?></h3>
+              <h4><?= $site['namaweb'] ?></h4>
               <p>
                 <?= $site['alamat'] ?>
                 <br>

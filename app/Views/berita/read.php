@@ -20,7 +20,7 @@ $session = \Config\Services::session();
           <div class="card">
             <img src="<?= base_url('assets/upload/image/' . $berita['gambar']) ?>">
             <div class="card-body">
-              <h3><?= $berita['judul_berita'] ?></h3>
+              <h4><?= $berita['judul_berita'] ?></h4>
                 <?= $berita['isi'] ?>
             </div>
           </div>
@@ -51,7 +51,7 @@ $session = \Config\Services::session();
                   <td>
                     <a href="<?= base_url('berita/kelas/'.$k['has_kelas'])?>" class="btn btn-sm btn-success">Detail</a>
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#daftar">
+                    <button type="button" class="btn btn-primary btn-sm " data-bs-toggle="modal" data-bs-target="#daftar">
                       Daftar
                     </button>
                     <!-- Modal -->
@@ -101,7 +101,7 @@ $session = \Config\Services::session();
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="btn btn-default btn-sm">Save</button>
                           </div>
                         </div>
                       </div>
@@ -125,31 +125,21 @@ $session = \Config\Services::session();
         </div>
         <div class="col-md-4">
           <div class="card">
-            <div class="card-header">
-              <h3>Berita Lainnya</h3>
+            <div class="card-header bg-white">
+              <h4>Berita Lainnya</h4>
             </div>
             <div class="card-body">
               <?php foreach ($sidebar as $sidebar) { ?>
-              <div class="row">
-                <div class="col-3">
-                  <?php if ($sidebar['gambar'] === '') { ?>
-                    <img src="<?= icon() ?>" class="img img-thumbnail">
-                  <?php 
-                    }else{ 
-                  ?>
-                    <img src="<?= base_url('assets/upload/image/thumbs/' . $sidebar['gambar']) ?>" class="img img-thumbnail">
-                  <?php 
-                  } 
-                  ?>
+                <div class="row">
+                  <label class="col-10"><?= $sidebar['judul_berita']?></label>
+                  <div class="col-2">
+                  <?= $sidebar['hits']?>
+                  </div>
                 </div>
-                <div class="col-9"><h4 style="font-size: 18px;"><a href="<?= base_url('berita/read/' . $sidebar['slug_berita']) ?>"></a></h4>
-                    <small class="text-gray-dark"><i class="fa fa-eye"></i> <?= $sidebar['hits'] ?> views</small>
-                </div>
-                <div class="clearfix"><br></div><hr>
-                <?php 
-                } 
-                ?>
-              </div>
+              <?php
+              }
+              ?>
+              
             </div>
           </div>
         </div>
@@ -157,3 +147,9 @@ $session = \Config\Services::session();
     </div>
   </section><!-- End Contact Section -->
 </main><!-- End #main -->
+
+
+
+
+  
+  
