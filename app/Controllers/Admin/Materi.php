@@ -5,6 +5,7 @@ namespace App\Controllers\Admin;
 use App\Models\Berita_model;
 use App\Models\Kategori_model;
 use App\Models\Materi_model;
+use App\Models\Materi_file_model;
 use App\Models\User_model;
 use App\Models\Kelas_model;
 
@@ -36,20 +37,24 @@ class Materi extends BaseController
     public function detail($has_materi)
     {
         checklogin();
-        $m_materi   = new Materi_model();
-        $m_kategori = new Kategori_model();
-        $materi     = $m_materi->has_materi($has_materi);
-        $id_kelas   = $materi['id_kelas'];
-        $m_user     = new User_model();
-        $user       = $m_user->listing();
-        $m_kelas    = new Kelas_model();
-        $kelas      = $m_kelas->by_id_kelas($id_kelas);
+        $m_materi       = new Materi_model();
+        $m_kategori     = new Kategori_model();
+        $m_materi_file  = new Materi_file_model();
+        $materi         = $m_materi->has_materi($has_materi);
+        $id_kelas       = $materi['id_kelas'];
+        $id_materi      = $materi['id_materi'];
+        $m_user         = new User_model();
+        $user           = $m_user->listing();
+        $m_kelas        = new Kelas_model();
+        $kelas          = $m_kelas->by_id_kelas($id_kelas);
+        $mater_file     = $m_materi_file->list_by_id_materi($id_materi);
         $data = [
-            'title'     => "Detail Materi ".$materi['materi'],
-            'materi'    => $materi,
-            'user'      => $user,
-            'kelas'     => $kelas,
-            'content'   => 'admin/materi/detail',
+            'title'         => "Detail Materi ".$materi['materi'],
+            'materi'        => $materi,
+            'materi_file'   => $mater_file,
+            'user'          => $user,
+            'kelas'         => $kelas,
+            'content'       => 'admin/materi/detail',
         ];
         echo view('admin/layout/wrapper', $data);
     }

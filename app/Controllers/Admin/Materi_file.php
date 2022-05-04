@@ -3,7 +3,7 @@
 namespace App\Controllers\Admin;
 
 use App\Models\Berita_model;
-use App\Models\Kategori_model;
+use App\Models\File_model;
 use App\Models\Materi_model;
 use App\Models\Materi_file_model;
 use App\Models\User_model;
@@ -27,13 +27,16 @@ class Materi_file extends BaseController
     public function file($has_materi)
     {
         checklogin();
+        $m_file             = new File_model();
         $m_materi           = new Materi_model();
         $materi             = $m_materi->has_materi($has_materi);
         $m_materi_file      = new Materi_file_model();
         $materi_file        = $m_materi_file->file();
+        $file               = $m_file->listing();
         $data = [
             'title'         => 'Tambah Bahan Ajar Materi : '.$materi['materi'],
             'materi_file'   => $materi_file,
+            'file'          => $file,
             'materi'        => $materi, 
             'content'       => 'admin/materi_file/add-file',
         ];
@@ -67,40 +70,32 @@ class Materi_file extends BaseController
     }
     
     // save add
-    public function add()
+    public function addfile($has_materi)
     {
         checklogin();
-        $m_kategori = new Kategori_model();
-        $m_kelas    = new kelas_model();
-        $m_materi   = new Materi_model();
-        $kategori   = $m_kategori->listing();
+        $m_materi       = new Materi_model();
+        $materi         = $m_materi->has_materi($has_materi);
+        $m_materi_file  = new Materi_file_model();
         // Start validasi
-        if ($this->request->getMethod() === 'post' && $this->validate(
-            [
-                'materi'    => 'required|min_length[6]',
-                'pemateri'  => 'required|numeric',
-            ]
-        )) {
-            $has_kelas      = $this->request->getVar('kelas');
-            $kelas          = $m_kelas->detail($has_kelas);
-            $id_kelas       = $kelas['id_kelas'];
-            $id_event       = $kelas['id_event'];
-            $waktu_mulai    = date ('Y-m-d H:i:s', strtotime($this->request->getVar('tanggal_mulai')." ".$this->request->getVar('jam_mulai')));
-            $waktu_selesai  = date ('Y-m-d H:i:s', strtotime($this->request->getVar('tanggal_selesai')." ".$this->request->getVar('jam_selesai')));
-            $data           = [
-                'id_event'      => $id_event,
-                'id_kelas'      => $id_kelas,
-                'materi'        => $this->request->getVar('materi'),
-                'pemateri'      => $this->request->getVar('pemateri'),
-                'waktu_mulai'   => $waktu_mulai,
-                'waktu_selesai' => $waktu_selesai,
-                'created_by'    => $this->session->get('id_user'),
-                'created_at'    => date('Y-m-d H:i:s'),
-                'has_materi'    => md5(uniqid()),
-            ];
-            $m_materi->save($data);
-            return redirect()->to(base_url('admin/event/detail/'."/".$has_event))->with('sukses', 'Data Berhasil di Simpan');;
-            // echo $waktu_mulai;
+        if ($this->request->getMethod() === 'post') {
+            $id_file    = $this->request->getVar('id_file');
+            
+            $data       = [
+                    'id_event'      => $materi['id_event'],
+                    'id_kelas'      => $materi['id_kelas'],
+                    'id_materi'     => $materi['id_materi'],
+                    'id_file'       => $id_file,
+                    'created_by'    => $this->session->get('id_user'),
+                    'created_at'    => date('Y-m-d H:i:s'),
+                    'has_materi_file'=> md5(uniqid()),
+                ];
+            
+                $m_materi_file->save($data);
+            
+            
+            // var_dump($data);
+            return redirect()->to(base_url('admin/materi_file/file/'.$has_materi))->with('sukses', 'Data Berhasil di Simpan');;
+            // // echo $waktu_mulai;
         }
     }
     public function update($has_materi)

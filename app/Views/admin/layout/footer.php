@@ -228,6 +228,15 @@ $(document).ready(function(){
       "responsive": true,
       "paging": true,
       "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+      "lengthChange": false,
+      "autoWidth": false
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $("#example4").DataTable({
+      // "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+      // "buttons": ["csv", "excel", "pdf"],
+      "responsive": true,
+      "paging": true,
+      "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
       "lengthChange": true,
       "autoWidth": false
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');

@@ -2,43 +2,43 @@
     <div class="col-md-6">
         
         <div class="card">
-            <div class="card-header">
+            <div class="card-header bg-dark">
                 <b>Detail Kegiatan</b>
             </div>
             <div class="card-body">
                 <div class="row">
-                    <label class="col-sm-2">Acara</label>
-                    <div class="col-sm-10">
+                    <label class="col-sm-3">Acara</label>
+                    <div class="col-sm-9">
                         <?= $materi['judul_berita']?>
                     </div>
                 </div>
                 <div class="row">
-                    <label class="col-sm-2">Topik</label>
-                    <div class="col-sm-10">
+                    <label class="col-sm-3">Topik</label>
+                    <div class="col-sm-9">
                         <?= $materi['materi']?>
                     </div>
                 </div>
                 <div class="row">
-                    <label class="col-sm-2">Pemateri</label>
-                    <div class="col-sm-10">
+                    <label class="col-sm-3">Pemateri</label>
+                    <div class="col-sm-9">
                         <?= $materi['nama']?>
                     </div>
                 </div>
                 <div class="row">
-                    <label class="col-sm-2">Waktu Mulai</label>
-                    <div class="col-sm-10">
+                    <label class="col-sm-3">Waktu Mulai</label>
+                    <div class="col-sm-9">
                         <?= $materi['waktu_mulai']?>
                     </div>
                 </div>
                 <div class="row">
-                    <label class="col-sm-2">Waktu Selesai</label>
-                    <div class="col-sm-10">
+                    <label class="col-sm-3">Waktu Selesai</label>
+                    <div class="col-sm-9">
                         <?= $materi['waktu_selesai']?>
                     </div>
                 </div>
                 <div class="row">
-                    <label class="col-sm-2">Durasi</label>
-                    <div class="col-sm-10">
+                    <label class="col-sm-3">Durasi</label>
+                    <div class="col-sm-9">
                         <?= round((strtotime($materi['waktu_selesai']))-(strtotime($materi['waktu_mulai'])))/60?> Menit
                     </div>
                 </div>
@@ -183,13 +183,13 @@
     </div>
     <div class="col-md-6">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header bg-dark">
                 <b>Bahan Ajar</b>
             </div>
             <div class="card-body">
                 <div class="row mb-2">
                     <div class="col-6">
-                        <a href="#" class="btn btn-sm btn-primary">Tambah Media File</a>
+                        <a href="<?= base_url('admin/materi_file/file/'.$materi['has_materi'])?>" class="btn btn-sm btn-primary">Tambah Media File</a>
                     </div>
                     <div class="col-6 text-right">
                         <a href="#" class="btn btn-sm btn-danger">Tambah Media Video</a>
@@ -199,9 +199,20 @@
                     <tr>
                         <th>#</th>
                         <th>Nama File</th>
-                        <th>Jenis File</th>
                         <th>Hit</th>
                     </tr>
+                    <?php
+                    $no =1;
+                    foreach($materi_file as $mf):
+                    ?>
+                    <tr>
+                        <td><?= $no++; ?></td>
+                        <td><?= $mf['judul_file']?></td>
+                        <td><?= $mf['hit_file']?></td>
+                    </tr>
+                    <?php
+                    endforeach;
+                    ?>
                 </table>
             </div>
         </div>

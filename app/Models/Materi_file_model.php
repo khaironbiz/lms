@@ -7,19 +7,16 @@ use CodeIgniter\Model;
 class Materi_file_model extends Model
 {
     protected $table         = 'materi_file';
-    protected $primaryKey    = 'id_materi';
+    protected $primaryKey    = 'id_materi_file';
     protected $allowedFields = [
                                 'id_event',
                                 'id_kelas',
-                                'materi',
-                                'pemateri',
-                                'waktu_mulai',
-                                'waktu_selesai',
+                                'id_materi',
+                                'id_file',
                                 'created_by',
                                 'created_at',
                                 'updated_at',
-                                'blokir',
-                                'has_materi',
+                                'has_materi_file',
                             ];
 
     // Listing
@@ -48,8 +45,9 @@ class Materi_file_model extends Model
     public function list_by_id_materi($id_materi)
     {
         $builder = $this->db->table('materi_file');
-        $builder->select('materi_file.*, materi.materi');
+        $builder->select('materi_file.*, materi.materi, files.judul_file, files.nama_file, files.hit_file');
         $builder->join('materi', 'materi.id_materi = materi_file.id_materi', 'LEFT');
+        $builder->join('files', 'files.id_file = materi_file.id_file', 'LEFT');
         $builder->where(['materi_file.id_materi'  => $id_materi]);
         $builder->orderBy('materi_file.id_materi_file', 'DESC');
         $query = $builder->get();

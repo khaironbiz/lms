@@ -10,7 +10,7 @@
             <div class="card-header bg-dark">
                 <div class="row">
                     <div class="col-md-9">
-                        <b><?= $kelas->nama_kelas;?> . <?= $kelas->id_kelas;?></b>
+                        <b><?= $kelas->nama_kelas;?></b>
                     </div>
                     <div class="col-md-3 text-right">
                         <a href="<?= base_url()?>/admin/kelas/edit/<?= $kelas->has_kelas;?>" class="btn btn-sm btn-success">Edit</a>

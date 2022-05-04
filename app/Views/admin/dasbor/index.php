@@ -45,7 +45,7 @@ $m_dasbor = new Dasbor_model();
   <!-- /.col -->
   <div class="col-6 col-md-4 col-xl-3 col-xxl-2">
     <div class="info-box mb-3">
-      <span class="info-box-icon bg-success elevation-1"><a href="<?= base_url('admin/event')?>"><i class="fas fa-laptop-house"></i></a></span>
+      <span class="info-box-icon bg-success elevation-1"><a href="<?= base_url('admin/kelas')?>"><i class="fas fa-laptop-house"></i></a></span>
       <div class="info-box-content">
         <span class="info-box-text">Kelas</span>
         <span class="info-box-number"><?= angka($m_dasbor->event()) ?> <small>Acara</small></span>

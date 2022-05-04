@@ -12,8 +12,8 @@ echo view($sub_menu);
 				<th>Tanggal</th>
 				<th>Topik</th>
 				<th>Akreditasi</th>
-				<th>Harga Dasar</th>
-				<th>Harga Jual</th>
+				<th>H.Dasar</th>
+				<th>H.Jual</th>
 				<th>Kuota</th>
 				<th>Pendaftar</th>
 				<th>Sisa</th>
