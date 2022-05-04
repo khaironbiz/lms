@@ -7,10 +7,10 @@
 <div class="row">
     <div class="col-md-8">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header bg-dark">
                 <div class="row">
                     <div class="col-md-9">
-                        <b><?= $kelas->nama_kelas;?></b>
+                        <b><?= $kelas->nama_kelas;?> . <?= $kelas->id_kelas;?></b>
                     </div>
                     <div class="col-md-3 text-right">
                         <a href="<?= base_url()?>/admin/kelas/edit/<?= $kelas->has_kelas;?>" class="btn btn-sm btn-success">Edit</a>
@@ -22,39 +22,45 @@
             
             <div class="card-body">
                 <div class="row">
-                    <label class="col-md-3">Tanggal Kegiatan</label>
-                    <div class="col-md-9"> :
-                        <?php if($tanggal_mulai == $tanggal_selesai){ echo $tanggal_mulai; }else{ echo $tanggal_mulai." sd ". $tanggal_selesai;} ;?>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <label class="col-md-5">Tanggal Kegiatan</label>
+                            <div class="col-md-7"> :
+                                <?php if($tanggal_mulai == $tanggal_selesai){ echo $tanggal_mulai; }else{ echo $tanggal_mulai." sd ". $tanggal_selesai;} ;?>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-5">Harga Dasar</label>
+                            <div class="col-md-7"> :
+                                <?= number_format($kelas->harga_dasar);?>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-5">Harga Jual</label>
+                            <div class="col-md-7"> :
+                                <?= number_format($kelas->harga_jual);?>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <label class="col-md-3">Harga Dasar</label>
-                    <div class="col-md-9"> :
-                        <?= number_format($kelas->harga_dasar);?>
-                    </div>
-                </div>
-                <div class="row">
-                    <label class="col-md-3">Harga Jual</label>
-                    <div class="col-md-9"> :
-                        <?= number_format($kelas->harga_jual);?>
-                    </div>
-                </div>
-                <div class="row">
-                    <label class="col-md-3">Kuota</label>
-                    <div class="col-md-9"> :
-                        <?= number_format($kelas->kuota);?>
-                    </div>
-                </div>
-                <div class="row">
-                    <label class="col-md-3">Pendaftar</label>
-                    <div class="col-md-9"> : 
-                        <?= number_format($count_peserta);?>
-                    </div>
-                </div>
-                <div class="row">
-                    <label class="col-md-3">Sisa</label>
-                    <div class="col-md-9"> :
-                        <?= number_format(($kelas->kuota)-$count_peserta);?>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <label class="col-md-5">Kuota</label>
+                            <div class="col-md-7"> :
+                                <?= number_format($kelas->kuota);?>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-5">Pendaftar</label>
+                            <div class="col-md-7"> : 
+                                <?= number_format($count_peserta);?>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-5">Sisa</label>
+                            <div class="col-md-7"> :
+                                <?= number_format(($kelas->kuota)-$count_peserta);?>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -171,8 +177,8 @@
                     ?>
                     <tr <?php if( $materi['blokir'] ==1){echo "class='bg-danger'";}?>>
                         <td><?= $num++; ?></td>
-                        <td>
-                            <?= $tgl_mulai ?><br>
+                        <td class="w-25">
+                            <?= date('F, d', $detik_mulai) ?><br>
                             <?= $jam_mulai; ?> - <?= $jam_selesai?><br>
                         </td>
                         <td>
@@ -221,7 +227,7 @@
                 <b>Akreditasi Profesi</b>
             </div>
             <img src="<?= base_url()?>/assets/upload/image/<?= $kelas->poster?>">
-            <div class="card-body">
+            <div class="card-body table-responsive">
                 <button type="button" class="btn btn-sm btn-primary mb-2" data-toggle="modal" data-target="#add-akreditasi">
                     <i class="fa fa-plus"> SKP</i>
                 </button>
@@ -322,7 +328,7 @@
                 </table>
             </div>
             <div class="card-footer">
-                <b>Peserta</b>
+                <b>Peserta : <?= $count_peserta?></b>
             </div>
             <div class="card-body table-responsive">
                 <table class="table table-sm table-bordered" id="example3">
@@ -330,7 +336,6 @@
                         <tr>
                             <th>#</th>
                             <th>Nama</th>
-                            <th>HP</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -340,8 +345,11 @@
                         ?>
                         <tr>
                             <td><?= $number++?></td>
-                            <td><?= $peserta['nama_sertifikat']?></td>
-                            <td><?= $peserta['hp_peserta']?></td>
+                            <td>
+                                <?= $peserta['nama_sertifikat']?><br>
+                                <?= $peserta['hp_peserta']?>
+                            </td>
+                            
                         </tr>
                         <?php
                             endforeach

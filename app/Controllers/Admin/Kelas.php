@@ -59,6 +59,7 @@ class Kelas extends BaseController
         $kelas_peserta          = $m_kelas_peserta->list_by_id_kelas($id_kelas);
         $count_id_kelas         = $m_kelas_peserta->count_id_kelas($id_kelas);
         
+        
 
         $data = [
             'title'         => $kelas->nama_kelas,

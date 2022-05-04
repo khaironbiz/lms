@@ -54,7 +54,6 @@ class Kelas_peserta_model extends Model
         $builder->where('kelas_peserta.id_kelas', $id_kelas);
         $builder->orderBy('kelas_peserta.id_kelas_peserta', 'DESC');
         $query = $builder->get();
-
         return $query->getResultArray();
     }
     // read

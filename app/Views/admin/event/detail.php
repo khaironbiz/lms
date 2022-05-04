@@ -35,7 +35,7 @@ echo view($sub_menu)
                     
                     }  
                 </style> -->
-                <div class="col-md-6">
+                <div class="col-xl-6">
                     
                     <div class="card card-kecil bg-light">
                         <div class="card-header">
@@ -43,39 +43,39 @@ echo view($sub_menu)
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <label class="col-sm-4">Tanggal Kegiatan</label>
+                                <label class="col-sm-4">Tanggal</label>
                                 <div class="col-sm-8">
-                                    <?= date('d-m-Y',strtotime($k['tanggal_mulai']))?>
+                                    : <?= date('d-m-Y',strtotime($k['tanggal_mulai']))?>
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-sm-4">Harga Dasar</label>
+                                <label class="col-sm-4">H. Dasar</label>
                                 <div class="col-sm-8">
-                                    <?= number_format($k['harga_dasar'])?>
+                                    : <?= number_format($k['harga_dasar'])?>
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-sm-4">Harga Jual</label>
+                                <label class="col-sm-4">H. Jual</label>
                                 <div class="col-sm-8">
-                                    <?= number_format($k['harga_jual'])?>
+                                    : <?= number_format($k['harga_jual'])?>
                                 </div>
                             </div>
                             <div class="row">
                                 <label class="col-sm-4">Kuota</label>
                                 <div class="col-sm-8">
-                                    <?= number_format($k['kuota'])?>
+                                    : <?= number_format($k['kuota'])?>
                                 </div>
                             </div>
                             <div class="row">
                                 <label class="col-sm-4">Pendaftar</label>
                                 <div class="col-sm-8">
-                                    
+                                    : 
                                 </div>
                             </div>
                             <div class="row">
                                 <label class="col-sm-4">Sisa</label>
                                 <div class="col-sm-8">
-                                    
+                                    : 
                                 </div>
                             </div>
                         </div>
