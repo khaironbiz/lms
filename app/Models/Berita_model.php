@@ -56,7 +56,7 @@ class Berita_model extends Model
         $builder->where(['status_berita' => 'Publish',
             'jenis_berita'               => 'Berita', ]);
         $builder->orderBy('berita.tanggal_publish', 'DESC');
-        $builder->limit(3);
+        $builder->limit(4);
         $query = $builder->get();
 
         return $query->getResultArray();

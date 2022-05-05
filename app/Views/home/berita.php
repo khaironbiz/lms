@@ -10,7 +10,7 @@
         </div>
         <?php foreach ($berita2 as $berita2) { ?>
          <div class="col-md-4">
-           <div class="card" style="margin-bottom: 20px;">
+           <div class="card mb-2">
             <img src="<?= base_url('assets/upload/image/' . $berita2['gambar']) ?>">
             <div class="card-body">
               <h3><?= $berita2['judul_berita'] ?></h3>

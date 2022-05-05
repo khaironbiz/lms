@@ -20,15 +20,15 @@ class Home extends BaseController
         $slider        = $m_galeri->slider();
         $client        = $m_client->testimoni();
         $berita2       = $m_berita->beranda();
-
-        $data = ['title'  => $konfigurasi['namaweb'] . ' | ' . $konfigurasi['tagline'],
-            'description' => $konfigurasi['namaweb'] . ', ' . $konfigurasi['tentang'],
-            'keywords'    => $konfigurasi['namaweb'] . ', ' . $konfigurasi['keywords'],
-            'slider'      => $slider,
-            'konfigurasi' => $konfigurasi,
-            'client'      => $client,
-            'berita2'     => $berita2,
-            'content'     => 'home/index',
+        $data = [
+            'title'         => $konfigurasi['namaweb'] . ' | ' . $konfigurasi['tagline'],
+            'description'   => $konfigurasi['namaweb'] . ', ' . $konfigurasi['tentang'],
+            'keywords'      => $konfigurasi['namaweb'] . ', ' . $konfigurasi['keywords'],
+            'slider'        => $slider,
+            'konfigurasi'   => $konfigurasi,
+            'client'        => $client,
+            'berita2'       => $berita2,
+            'content'       => 'home/index',
         ];
         echo view('layout/wrapper', $data);
     }
