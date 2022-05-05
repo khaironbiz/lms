@@ -79,6 +79,15 @@ class Kategori_kelas_model extends Model
         $query = $builder->get();
         return $query->getRowArray();
     }
+    // detail
+    public function by_id($id_kategori_kelas)
+    {
+        $builder = $this->db->table('kategori_kelas');
+        $builder->where('id_kategori_kelas', $id_kategori_kelas);
+        $builder->orderBy('kategori_kelas.id_kategori_kelas', 'DESC');
+        $query = $builder->get();
+        return $query->getRowArray();
+    }
     // read
     public function read($slug_kategori_kelas)
     {

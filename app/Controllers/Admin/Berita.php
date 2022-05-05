@@ -5,6 +5,7 @@ namespace App\Controllers\Admin;
 use App\Models\Berita_model;
 use App\Models\Kategori_model;
 use App\Models\User_model;
+use App\Models\Client_model;
 
 class Berita extends BaseController
 {
@@ -100,6 +101,8 @@ class Berita extends BaseController
         checklogin();
         $m_kategori = new Kategori_model();
         $m_berita   = new Berita_model();
+        $m_client   = new Client_model();
+        $client     = $m_client->listing();
         $kategori   = $m_kategori->listing();
 
         // Start validasi
@@ -160,9 +163,11 @@ class Berita extends BaseController
             return redirect()->to(base_url('admin/berita/jenis_berita'))->with('sukses', 'Data Berhasil di Simpan');
         }
 
-        $data = ['title' => 'Tambah Berita',
-            'kategori'   => $kategori,
-            'content'    => 'admin/berita/tambah',
+        $data = [
+            'title'     => 'Tambah Berita',
+            'client'    => $client,
+            'kategori'  => $kategori,
+            'content'   => 'admin/berita/tambah',
         ];
         echo view('admin/layout/wrapper', $data);
     }

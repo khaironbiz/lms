@@ -3,7 +3,7 @@
 ?>
 
 <div class="row">
-	<div class="col-md-4">
+	<div class="col-md-3">
 		<?php
 		if($kelas['poster'] !=''):
 		?>
@@ -12,7 +12,7 @@
 		endif
 		?>
 	</div>
-	<div class="col-md-8">
+	<div class="col-md-9">
 		<div class="row">
 			<label class="col-md-2 mt-1">Event</label>
 			<div class="col-md-10">
@@ -49,7 +49,7 @@
 			<label class="col-md-2 mt-1">Kategori</label>
 			<div class="col-md-4">
 				<select class="form-control form-control-sm" name="kategori_kelas" riquired>
-					<option value=''>Pilih</option>
+					<option value='<?= $kelas['kategori_kelas']?>'><?= $kelas['kategori']?></option>
 					<?php 
 					foreach($kategori_kelas as $k){
 					?>
@@ -75,7 +75,7 @@
 			<label class="col-md-2 mt-1">Metode</label>
 			<div class="col-md-4">
 				<select name="metode_pembelajaran" class="form-control form-control-sm" required>
-					<option value=""></option>
+					<option value="<?= $kelas['metode_pembelajaran']?>"><?= metode_belajar($kelas['metode_pembelajaran'])?></option>
 					<option value="0">Daring</option>
 					<option value="1">Luring</option>					
 					<option value="2">Gabungan Daring dan Luring</option>
@@ -102,7 +102,8 @@
 			</div>
 		</div>
 		<div class="modal-footer justify-content-between">
-			<button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Simpan</button>
+			<a href="<?= base_url('admin/kelas/detail/'.$kelas['has_kelas'])?>" class="btn btn-sm btn-danger">Back</a>
+			<button type="submit" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Simpan</button>
 		</div>
 	</div>
 	

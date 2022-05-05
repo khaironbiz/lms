@@ -81,7 +81,7 @@ $m_dasbor = new Dasbor_model();
   <!-- /.col -->
   <div class="col-6 col-md-4 col-xl-3 col-xxl-2">
     <div class="info-box mb-3">
-      <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-address-card"></i></span>
+      <span class="info-box-icon bg-danger elevation-1"><a href="<?= base_url('admin/client')?>"><i class="fas fa-address-card"></i></a></span>
       <div class="info-box-content">
         <span class="info-box-text">Clients <i class="fas fa-acorn"></i></span>
         <span class="info-box-number"><?= angka($m_dasbor->client()) ?></span>

@@ -50,6 +50,7 @@ class Client extends BaseController
                     'tempat_lahir'  => $this->request->getPost('tempat_lahir'),
                     'tanggal_lahir' => date('Y-m-d', strtotime($this->request->getPost('tanggal_lahir'))),
                     'tanggal_post'  => date('Y-m-d H:i:s'),
+                    'has_client'    => md5(uniqid()),
                 ];
                 $m_client->tambah($data);
                 // masuk database
@@ -58,7 +59,8 @@ class Client extends BaseController
                 return redirect()->to(base_url('admin/client'));
             }
             // masuk database
-            $data = ['id_user'  => $this->session->get('id_user'),
+            $data = [
+                'id_user'       => $this->session->get('id_user'),
                 'jenis_client'  => $this->request->getPost('jenis_client'),
                 'nama'          => $this->request->getPost('nama'),
                 'pimpinan'      => $this->request->getPost('pimpinan'),
@@ -72,6 +74,7 @@ class Client extends BaseController
                 'tempat_lahir'  => $this->request->getPost('tempat_lahir'),
                 'tanggal_lahir' => date('Y-m-d', strtotime($this->request->getPost('tanggal_lahir'))),
                 'tanggal_post'  => date('Y-m-d H:i:s'),
+                'has_client'    => md5(uniqid()),
             ];
             $m_client->tambah($data);
             // masuk database
@@ -115,20 +118,22 @@ class Client extends BaseController
                     ->save('assets/upload/client/thumbs/' . $namabaru);
                 // masuk database
                 // masuk database
-                $data = ['id_client' => $id_client,
-                    'id_user'        => $this->session->get('id_user'),
-                    'jenis_client'   => $this->request->getPost('jenis_client'),
-                    'nama'           => $this->request->getPost('nama'),
-                    'pimpinan'       => $this->request->getPost('pimpinan'),
-                    'alamat'         => $this->request->getPost('alamat'),
-                    'telepon'        => $this->request->getPost('telepon'),
-                    'website'        => $this->request->getPost('website'),
-                    'email'          => $this->request->getPost('email'),
-                    'isi_testimoni'  => $this->request->getPost('isi_testimoni'),
-                    'gambar'         => $namabaru,
-                    'status_client'  => $this->request->getPost('status_client'),
-                    'tempat_lahir'   => $this->request->getPost('tempat_lahir'),
-                    'tanggal_lahir'  => date('Y-m-d', strtotime($this->request->getPost('tanggal_lahir'))),
+                $data = [
+                    'id_client'         => $id_client,
+                    'id_user'           => $this->session->get('id_user'),
+                    'jenis_client'      => $this->request->getPost('jenis_client'),
+                    'nama'              => $this->request->getPost('nama'),
+                    'pimpinan'          => $this->request->getPost('pimpinan'),
+                    'alamat'            => $this->request->getPost('alamat'),
+                    'telepon'           => $this->request->getPost('telepon'),
+                    'website'           => $this->request->getPost('website'),
+                    'email'             => $this->request->getPost('email'),
+                    'isi_testimoni'     => $this->request->getPost('isi_testimoni'),
+                    'gambar'            => $namabaru,
+                    'status_client'     => $this->request->getPost('status_client'),
+                    'tempat_lahir'      => $this->request->getPost('tempat_lahir'),
+                    'tanggal_lahir'     => date('Y-m-d', strtotime($this->request->getPost('tanggal_lahir'))),
+                    'has_client'        => md5(uniqid()),
                 ];
                 $m_client->edit($data);
                 // masuk database
@@ -151,6 +156,7 @@ class Client extends BaseController
                 'status_client' => $this->request->getPost('status_client'),
                 'tempat_lahir'  => $this->request->getPost('tempat_lahir'),
                 'tanggal_lahir' => date('Y-m-d', strtotime($this->request->getPost('tanggal_lahir'))),
+                'has_client'    => md5(uniqid()),
             ];
             $m_client->edit($data);
             // masuk database

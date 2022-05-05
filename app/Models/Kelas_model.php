@@ -74,7 +74,7 @@ class Kelas_model extends Model
     public function detail($has_kelas)
     {
         $builder = $this->db->table('kelas');
-        $builder->select('kelas.*, kategori_kelas.kategori_kelas, berita.judul_berita, users.nama');
+        $builder->select('kelas.*, kategori_kelas.kategori_kelas as kategori, berita.judul_berita, users.nama');
         $builder->join('kategori_kelas', 'kategori_kelas.id_kategori_kelas = kelas.kategori_kelas', 'LEFT');
         $builder->join('berita', 'berita.id_berita = kelas.id_event', 'LEFT');
         $builder->join('users', 'users.id_user = kelas.pic_kelas', 'LEFT');

@@ -44,10 +44,7 @@
 		</select>
 		<small class="text-secondary">Status publikasi</small>
 	</div>
-	<div class="col-md-2">
-		<input type="text" name="icon" class="form-control" value="<?= set_value('icon') ?>">
-		<small class="text-secondary">Icon <a href="https://fontawesome.com/icons" target="_blank">Fontawsome</a></small>
-	</div>
+	
 </div>
 
 <div class="form-group row">

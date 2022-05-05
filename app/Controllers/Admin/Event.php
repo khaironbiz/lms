@@ -7,6 +7,7 @@ use App\Models\Kategori_model;
 use App\Models\User_model;
 use App\Models\Kelas_model;
 use App\Models\Materi_model;
+use App\Models\Client_model;
 use App\Models\Kategori_kelas_model;
 
 class Event extends BaseController
@@ -110,9 +111,12 @@ class Event extends BaseController
         checklogin();
         $m_kategori = new Kategori_model();
         $m_berita   = new Berita_model();
+        $m_client   = new Client_model();
+        $client     = $m_client->listing();
         $kategori   = $m_kategori->listing();
         $data = [
             'title'     => 'Tambah Event',
+            'client'    => $client,
             'kategori'  => $kategori,
             'content'   => 'admin/event/tambah',
         ];

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Konfigurasi_model;
+use App\Models\Kategori_kelas_model;
 use App\Models\User_model;
 
 // namaweb
@@ -470,4 +471,23 @@ function checksiswa()
      {
          return number_format($angka, '0', ',', '.');
      }
+    // metode belajar
+    function metode_belajar($metode)
+    {
+        if( $metode == 0){
+            echo "Daring";
+        }elseif( $metode==1){
+            echo "Luring";
+        }elseif($metode==2){
+            echo "Gabungan Daring dan Luring";
+        }else{
+            echo "NULL";
+        }
+    }
+    function kategori_kelas($id_ketegori_kelas)
+    {
+    $m_kategori_kelas   = new Kategori_kelas_model();
+    $kategori_kelas     = $m_kategori_kelas->by_id($id_ketegori_kelas);
 
+    return $kategori_kelas['kategori_kelas'];
+    }

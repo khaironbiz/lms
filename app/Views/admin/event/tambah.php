@@ -11,8 +11,21 @@
 
 <div class="form-group row">
 	<label class="col-md-2">Banner</label>
-	<div class="col-md-10">
+	<div class="col-md-4">
 		<input type="file" name="gambar" class="form-control" value="<?= set_value('gambar') ?>">
+	</div>
+	<div class="col-md-6">
+		<select name="id_client" class="form-control" required>
+			<option value="">---pilih---</option>
+			<?php
+				foreach($client as $client):
+			?>
+			<option value="<?= $client['id_client']?>"><?= $client['nama']?></option>
+			<?php
+				endforeach
+			?>
+		</select>
+		
 	</div>
 </div>
 
@@ -32,21 +45,18 @@
 		</select>
 		<small class="text-secondary">Status publikasi</small>
 	</div>
-	<div class="col-md-2">
-		<input type="text" name="icon" class="form-control" value="<?= set_value('icon') ?>">
-		<small class="text-secondary">Icon <a href="https://fontawesome.com/icons" target="_blank">Fontawsome</a></small>
-	</div>
+	
 </div>
 
 <div class="form-group row">
 	<label class="col-md-2">Waktu Publikasi</label>
-	<div class="col-md-4">
+	<div class="col-md-2">
 		<input type="text" name="tanggal_publish" class="form-control tanggal" value="<?php if (isset($_POST['tanggal_publis'])) {
     echo set_value('tanggal_publish');
 } else {
     echo date('d-m-Y');
 } ?>">
-		<small class="text-secondary">Format <strong>dd-mm-yyyy</strong>. Misal: <?= date('d-m-Y') ?></small>
+		<small class="text-secondary">Format <strong>dd-mm-yyyy</strong></small>
 	</div>
 	<div class="col-md-2">
 		<input type="text" name="jam" class="form-control jam" value="<?php if (isset($_POST['jam'])) {
@@ -54,7 +64,7 @@
 } else {
     echo date('H:i:s');
 } ?>">
-		<small class="text-secondary">Format <strong>HH:MM:SS</strong>. Misal: <?= date('H:i:s') ?></small>
+		<small class="text-secondary">Format <strong>HH:MM:SS</strong></small>
 	</div>
 </div>
 
