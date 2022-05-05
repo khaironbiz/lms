@@ -26,11 +26,12 @@ class Materi_model extends Model
     // Listing
     public function listing()
     {
-        $builder = $this->db->table('kelas');
-        $builder->select('kelas.*, berita.judul_berita, users.nama');
-        $builder->join('berita', 'berita.id_berita = kelas.id_event', 'LEFT');
-        $builder->join('users', 'users.id_user = kelas.pic_kelas', 'LEFT');
-        $builder->orderBy('kelas.id_event', 'DESC');
+        $builder = $this->db->table('materi');
+        $builder->select('materi.*, berita.judul_berita, users.nama, kelas.nama_kelas');
+        $builder->join('berita', 'berita.id_berita = materi.id_event', 'LEFT');
+        $builder->join('users', 'users.id_user = materi.pemateri', 'LEFT');
+        $builder->join('kelas', 'kelas.id_kelas = materi.id_kelas', 'LEFT');
+        $builder->orderBy('materi.id_event', 'DESC');
         $query = $builder->get();
         return $query->getResultArray();
     }

@@ -17,7 +17,7 @@ $menu_layanan = $menu->layanan();
         <?php
         if($session->get('nama') !='') {
         ?>
-        <i class="fa fa-user" aria-hidden="true"></i><a href="<?= base_url('admin/dasbor')?>" class="btn btn-primary btn-sm"><?= $session->get('nama');?></a> 
+        <i class="fa fa-user" aria-hidden="true"></i><a href="<?= base_url('admin/dasbor')?>" class="btn btn-primary btn-sm">My Account</a> 
         <?php
         }
         ?>

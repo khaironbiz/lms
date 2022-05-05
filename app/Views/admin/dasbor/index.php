@@ -45,10 +45,33 @@ $m_dasbor = new Dasbor_model();
   <!-- /.col -->
   <div class="col-6 col-md-4 col-xl-3 col-xxl-2">
     <div class="info-box mb-3">
-      <span class="info-box-icon bg-success elevation-1"><a href="<?= base_url('admin/kelas')?>"><i class="fas fa-laptop-house"></i></a></span>
+      <span class="info-box-icon bg-danger elevation-1"><a href="<?= base_url('admin/kelas')?>"><i class="fas fa-laptop-house"></i></a></span>
       <div class="info-box-content">
         <span class="info-box-text">Kelas</span>
-        <span class="info-box-number"><?= angka($m_dasbor->event()) ?> <small>Acara</small></span>
+        <span class="info-box-number"><?= angka($m_dasbor->kelas()) ?> <small>Acara</small></span>
+      </div>
+      <!-- /.info-box-content -->
+    </div>
+    <!-- /.info-box -->
+  </div>
+  <div class="col-6 col-md-4 col-xl-3 col-xxl-2">
+    <div class="info-box mb-3">
+      <span class="info-box-icon bg-warning elevation-1"><a href="<?= base_url('admin/kelas_peserta')?>"><i class="fas fa-user-graduate"></i></a></span>
+      <div class="info-box-content">
+        <span class="info-box-text">Peserta</span>
+        <span class="info-box-number"><?= angka($m_dasbor->peserta()) ?> <small>Peserta</small></span>
+      </div>
+      <!-- /.info-box-content -->
+    </div>
+    <!-- /.info-box -->
+  </div>
+  <!-- /.col -->
+  <div class="col-6 col-md-4 col-xl-3 col-xxl-2">
+    <div class="info-box mb-3">
+      <span class="info-box-icon bg-info elevation-1"><a href="<?= base_url('admin/file')?>"><i class="fas fa-file-archive"></i></a></span>
+      <div class="info-box-content">
+        <span class="info-box-text">File Pelajaran</span>
+        <span class="info-box-number"><?= angka($m_dasbor->file_pelajaran()) ?> <small>File</small></span>
       </div>
       <!-- /.info-box-content -->
     </div>

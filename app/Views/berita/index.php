@@ -15,21 +15,27 @@
   <!-- ======= Contact Section ======= -->
   <section id="contact" class="contact">
     <div class="container">
+      <div class="section-title">
+          <h2><?= $title ?></h2>
+      </div>
       <div class="row">
         <?php foreach ($berita as $berita) { ?>
-         <div class="col-md-4">
-           <div class="card" style="margin-bottom: 20px;">
-            <img src="<?= base_url('assets/upload/image/' . $berita['gambar']) ?>">
+         <div class="col-lg-4 col-md-6 d-flex ">
+           <div class="card mb-2">
+            <img src="<?= base_url('assets/upload/image/' . $berita['gambar']) ?>" class="w-100">
             <div class="card-body">
               <h5><?= $berita['judul_berita'] ?></h5>
               <p class="card-text">
                 <?= $berita['ringkasan'] ?>
               </p>
               <p>
-                <a href="<?= base_url('berita/read/' . $berita['slug_berita']) ?>" class="btn btn-default">
+                
+              </p>
+            </div>
+            <div class="card-footer">
+              <a href="<?= base_url('berita/read/' . $berita['slug_berita']) ?>" class="btn btn-default">
                   <i class="fa fa-chevron-right"></i>  Baca...
                 </a>
-              </p>
             </div>
           </div>
          </div>

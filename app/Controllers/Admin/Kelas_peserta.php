@@ -87,8 +87,10 @@ class Kelas_peserta extends BaseController
                 ]
             ];
             if (!$this->validate($data_validasi)) {
-                session()->setFlashdata('error', $this->validator->listErrors());
-                return redirect()->back()->withInput();
+                // session()->setFlashdata('error', $this->validator->listErrors());
+                $this->session->setFlashdata('warning', 'Data gagal ditambah');
+                // return redirect()->back()->withInput();
+                return redirect()->back();
             }else{
                 $email_peserta      = $this->request->getPost('email_peserta');
                 $hp_peserta         = $this->request->getPost('hp_peserta');

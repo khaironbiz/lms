@@ -3,6 +3,7 @@
 namespace App\Controllers\Admin;
 
 use App\Models\File_model;
+use App\Models\Materi_model;
 
 class File extends BaseController
 {
@@ -14,7 +15,7 @@ class File extends BaseController
         $m_file             = new File_model();
         $file               = $m_file->listing();
         $data = [
-            'title'         => 'Kumpulan File',
+            'title'         => 'Kumpulan File Bahan Ajar',
             'file'          => $file,
             'content'       => 'admin/file/index',
         ];
@@ -30,6 +31,22 @@ class File extends BaseController
             'title'         => 'Add File',
             'file'          => $file,
             'content'       => 'admin/file/tambah',
+        ];
+        echo view('admin/layout/wrapper', $data);
+    }
+    // index
+    public function add($has_materi){
+        checklogin();
+        $id_user            = $this->session->get('id_user');
+        $m_materi           = new Materi_model();
+        $materi             = $m_materi->has_materi($has_materi);
+        $m_file             = new File_model();
+        $file               = $m_file->listing();
+        $data = [
+            'title'         => 'Add File',
+            'file'          => $file,
+            'materi'        => $materi,
+            'content'       => 'admin/file/add',
         ];
         echo view('admin/layout/wrapper', $data);
     }
@@ -89,6 +106,54 @@ class File extends BaseController
                     ];
                     $m_file->tambah($data);
                     return redirect()->to(base_url('admin/file'))->with('sukses', 'Data Berhasil di Simpan');
+                }
+                return redirect()->to(base_url('admin/file'))->with('warning', 'Invalid URL');
+                
+            }
+        session()->setFlashdata('error', $this->validator->listErrors());
+        return redirect()->back()->withInput();
+    }
+    public function create_to_materi($has_materi){
+        checklogin();
+        $id_user        = $this->session->get('id_user');
+        $m_file         = new File_model();
+        // Start validasi
+        if ($this->request->getMethod() === 'post') 
+            if (!$this->validate([
+                'gambar'  => [
+                    'rules'     => 'ext_in[gambar,png,jpg,pdf,doc,docx,xls,xlsx,ppt,pptx]',
+                    'errors'    => [
+                        
+                        'ext_in'        => 'File yang dizinkan adalah : png,jpg,pdf,doc,docx,xls,xlsx,ppt,pptx'
+                    ]
+                ],
+                'judul_file'    => [
+                    'rules'     => 'required|min_length[5]',
+                    'errors'    => [
+                        'required'      => 'Judul File Wajib diisi',
+                        'min_length'    => 'Judul file minimal 5 karakter'
+                    ]
+                ],
+            ])){
+                session()->setFlashdata('error', $this->validator->listErrors());
+                return redirect()->back()->withInput();
+            }else{
+                if (! empty($_FILES['gambar']['name'])) {
+                    // Image upload
+                    $avatar     = $this->request->getFile('gambar');
+                    $namabaru   = uniqid().str_replace(' ', '-', $avatar->getName());
+                    $avatar->move('assets/upload/file/', $namabaru);
+                    $has_file   = md5(uniqid());
+                    // masuk database
+                    $data = [
+                        'judul_file'        => $this->request->getVar('judul_file'),
+                        'nama_file'         => $namabaru,
+                        'created_by'        => $this->session->get('id_user'),
+                        'created_at'        => date('Y-m-d H:i:s'),
+                        'has_file'          => $has_file, 
+                    ];
+                    $m_file->tambah($data);
+                    return redirect()->to(base_url('admin/materi_file/file/'.$has_materi))->with('sukses', 'Data Berhasil di Simpan');
                 }
                 return redirect()->to(base_url('admin/file'))->with('warning', 'Invalid URL');
                 

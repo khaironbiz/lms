@@ -207,8 +207,8 @@
                     ?>
                     
                     <tr>
-                        <td><?= $nomor++; ?></td>
-                        <td><?= $mf['id_materi_file']?><br></td>
+                        <td></td>
+                        <td colspan="3"><?= $mf['judul_file']?><br></td>
                     </tr>
                     
                     <?php

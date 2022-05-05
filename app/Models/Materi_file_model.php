@@ -64,6 +64,27 @@ class Materi_file_model extends Model
         $query = $builder->get();
         return $query->getResultArray();
     }
+    // count id materi
+    public function count_id_materi($id_materi)
+    {
+        $builder = $this->db->table('materi_file')->where('id_materi', $id_materi);
+        $query   = $builder->get();
+        return $query->getNumRows();
+    }
+     // count id materi
+    public function count_id_file($id_file)
+    {
+        $builder = $this->db->table('materi_file')->where('id_file', $id_file);
+        $query   = $builder->get();
+        return $query->getNumRows();
+    }
+    // count dupliakasi id file dan id materi
+    public function count_id_file_id_materi($id_file, $id_materi)
+    {
+        $builder = $this->db->table('materi_file')->where('id_file', $id_file)->where('id_materi', $id_materi);
+        $query   = $builder->get();
+        return $query->getNumRows();
+    }
     // Event
     public function kelas($id_kelas)
     {

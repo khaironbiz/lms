@@ -88,7 +88,7 @@ class Berita extends BaseController
 		$kelas          = $m_kelas->by_has_kelas($has_kelas);
         // Update hits
         $data = [
-            'id_kelas'  => $kelas->id_kelas,
+            'has_kelas'  => $kelas->has_kelas,
             'hit_kelas' => $kelas->hit_kelas + 1,
         ];
         $m_kelas->edit($data);

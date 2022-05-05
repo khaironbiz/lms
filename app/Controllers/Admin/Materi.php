@@ -18,8 +18,8 @@ class Materi extends BaseController
         $m_berita           = new Berita_model();
         $m_kategori         = new Kategori_model();
         $m_kelas            = new Kelas_model();
-        $m_kategori_kelas   = new Kategori_kelas_model();
-        $kategori_kelas     = $m_kategori_kelas->listing();
+        $m_materi           = new Materi_model();
+        $materi             = $m_materi->listing();
         $berita             = $m_berita->event();
         $kelas              = $m_kelas->listing();
         $total              = $m_berita->total_event();
@@ -27,9 +27,9 @@ class Materi extends BaseController
             'title'         => 'Kelas (' . $total . ')',
             'berita'        => $berita,
             'kelas'         => $kelas,
-            'kategori_kelas'=> $kategori_kelas,
+            'materi'        => $materi,
             'sub_menu'      => 'admin/sub_menu/berita',
-            'content'       => 'admin/kelas/index',
+            'content'       => 'admin/materi/index',
         ];
         echo view('admin/layout/wrapper', $data);
     }

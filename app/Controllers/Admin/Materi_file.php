@@ -33,6 +33,7 @@ class Materi_file extends BaseController
         $m_materi_file      = new Materi_file_model();
         $materi_file        = $m_materi_file->file();
         $file               = $m_file->listing();
+    
         $data = [
             'title'         => 'Tambah Bahan Ajar Materi : '.$materi['materi'],
             'materi_file'   => $materi_file,

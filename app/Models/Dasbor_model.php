@@ -13,6 +13,20 @@ class Dasbor_model extends Model
         $query   = $builder->get();
         return $query->getNumRows();
     }
+    // kelas
+    public function kelas()
+    {
+        $builder = $this->db->table('kelas');
+        $query   = $builder->get();
+        return $query->getNumRows();
+    }
+    // kelas
+    public function peserta()
+    {
+        $builder = $this->db->table('kelas_peserta');
+        $query   = $builder->get();
+        return $query->getNumRows();
+    }
     public function event()
     {
         $builder = $this->db->table('berita');
@@ -90,6 +104,14 @@ class Dasbor_model extends Model
         return $query->getNumRows();
     }
 
+    // download
+    public function file_pelajaran()
+    {
+        $builder = $this->db->table('files');
+        $query   = $builder->get();
+
+        return $query->getNumRows();
+    }
     // staff
     public function staff()
     {
