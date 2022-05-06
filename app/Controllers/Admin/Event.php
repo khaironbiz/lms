@@ -152,6 +152,7 @@ class Event extends BaseController
                 // masuk database
                 $data = [
                     'id_user'         => $this->session->get('id_user'),
+                    'id_client'       => $this->request->getVar('id_client'),
                     'id_kategori'     => $this->request->getVar('id_kategori'),
                     'slug_berita'     => strtolower(url_title($this->request->getVar('judul_berita'))),
                     'judul_berita'    => $this->request->getVar('judul_berita'),
@@ -167,25 +168,31 @@ class Event extends BaseController
                     'has_berita'      => md5(uniqid()),
                 
                 ];
-                $m_berita->tambah($data);
-                return redirect()->to(base_url('admin/event'))->with('sukses', 'Data Berhasil di Simpan');
+                var_dump($data);
+                $m_berita->save($data);
+                return redirect()->to(base_url('admin/event'))->with('sukses', 'Data Berhasil disimpan');
+            }else{
+                $data = [
+                    'id_user'         => $this->session->get('id_user'),
+                    'id_client'       => $this->request->getVar('id_client'),
+                    'id_kategori'     => $this->request->getVar('id_kategori'),
+                    'slug_berita'     => strtolower(url_title($this->request->getVar('judul_berita'))),
+                    'judul_berita'    => $this->request->getVar('judul_berita'),
+                    'ringkasan'       => $this->request->getVar('ringkasan'),
+                    'isi'             => $this->request->getVar('isi'),
+                    'status_berita'   => $this->request->getVar('status_berita'),
+                    'jenis_berita'    => $this->request->getVar('jenis_berita'),
+                    'keywords'        => $this->request->getVar('keywords'),
+                    'icon'            => $this->request->getVar('icon'),
+                    'tanggal_post'    => date('Y-m-d H:i:s'),
+                    'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
+                    'has_berita'      => md5(uniqid()),
+                ];
+                var_dump($data);
+                // $m_berita->tambah($data);
+                // return redirect()->to(base_url('admin/event'))->with('sukses', 'Data Berhasil di Simpan');
             }
-            $data = [
-                'id_user'         => $this->session->get('id_user'),
-                'id_kategori'     => $this->request->getVar('id_kategori'),
-                'slug_berita'     => strtolower(url_title($this->request->getVar('judul_berita'))),
-                'judul_berita'    => $this->request->getVar('judul_berita'),
-                'ringkasan'       => $this->request->getVar('ringkasan'),
-                'isi'             => $this->request->getVar('isi'),
-                'status_berita'   => $this->request->getVar('status_berita'),
-                'jenis_berita'    => $this->request->getVar('jenis_berita'),
-                'keywords'        => $this->request->getVar('keywords'),
-                'icon'            => $this->request->getVar('icon'),
-                'tanggal_post'    => date('Y-m-d H:i:s'),
-                'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
-            ];
-            $m_berita->tambah($data);
-            return redirect()->to(base_url('admin/event'))->with('sukses', 'Data Berhasil di Simpan');
+            
         }else{
             return redirect()->to(base_url('admin/event'))->with('warning', 'Data gagal di Simpan');
         }
@@ -222,11 +229,14 @@ class Event extends BaseController
         checklogin();
         $m_kategori = new Kategori_model();
         $m_berita   = new Berita_model();
+        $m_client   = new Client_model();
+        $client     = $m_client->listing();
         $kategori   = $m_kategori->listing();
         $berita     = $m_berita->detail($id_berita);
         $data       = [
             'title'     => 'Edit',
             'kategori'  => $kategori,
+            'client'    => $client,
             'berita'    => $berita,
             'content'   => 'admin/event/edit',
         ];
@@ -264,6 +274,7 @@ class Event extends BaseController
                 $data = [
                     'id_berita'       => $id_berita,
                     'id_user'         => $this->session->get('id_user'),
+                    'id_client'       => $this->request->getVar('id_client'),
                     'id_kategori'     => $this->request->getVar('id_kategori'),
                     'slug_berita'     => strtolower(url_title($this->request->getVar('judul_berita'))),
                     'judul_berita'    => $this->request->getVar('judul_berita'),
@@ -275,6 +286,7 @@ class Event extends BaseController
                     'icon'            => $this->request->getVar('icon'),
                     'gambar'          => $namabaru,
                     'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
+                    'has_berita'      => md5(uniqid()),
                 ];
                 $m_berita->edit($data);
                 return redirect()->to(base_url('admin/event'))->with('sukses', 'Data Berhasil di Simpan');
@@ -282,6 +294,7 @@ class Event extends BaseController
             $data = [
                 'id_berita'       => $id_berita,
                 'id_user'         => $this->session->get('id_user'),
+                'id_client'       => $this->request->getVar('id_client'),
                 'id_kategori'     => $this->request->getVar('id_kategori'),
                 'slug_berita'     => strtolower(url_title($this->request->getVar('judul_berita'))),
                 'judul_berita'    => $this->request->getVar('judul_berita'),
@@ -292,6 +305,7 @@ class Event extends BaseController
                 'keywords'        => $this->request->getVar('keywords'),
                 'icon'            => $this->request->getVar('icon'),
                 'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
+                'has_berita'      => md5(uniqid()),
             ];
             $m_berita->edit($data);
             return redirect()->to(base_url('admin/event'))->with('sukses', 'Data Berhasil disimpan');

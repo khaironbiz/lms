@@ -11,8 +11,21 @@
 
 <div class="form-group row">
 	<label class="col-md-2">Banner</label>
-	<div class="col-md-10">
+	<div class="col-md-4">
 		<input type="file" name="gambar" class="form-control" value="<?= $berita['gambar'] ?>">
+	</div>
+	<div class="col-md-6">
+		<select name="id_client" class="form-control" required>
+			<option value="">---pilih---</option>
+			<?php
+				foreach($client as $client):
+			?>
+			<option value="<?= $client['id_client']?>"><?= $client['nama']?></option>
+			<?php
+				endforeach
+			?>
+		</select>
+		
 	</div>
 </div>
 

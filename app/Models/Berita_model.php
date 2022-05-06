@@ -8,7 +8,7 @@ class Berita_model extends Model
 {
     protected $table         = 'berita';
     protected $primaryKey    = 'id_berita';
-    protected $allowedFields = [];
+    protected $allowedFields = ['id_user', 'judul_berita', 'id_client', 'id_kategori', 'slug_berita', 'ringkasan','isi','status_berita','jenis_berita','keywords','gambar', 'hits', 'tanggal_post', 'tanggal_publish', 'tanggal','has_berita'];
 
     // Listing
     public function listing()

@@ -33,8 +33,14 @@ class User_model extends Model
     public function login($username, $password)
     {
         return $this->asArray()
-            ->where(['username' => $username,
-                'password'      => sha1($password), ])
+            ->where([
+                'email'     => $username,
+                'password'  => sha1($password), 
+                ])
+            ->orWhere([
+                'username'  => $username,
+                'password'  => sha1($password), 
+            ])
             ->first();
     }
     //ambil password

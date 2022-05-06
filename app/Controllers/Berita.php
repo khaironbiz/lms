@@ -59,6 +59,7 @@ class Berita extends BaseController
         $id_event       = $berita['id_berita'];
 		$kelas          = $m_kelas->event($id_event);
         $materi         = $m_materi->event($id_event);
+        var_dump($berita);
         // Update hits
         $data = [
             'id_berita' => $berita['id_berita'],

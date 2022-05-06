@@ -101,8 +101,6 @@ class Berita extends BaseController
         checklogin();
         $m_kategori = new Kategori_model();
         $m_berita   = new Berita_model();
-        $m_client   = new Client_model();
-        $client     = $m_client->listing();
         $kategori   = $m_kategori->listing();
 
         // Start validasi
@@ -140,6 +138,7 @@ class Berita extends BaseController
                     'gambar'          => $namabaru,
                     'tanggal_post'    => date('Y-m-d H:i:s'),
                     'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
+                    'has_berita'      => md5(uniqid()),
                 ];
                 $m_berita->tambah($data);
                 return redirect()->to(base_url('admin/berita'))->with('sukses', 'Data Berhasil di Simpan');
@@ -157,10 +156,11 @@ class Berita extends BaseController
                 'icon'            => $this->request->getVar('icon'),
                 'tanggal_post'    => date('Y-m-d H:i:s'),
                 'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
+                'has_berita'      => md5(uniqid()),
             ];
             $m_berita->tambah($data);
 
-            return redirect()->to(base_url('admin/berita/jenis_berita'))->with('sukses', 'Data Berhasil di Simpan');
+            return redirect()->to(base_url('admin/berita'))->with('sukses', 'Data Berhasil di Simpan');
         }
 
         $data = [
@@ -215,6 +215,7 @@ class Berita extends BaseController
                     'icon'            => $this->request->getVar('icon'),
                     'gambar'          => $namabaru,
                     'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
+                    'has_berita'      => md5(uniqid()),
                 ];
                 $m_berita->edit($data);
 
@@ -233,10 +234,11 @@ class Berita extends BaseController
                 'keywords'        => $this->request->getVar('keywords'),
                 'icon'            => $this->request->getVar('icon'),
                 'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
+                'has_berita'      => md5(uniqid()),
             ];
             $m_berita->edit($data);
 
-            return redirect()->to(base_url('admin/berita/jenis_berita/' . $this->request->getVar('jenis_berita')))->with('sukses', 'Data Berhasil di Simpan');
+            return redirect()->to(base_url('admin/berita/'))->with('sukses', 'Data Berhasil di Simpan');
         }
 
         $data = ['title' => 'Edit Berita: ' . $berita['judul_berita'],

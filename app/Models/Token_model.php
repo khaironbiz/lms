@@ -49,14 +49,9 @@ class Token_model extends Model
     // count token
     public function count_token($token)
     {
-        $builder = $this->db->table('token');
-        $builder->select('COUNT(*) AS count');
-        $builder->where([
-            'token'    => $token,
-            'read_at'  => '0', ]);
-        $builder->orderBy('token.id_token', 'DESC');
-        $query = $builder->get();
-        return $query->getRowArray();
+        $builder = $this->db->table('token')->where('token', $token)->where('read_at', 0);
+        $query   = $builder->get();
+        return $query->getNumRows();
     }
     // count
     public function count($id_user)

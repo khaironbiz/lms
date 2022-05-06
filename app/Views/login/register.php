@@ -46,7 +46,7 @@ $site        = $konfigurasi->listing();
       <h4 class="login-box-msg">Registrasi Anggota</h4>
       <hr>
       <?= '<span class="text-danger">' . \Config\Services::validation()->listErrors() . '</span>'; ?>
-      <?= form_open(base_url('registrasi')); ?>
+      <?= form_open(base_url('register')); ?>
       <?= csrf_field() ?>
         <div class="mb-1 row">
             <label class="col-sm-2 col-form-label">Nama</label>

@@ -12,7 +12,7 @@ class Registrasi_model extends Model
     protected $returnType           = 'array';
     protected $useSoftDeletes       = false;
     protected $allowedFields        = [
-        'nama','nik','jenis_kelamin','tanggal_lahir','nira','dpw','email','hp','password','created_at','has_registrasi'
+        'nama','nik','jenis_kelamin','tanggal_lahir','nira','dpw','email','hp','password','created_at','updated_at','has_registrasi','level_akses'
     ];
     protected $validationRules      = [];
     protected $validationMessages   = [];
@@ -27,6 +27,14 @@ class Registrasi_model extends Model
         $query = $builder->get();
 
         return $query->getResultArray();
+    }
+    public function has_registrasi($has_registrasi){
+        $builder = $this->db->table('registrasi');
+        $builder->select('registrasi.*, token.token, token.exp_date');
+        $builder->where('has_registrasi', $has_registrasi);
+        $builder->join('token', 'token.token = registrasi.has_registrasi');
+        $query = $builder->get();
+        return $query->getRowArray();
     }
     public function detail($token)
     {
@@ -48,6 +56,13 @@ class Registrasi_model extends Model
         $builder->orderBy('token.id_token', 'DESC');
         $query = $builder->get();
         return $query->getRowArray();
+    }
+    //count has registrasi
+    public function count_has_registrasi($has_registrasi)
+    {
+        $builder = $this->db->table('registrasi')->where('has_registrasi', $has_registrasi);
+        $query   = $builder->get();
+        return $query->getNumRows();
     }
     // count token
     public function count_token($token)
