@@ -143,13 +143,6 @@ class Event extends BaseController
                 // Image upload
                 $avatar   = $this->request->getFile('gambar');
                 $namabaru = str_replace(' ', '-', $avatar->getName());
-                $avatar->move('assets/upload/image/', $namabaru);
-                // Create thumb
-                $image = \Config\Services::image()
-                    ->withFile('assets/upload/image/' . $namabaru)
-                    ->fit(100, 100, 'center')
-                    ->save('assets/upload/image/thumbs/' . $namabaru);
-                // masuk database
                 $data = [
                     'id_user'         => $this->session->get('id_user'),
                     'id_client'       => $this->request->getVar('id_client'),
@@ -166,11 +159,21 @@ class Event extends BaseController
                     'tanggal_post'    => date('Y-m-d H:i:s'),
                     'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
                     'has_berita'      => md5(uniqid()),
-                
                 ];
-                var_dump($data);
-                $m_berita->save($data);
-                return redirect()->to(base_url('admin/event'))->with('sukses', 'Data Berhasil disimpan');
+                $tambah_berita = $m_berita->save($data);
+                if($tambah_berita){
+                    $avatar->move('assets/upload/image/', $namabaru);
+                    // Create thumb
+                    $image = \Config\Services::image()
+                        ->withFile('assets/upload/image/' . $namabaru)
+                        ->fit(100, 100, 'center')
+                        ->save('assets/upload/image/thumbs/' . $namabaru);
+                    // masuk database
+                    return redirect()->to(base_url('admin/event'))->with('sukses', 'Data Berhasil disimpan');
+                }else{
+                    var_dump($data);
+                    // return redirect()->to(base_url('admin/event'))->with('warning', 'Data gagal disimpan');
+                }
             }else{
                 $data = [
                     'id_user'         => $this->session->get('id_user'),
