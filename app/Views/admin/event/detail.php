@@ -86,9 +86,9 @@ echo view($sub_menu)
             <button type="button" class="btn btn-success btn-sm mb-2" data-toggle="modal" data-target="#modal-default<?= $berita['id_berita'] ?>">
 			<i class="fa fa-plus"></i> Add Kelas
             </button>
-            <?= form_open(base_url('admin/kelas/add_kelas/'.$berita['has_berita']));
-                echo csrf_field();
-            ?>
+            <form action="<?= base_url('admin/kelas/add_kelas/'.$berita['has_berita']) ?>" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+
+            <?= csrf_field(); ?>
                 <div class="modal fade" id="modal-default<?= $berita['id_berita'] ?>">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
@@ -99,20 +99,20 @@ echo view($sub_menu)
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <div class="form-group row">
+                                <div class="mt-1 row">
                                     <label class="col-2">Event</label>
                                     <div class="col-10">
                                         <input type="text" name="judul_berita" class="form-control" value="<?= $berita['judul_berita'] ?>" readonly>
                                         <input type="hidden" name="id_event" class="form-control" value="<?= $berita['id_berita'] ?>" readonly>
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                <div class="mt-1 row">
                                     <label class="col-2">Kelas</label>
                                     <div class="col-10">
                                         <input type="text" name="nama_kelas" class="form-control form-control-sm" placeholder="Nama Kegiatan" value="<?= set_value('nama_kelas') ?>" required>
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                <div class="mt-1 row">
                                     <label class="col-md-2">Tanggal Mulai</label>
                                     <div class="col-md-4">
                                         <input type="text" name="tanggal_mulai" class="form-control form-control-sm tanggal" value="<?= set_value('tanggal_mulai') ?>" required>
@@ -122,7 +122,7 @@ echo view($sub_menu)
                                         <input type="text" name="tanggal_selesai" class="form-control form-control-sm tanggal" value="<?= set_value('tanggal_selesai') ?>" required>
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                <div class="mt-1 row">
                                     <label class="col-md-2">Harga Dasar</label>
                                     <div class="col-md-4">
                                         <input type="number" name="harga_dasar" class="form-control form-control-sm" placeholder="Harga Dasar" value="<?= set_value('harga_dasar') ?>" required>
@@ -132,7 +132,7 @@ echo view($sub_menu)
                                         <input type="number" name="harga_jual" class="form-control form-control-sm" placeholder="Harga Jual" value="<?= set_value('harga_jual') ?>" required>
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                <div class="mt-1 row">
                                     <label class="col-md-2">Kategori</label>
                                     <div class="col-md-4">
                                         <select class="form-control form-control-sm" name="kategori_kelas" riquired>
@@ -152,10 +152,14 @@ echo view($sub_menu)
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group row">
+                                <div class="mt-1 row">
                                     <label class="col-md-2">Kuota</label>
                                     <div class="col-md-4">
                                         <input type="number" name="kuota" class="form-control form-control-sm" placeholder="Kuota" value="<?= set_value('kuota') ?>" required>
+                                    </div>
+                                    <label class="col-md-2">Poster</label>
+                                    <div class="col-md-4">
+                                        <input type="file" name="gambar" class="form-control form-control-sm" required>
                                     </div>
                                             
                                 </div>

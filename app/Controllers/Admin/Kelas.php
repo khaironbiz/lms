@@ -145,34 +145,59 @@ class Kelas extends BaseController
     {
         checklogin();
         $m_kelas        = new Kelas_model();
-        $data_validasi  = [
+        
+        // Start validasi
+        if ($this->request->getMethod() === 'post'){
+            $data_validasi  = [
                 'nama_kelas'        => 'required|min_length[3]',
                 'kategori_kelas'    => 'required',
+                'gambar' => [
+                    'mime_in[gambar,image/jpg,image/jpeg,image/gif,image/png]',
+                    'max_size[gambar,4096]',
+                ],
             ];
-        // Start validasi
-        if ($this->request->getMethod() === 'post' && $this->validate($data_validasi)){
-            $time_start     = strtotime($this->request->getVar('tanggal_mulai'));
-            $time_end       = strtotime($this->request->getVar('tanggal_selesai'));
-            $tanggal_mulai  = date('Y-m-d',$time_start);
-            $tanggal_selesai= date('Y-m-d',$time_end);
-            $data = [
-                'pic_kelas'         => $this->session->get('id_user'),
-                'id_event'          => $this->request->getVar('id_event'),
-                'nama_kelas'        => $this->request->getVar('nama_kelas'),
-                'kategori_kelas'    => $this->request->getVar('kategori_kelas'),
-                'tanggal_mulai'     => $tanggal_mulai,
-                'tanggal_selesai'   => $tanggal_selesai,
-                'kuota'             => $this->request->getVar('kuota'),
-                'status'            => $this->request->getVar('status'),
-                'harga_dasar'       => $this->request->getVar('harga_dasar'),
-                'harga_jual'        => $this->request->getVar('harga_jual'),
-                'has_kelas'         => md5(uniqid()),
-            ];
-            $m_kelas->save($data);
-            return redirect()->to(base_url('admin/event/detail/'.$has_berita))->with('sukses', 'Data Berhasil di Simpan');
+            if($this->validate($data_validasi)){
+                $time_start     = strtotime($this->request->getVar('tanggal_mulai'));
+                $time_end       = strtotime($this->request->getVar('tanggal_selesai'));
+                $tanggal_mulai  = date('Y-m-d',$time_start);
+                $tanggal_selesai= date('Y-m-d',$time_end);
+                $avatar         = $this->request->getFile('gambar');
+                $namabaru       = uniqid().str_replace(' ', '-', $avatar->getName());
+                $data = [
+                    'pic_kelas'         => $this->session->get('id_user'),
+                    'id_event'          => $this->request->getVar('id_event'),
+                    'nama_kelas'        => $this->request->getVar('nama_kelas'),
+                    'kategori_kelas'    => $this->request->getVar('kategori_kelas'),
+                    'tanggal_mulai'     => $tanggal_mulai,
+                    'tanggal_selesai'   => $tanggal_selesai,
+                    'kuota'             => $this->request->getVar('kuota'),
+                    'status'            => $this->request->getVar('status'),
+                    'poster'            => $namabaru,
+                    'harga_dasar'       => $this->request->getVar('harga_dasar'),
+                    'harga_jual'        => $this->request->getVar('harga_jual'),
+                    'has_kelas'         => md5(uniqid()),
+                ];
+                $add_kelas = $m_kelas->save($data);
+                if($add_kelas){
+                    $avatar->move('assets/upload/image/', $namabaru);
+                    // Create thumb
+                    $image = \Config\Services::image()
+                        ->withFile('assets/upload/image/' . $namabaru)
+                        ->fit(400, 400, 'center')
+                        ->save('assets/upload/image/thumbs/' . $namabaru);
+                        // masuk database
+                    return redirect()->to(base_url('admin/event/detail/'.$has_berita))->with('sukses', 'Data Berhasil di Simpan');
+                }else{
+                    return redirect()->to(base_url('admin/event'))->with('warning', 'Data Gagal di Simpan');
+                }
+                
+            }else{
+                session()->setFlashdata('error', $this->validator->listErrors());
+                return redirect()->back()->withInput();
+            }
         }else{
-            return redirect()->to(base_url('admin/event'))->with('warning', 'Data Gagal di Simpan');
-        }
+            return redirect()->to(base_url('admin/event'))->with('warning', 'Akses Illegal');
+        } 
     }
     // edit
     public function edit($has_kelas)

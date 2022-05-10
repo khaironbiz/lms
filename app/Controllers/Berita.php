@@ -36,7 +36,7 @@ class Berita extends BaseController
         $m_konfigurasi = new Konfigurasi_model();
         $m_berita      = new Berita_model();
         $konfigurasi   = $m_konfigurasi->listing();
-        $berita        = $m_berita->event();
+        $berita        = $m_berita->event_publish();
 
         $data = [
             'title'         => 'Event ',

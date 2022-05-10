@@ -53,7 +53,7 @@
 					<?php 
 					foreach($kategori_kelas as $k){
 					?>
-					<option value='<?= $k['id_kategori_kelas']?>'><?= $k['kategori_kelas']?></option>
+					<option value='<?= $k['id_kategori_kelas']?>'><?= $k['nama_kategori_kelas']?></option>
 					<?php
 					}
 					?>

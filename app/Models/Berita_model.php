@@ -25,6 +25,21 @@ class Berita_model extends Model
         return $query->getResultArray();
     }
     // Event
+    public function event_publish()
+    {
+        $builder = $this->db->table('berita');
+        $builder->select('berita.*, kategori.nama_kategori, kategori.slug_kategori, users.nama');
+        $builder->join('kategori', 'kategori.id_kategori = berita.id_kategori', 'LEFT');
+        $builder->join('users', 'users.id_user = berita.id_user', 'LEFT');
+        $builder->where([
+                    'jenis_berita'  => 'Event', 
+                    'status_berita' => 'Publish']);
+        $builder->orderBy('berita.tanggal_publish', 'DESC');
+        $query = $builder->get();
+
+        return $query->getResultArray();
+    }
+    // Event
     public function event()
     {
         $builder = $this->db->table('berita');
@@ -32,7 +47,7 @@ class Berita_model extends Model
         $builder->join('kategori', 'kategori.id_kategori = berita.id_kategori', 'LEFT');
         $builder->join('users', 'users.id_user = berita.id_user', 'LEFT');
         $builder->where([
-                    'jenis_berita'  => 'Event', ]);
+                    'jenis_berita'  => 'Event']);
         $builder->orderBy('berita.tanggal_publish', 'DESC');
         $query = $builder->get();
 
