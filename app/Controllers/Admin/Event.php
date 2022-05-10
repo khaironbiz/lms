@@ -146,7 +146,6 @@ class Event extends BaseController
                 $data = [
                     'id_user'         => $this->session->get('id_user'),
                     'id_client'       => $this->request->getVar('id_client'),
-                    'id_kategori'     => $this->request->getVar('id_kategori'),
                     'slug_berita'     => strtolower(url_title($this->request->getVar('judul_berita'))),
                     'judul_berita'    => $this->request->getVar('judul_berita'),
                     'ringkasan'       => $this->request->getVar('ringkasan'),
@@ -154,7 +153,6 @@ class Event extends BaseController
                     'status_berita'   => $this->request->getVar('status_berita'),
                     'jenis_berita'    => $this->request->getVar('jenis_berita'),
                     'keywords'        => $this->request->getVar('keywords'),
-                    'icon'            => $this->request->getVar('icon'),
                     'gambar'          => $namabaru,
                     'tanggal_post'    => date('Y-m-d H:i:s'),
                     'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
@@ -178,7 +176,6 @@ class Event extends BaseController
                 $data = [
                     'id_user'         => $this->session->get('id_user'),
                     'id_client'       => $this->request->getVar('id_client'),
-                    'id_kategori'     => $this->request->getVar('id_kategori'),
                     'slug_berita'     => strtolower(url_title($this->request->getVar('judul_berita'))),
                     'judul_berita'    => $this->request->getVar('judul_berita'),
                     'ringkasan'       => $this->request->getVar('ringkasan'),
@@ -186,7 +183,6 @@ class Event extends BaseController
                     'status_berita'   => $this->request->getVar('status_berita'),
                     'jenis_berita'    => $this->request->getVar('jenis_berita'),
                     'keywords'        => $this->request->getVar('keywords'),
-                    'icon'            => $this->request->getVar('icon'),
                     'tanggal_post'    => date('Y-m-d H:i:s'),
                     'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
                     'has_berita'      => md5(uniqid()),
@@ -286,7 +282,6 @@ class Event extends BaseController
                     'status_berita'   => $this->request->getVar('status_berita'),
                     'jenis_berita'    => $this->request->getVar('jenis_berita'),
                     'keywords'        => $this->request->getVar('keywords'),
-                    'icon'            => $this->request->getVar('icon'),
                     'gambar'          => $namabaru,
                     'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
                     'has_berita'      => md5(uniqid()),
@@ -306,7 +301,6 @@ class Event extends BaseController
                 'status_berita'   => $this->request->getVar('status_berita'),
                 'jenis_berita'    => $this->request->getVar('jenis_berita'),
                 'keywords'        => $this->request->getVar('keywords'),
-                'icon'            => $this->request->getVar('icon'),
                 'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
                 'has_berita'      => md5(uniqid()),
             ];
