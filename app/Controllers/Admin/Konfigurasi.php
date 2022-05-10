@@ -10,6 +10,7 @@ class Konfigurasi extends BaseController
     public function index()
     {
         checklogin();
+        admin();
         $m_konfigurasi  = new Konfigurasi_model();
         $konfigurasi    = $m_konfigurasi->listing();
         $id_konfigurasi = $konfigurasi['id_konfigurasi'];
@@ -60,6 +61,7 @@ class Konfigurasi extends BaseController
     public function seo()
     {
         checklogin();
+        admin();
         $m_konfigurasi  = new Konfigurasi_model();
         $konfigurasi    = $m_konfigurasi->listing();
         $id_konfigurasi = $konfigurasi['id_konfigurasi'];
@@ -92,6 +94,7 @@ class Konfigurasi extends BaseController
     public function logo()
     {
         checklogin();
+        admin();
         $m_konfigurasi  = new Konfigurasi_model();
         $konfigurasi    = $m_konfigurasi->listing();
         $id_konfigurasi = $konfigurasi['id_konfigurasi'];
@@ -136,6 +139,7 @@ class Konfigurasi extends BaseController
     public function icon()
     {
         checklogin();
+        admin();
         $m_konfigurasi  = new Konfigurasi_model();
         $konfigurasi    = $m_konfigurasi->listing();
         $id_konfigurasi = $konfigurasi['id_konfigurasi'];

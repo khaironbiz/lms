@@ -10,6 +10,7 @@ class Client extends BaseController
     public function index()
     {
         checklogin();
+        admin();
         $m_client = new Client_model();
         $client   = $m_client->listing();
         $total    = $m_client->total();
@@ -93,6 +94,7 @@ class Client extends BaseController
     public function edit($id_client)
     {
         checklogin();
+        admin();
         $m_client = new Client_model();
         $client   = $m_client->detail($id_client);
 
@@ -175,6 +177,7 @@ class Client extends BaseController
     public function delete($id_client)
     {
         checklogin();
+        admin();
         $m_client = new Client_model();
         $data     = ['id_client' => $id_client];
         $m_client->delete($data);

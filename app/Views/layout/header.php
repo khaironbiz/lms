@@ -16,10 +16,16 @@ $menu_layanan = $menu->layanan();
       <div class="d-flex align-items-center">
         <?php
         if($session->get('nama') !='') {
+          if($session->get('akses_level') == 'Admin'){
         ?>
         <i class="fa fa-user" aria-hidden="true"></i><a href="<?= base_url('admin/dasbor')?>" class="btn btn-primary btn-sm">My Account</a> 
         <?php
+        }else{
+        ?>
+        <i class="fa fa-user" aria-hidden="true"></i><a href="<?= base_url('kelas/main')?>" class="btn btn-primary btn-sm">My Account</a> 
+        <?php
         }
+      }
         ?>
       </div>
     </div>

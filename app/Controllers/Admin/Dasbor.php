@@ -7,6 +7,7 @@ class Dasbor extends BaseController
     public function index()
     {
         checklogin();
+        admin();
         $data = ['title' => 'Dashboard Aplikasi',
             'content'    => 'admin/dasbor/index',
         ];

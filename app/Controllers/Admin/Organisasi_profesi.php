@@ -9,6 +9,7 @@ class Organisasi_profesi extends BaseController{
     
     public function index(){
         checklogin();
+        admin();
         $id_user        = $this->session->get('id_user');
         $m_profesi      = new Profesi_model();
         $m_op           = new Organisasi_profesi_model();
@@ -25,6 +26,7 @@ class Organisasi_profesi extends BaseController{
     //create
     public function create(){
         checklogin();
+        admin();
         $id_user        = $this->session->get('id_user');
         $m_op           = new Organisasi_profesi_model();
         if ($this->request->getMethod() === 'post' ){
@@ -96,6 +98,7 @@ class Organisasi_profesi extends BaseController{
     //detail
     public function detail($has_op){
         checklogin();
+        admin();
         $id_user        = $this->session->get('id_user');
         $m_profesi      = new Profesi_model();
         $m_op           = new Organisasi_profesi_model();
@@ -172,6 +175,7 @@ class Organisasi_profesi extends BaseController{
     // delete
     public function delete($has_op){
         checklogin();
+        admin();
         $m_op       = new Organisasi_profesi_model();
         $op         = $m_op->by_has_op($has_op);
         $data       = [

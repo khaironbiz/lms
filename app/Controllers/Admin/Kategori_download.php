@@ -10,6 +10,7 @@ class Kategori_download extends BaseController
     public function index()
     {
         checklogin();
+        admin();
         $m_kategori_download = new Kategori_download_model();
         $kategori_download   = $m_kategori_download->listing();
         $total               = $m_kategori_download->total();
@@ -44,6 +45,7 @@ class Kategori_download extends BaseController
     public function edit($id_kategori_download)
     {
         checklogin();
+        admin();
         $m_kategori_download = new Kategori_download_model();
         $kategori_download   = $m_kategori_download->detail($id_kategori_download);
         $total               = $m_kategori_download->total();
@@ -78,6 +80,7 @@ class Kategori_download extends BaseController
     public function delete($id_kategori_download)
     {
         checklogin();
+        admin();
         $m_kategori_download = new Kategori_download_model();
         $data                = ['id_kategori_download' => $id_kategori_download];
         $m_kategori_download->delete($data);

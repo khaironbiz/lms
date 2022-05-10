@@ -9,6 +9,7 @@ class Profesi extends BaseController{
     // daftar nama profesi
     public function index(){
         checklogin();
+        admin();
         $id_user    = $this->session->get('id_user');
         $m_profesi  = new Profesi_model();
         $profesi    = $m_profesi->listing();
@@ -22,6 +23,7 @@ class Profesi extends BaseController{
     //tambah data
     public function create(){
         checklogin();
+        admin();
         $id_user    = $this->session->get('id_user');
         $m_profesi  = new Profesi_model();
         $profesi    = $m_profesi->listing();
@@ -68,6 +70,7 @@ class Profesi extends BaseController{
     // edit
     public function update($has_profesi){
         checklogin();
+        admin();
         $id_user    = $this->session->get('id_user');
         $m_profesi  = new Profesi_model();
         $profesi    = $m_profesi->listing();
@@ -106,6 +109,7 @@ class Profesi extends BaseController{
     // delete
     public function delete($has_profesi){
         checklogin();
+        admin();
         $id_user    = $this->session->get('id_user');
         $m_profesi  = new Profesi_model();
         $profesi    = $m_profesi->listing();

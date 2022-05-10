@@ -48,6 +48,7 @@ class Berita extends BaseController
     public function jenis_berita($jenis_berita)
     {
         checklogin();
+        admin();
         $m_berita   = new Berita_model();
         $m_kategori = new Kategori_model();
         $berita     = $m_berita->jenis_berita_all($jenis_berita);
@@ -64,6 +65,7 @@ class Berita extends BaseController
     public function status_berita($status_berita)
     {
         checklogin();
+        admin();
         $m_berita   = new Berita_model();
         $m_kategori = new Kategori_model();
         $kategori   = $m_kategori->detail($id_kategori);
@@ -81,6 +83,7 @@ class Berita extends BaseController
     public function author($id_user)
     {
         checklogin();
+        admin();
         $m_berita   = new Berita_model();
         $m_kategori = new Kategori_model();
         $m_user     = new User_model();
@@ -99,6 +102,7 @@ class Berita extends BaseController
     public function tambah()
     {
         checklogin();
+        admin();
         $m_kategori = new Kategori_model();
         $m_berita   = new Berita_model();
         $kategori   = $m_kategori->listing();
@@ -176,6 +180,7 @@ class Berita extends BaseController
     public function edit($id_berita)
     {
         checklogin();
+        admin();
         $m_kategori = new Kategori_model();
         $m_berita   = new Berita_model();
         $kategori   = $m_kategori->listing();
@@ -253,6 +258,7 @@ class Berita extends BaseController
     public function delete($id_berita)
     {
         checklogin();
+        admin();
         $m_berita = new Berita_model();
         $data     = ['id_berita' => $id_berita];
         $m_berita->delete($data);

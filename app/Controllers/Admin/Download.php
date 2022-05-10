@@ -11,6 +11,7 @@ class Download extends BaseController
     public function index()
     {
         checklogin();
+        admin();
         $m_download          = new Download_model();
         $m_kategori_download = new Kategori_download_model();
         $download            = $m_download->listing();
@@ -27,6 +28,7 @@ class Download extends BaseController
     public function tambah()
     {
         checklogin();
+        admin();
         $m_download          = new Download_model();
         $m_kategori_download = new Kategori_download_model();
         $kategori_download   = $m_kategori_download->listing();
@@ -87,6 +89,7 @@ class Download extends BaseController
     public function edit($id_download)
     {
         checklogin();
+        admin();
         $m_kategori_download = new Kategori_download_model();
         $m_download          = new Download_model();
         $kategori_download   = $m_kategori_download->listing();
@@ -148,6 +151,7 @@ class Download extends BaseController
     public function unduh($id_download)
     {
         checklogin();
+        admin();
         $m_kategori_download = new Kategori_download_model();
         $m_download          = new Download_model();
         $kategori_download   = $m_kategori_download->listing();
@@ -160,6 +164,7 @@ class Download extends BaseController
     public function delete($id_download)
     {
         checklogin();
+        admin();
         $m_download = new Download_model();
         $data       = ['id_download' => $id_download];
         $m_download->delete($data);

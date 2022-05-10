@@ -102,7 +102,6 @@ class Kelas extends BaseController
         $kategori   = $m_kategori->detail($id_kategori);
         $berita     = $m_berita->status_berita_all($status_berita);
         $total      = $m_berita->total_status_berita($status_berita);
-
         $data = ['title' => $status_berita . ' (' . $total . ')',
             'berita'     => $berita,
             'content'    => 'admin/berita/index',
@@ -120,7 +119,6 @@ class Kelas extends BaseController
         $user       = $m_user->detail($id_user);
         $berita     = $m_berita->author_all($id_user);
         $total      = $m_berita->total_author($id_user);
-
         $data = ['title' => $user['nama'] . ' (' . $total . ')',
             'berita'     => $berita,
             'content'    => 'admin/berita/index',

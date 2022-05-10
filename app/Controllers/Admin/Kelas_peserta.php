@@ -107,11 +107,17 @@ class Kelas_peserta extends BaseController
                     'created_at'        => date('Y-m-d H:i:s'),
                     'has_kelas_peserta' => md5(uniqid())
                 ];
-                $m_kelas_peserta->save($data);
-                // masuk database
-                $this->session->setFlashdata('sukses', 'Data telah ditambah');
-                return redirect()->to(base_url('home/berita'));
-                // var_dump($data);
+                $tambah_peserta = $m_kelas_peserta->save($data);
+                if($tambah_peserta){
+
+                }else{
+                    $this->session->setFlashdata('sukses', 'Data sukses ditambah');
+                    return redirect()->to(base_url('berita'));
+                    // var_dump($data);
+                }
+                $this->session->setFlashdata('warning', 'Data gagal ditambah');
+                return redirect()->back();
+                    // var_dump($data);
             }
         }else{
             $this->session->setFlashdata('warning', 'INVALID AKSES');
@@ -120,6 +126,74 @@ class Kelas_peserta extends BaseController
         
         //return redirect()->to(base_url('a/b/'.$short));
     }
+
+    // daftar sebagai tamu non member
+    public function daftar_tamu($has_kelas){
+        $m_kelas_peserta    = new Kelas_peserta_model();
+        $kelas_peserta      = $m_kelas_peserta->listing();
+        $m_kelas            = new Kelas_model();
+        $kelas              = $m_kelas->detail($has_kelas);
+        $id_berita          = $kelas['id_event'];
+        $m_berita           = new Berita_model();
+        $berita             = $m_berita->by_id($id_berita);
+        // Start validasi
+        if ($this->request->getMethod() === 'post' ){
+            $data_validasi = [
+                'email_peserta' => [
+                    'rules' => 'required|min_length[10]',
+                    'errors' => [
+                        'required'      => 'Email peserta harus diisi',
+                        'min_length'    => 'Email peserta minimal 10 karakter',
+                    ]
+                ],
+                'hp_peserta' => [
+                    'rules'             => 'required|min_length[10]|numeric',
+                    'errors'            => [
+                        'required'      => 'Nomor HP harus diisi',
+                        'min_length'    => 'Nomor HP minimal 10 karakter',
+                        'numeric'       => 'Nomor HP hanya berupa angka'
+                    ]
+                ]
+            ];
+            if (!$this->validate($data_validasi)) {
+                // session()->setFlashdata('error', $this->validator->listErrors());
+                $this->session->setFlashdata('warning', 'Data gagal ditambah');
+                // return redirect()->back()->withInput();
+                return redirect()->back();
+            }else{
+                $email_peserta      = $this->request->getPost('email_peserta');
+                $hp_peserta         = $this->request->getPost('hp_peserta');
+                $nama_sertifikat    = $this->request->getPost('nama_sertifikat');
+                $data           = [ 
+                    'id_event'          => $kelas['id_event'],
+                    'id_kelas'          => $kelas['id_kelas'],         
+                    'email_peserta'     => $email_peserta,
+                    'hp_peserta'        => $hp_peserta,
+                    'nama_sertifikat'   => $nama_sertifikat,
+                    'harga'             => $kelas['harga_jual'],
+                    'created_at'        => date('Y-m-d H:i:s'),
+                    'has_kelas_peserta' => md5(uniqid())
+                ];
+                $tambah_peserta = $m_kelas_peserta->save($data);
+                if($tambah_peserta){
+
+                }else{
+                    $this->session->setFlashdata('sukses', 'Data sukses ditambah');
+                    return redirect()->to(base_url('berita'));
+                    // var_dump($data);
+                }
+                $this->session->setFlashdata('warning', 'Data gagal ditambah');
+                return redirect()->back();
+                    // var_dump($data);
+            }
+        }else{
+            $this->session->setFlashdata('warning', 'INVALID AKSES');
+            return redirect()->to(base_url('admin/url'));
+        }
+        
+        //return redirect()->to(base_url('a/b/'.$short));
+    }
+
     //tambah data
     public function pengkinian($has_url){
         checklogin();

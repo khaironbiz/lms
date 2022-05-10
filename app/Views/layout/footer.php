@@ -103,6 +103,25 @@ $menu_layanan = $menu->layanan();
     $('#example1').DataTable();
   });
   </script>
+  <!-- SWEETALERT -->
+  <?php if ($session->getFlashdata('sukses')) { ?>
+  <script>
+    swal("Berhasil", "<?= $session->getFlashdata('sukses'); ?>","success")
+  </script>
+  <?php } ?>
+
+  <?php if (isset($error)) { ?>
+  <script>
+    swal("Oops...", "<?= strip_tags($error); ?>","warning")
+  </script>
+  <?php } ?>
+
+  <?php if ($session->getFlashdata('warning')) { ?>
+  <script>
+    swal("Oops...", "<?= $session->getFlashdata('warning'); ?>","warning")
+  </script>
+  <?php } ?>
+
 </body>
 
 </html>

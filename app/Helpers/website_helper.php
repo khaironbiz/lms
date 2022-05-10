@@ -124,13 +124,25 @@ function checklogin()
             $ip_address = $_SERVER['REMOTE_ADDR'];
         }
 
-        $data = ['id_user' => $session->get('id_user'),
-            'ip_address'   => $ip_address,
-            'username'     => $session->get('username'),
-            'url'          => base_url(uri_string()),
+        $data = [
+            'id_user'       => $session->get('id_user'),
+            'ip_address'    => $ip_address,
+            'username'      => $session->get('username'),
+            'url'           => base_url(uri_string()),
         ];
 
         $m_user->user_log($data);
+    }
+}
+// checksiswa
+function admin()
+{
+    helper('url');
+    $session = \Config\Services::session();
+    if ($session->get('akses_level') != 'Admin') {
+        echo '<script>';
+        echo 'window.location.href = "' . base_url('login') . '?login=belum";';
+        echo '</script>';
     }
 }
 

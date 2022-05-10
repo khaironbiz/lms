@@ -66,18 +66,7 @@ echo view($sub_menu)
                                     : <?= number_format($k['kuota'])?>
                                 </div>
                             </div>
-                            <div class="row">
-                                <label class="col-sm-4">Pendaftar</label>
-                                <div class="col-sm-8">
-                                    : 
-                                </div>
-                            </div>
-                            <div class="row">
-                                <label class="col-sm-4">Sisa</label>
-                                <div class="col-sm-8">
-                                    : 
-                                </div>
-                            </div>
+                            
                         </div>
                         <div class="card-footer">
                             <a href="<?= base_url()?>/admin/kelas/detail/<?= $k['has_kelas']?>" class="btn btn-sm btn-primary">Detail</a>
@@ -149,7 +138,7 @@ echo view($sub_menu)
                                         <select class="form-control form-control-sm" name="kategori_kelas" riquired>
                                             <option value=''>Pilih</option>
                                             <?php foreach($kategori_kelas as $k){?>
-                                            <option value='<?= $k['id_kategori_kelas']?>'><?= $k['kategori_kelas']?></option>
+                                            <option value='<?= $k['id_kategori_kelas']?>'><?= $k['nama_kategori_kelas']?></option>
                                             <?php
                                             }
                                             ?>

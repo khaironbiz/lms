@@ -10,6 +10,7 @@ class User extends BaseController
     public function index()
     {
         checklogin();
+        admin();
         $m_user = new User_model();
         $user   = $m_user->listing();
         $total  = $m_user->total();
@@ -46,6 +47,7 @@ class User extends BaseController
     public function edit($id_user)
     {
         checklogin();
+        admin();
         $m_user = new User_model();
         $user   = $m_user->detail($id_user);
         // Start validasi
@@ -87,6 +89,7 @@ class User extends BaseController
     public function delete($id_user)
     {
         checklogin();
+        admin();
         $m_user = new User_model();
         $data   = ['id_user' => $id_user];
         $m_user->delete($data);

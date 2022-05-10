@@ -29,7 +29,7 @@ $session = \Config\Services::session();
           ?>
           <!-- kelas --->
           <div class="card mt-3">
-            <div class="card-header"><b>Kelas</b></div>
+            <div class="card-header"><b>Kelas</b> <?= $id_user; ?></div>
             <div class="card-body">
               <table class="table table-sm">
                 <tr>
@@ -51,14 +51,21 @@ $session = \Config\Services::session();
                   <td>
                     <a href="<?= base_url('berita/kelas/'.$k['has_kelas'])?>" class="btn btn-sm btn-success">Detail</a>
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary btn-sm " data-bs-toggle="modal" data-bs-target="#daftar">
+                    <button type="button" class="btn btn-primary btn-sm " data-bs-toggle="modal" data-bs-target="#daftar<?= $k['has_kelas']?>">
                       Daftar
                     </button>
                     <!-- Modal -->
-                    <?= form_open(base_url('admin/kelas_peserta/create/'."/".$k['has_kelas']));
-                    echo csrf_field();
+                    <?php
+                      if($id_user>0){
+                        echo form_open(base_url('admin/kelas_peserta/create/'.$k['has_kelas']));
+                        echo csrf_field();
+                      }else{
                     ?>
-                    <div class="modal fade" id="daftar" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <?= form_open(base_url('admin/kelas_peserta/daftar_tamu/'.$k['has_kelas']));
+                    echo csrf_field();
+                      }
+                    ?>
+                    <div class="modal fade" id="daftar<?= $k['has_kelas']?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                       <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                           <div class="modal-header">
@@ -92,12 +99,27 @@ $session = \Config\Services::session();
                                   <input type="telp" class="form-control form-control-sm" name="nama_sertifikat">
                                 </div>
                               </div>
+                              <?php
+                                if($id_user>0){
+                              ?>
                               <div class="row mb-1">
-                                <label for="inputPassword" class="col-md-3">Harga</label>
+                                <label for="inputPassword" class="col-md-3">Harga Member</label>
                                 <div class="col-md-9">
-                                  <input type="number" class="form-control form-control-sm" name="harga" value="<?= $k['harga_jual']?>">
+                                  <input type="number" class="form-control form-control-sm" name="harga" value="<?= $k['harga_jual']; ?>">
                                 </div>
                               </div>
+                              <?php
+                                }else{
+                              ?>
+                              <div class="row mb-1">
+                                <label for="inputPassword" class="col-md-3">Harga Non Member</label>
+                                <div class="col-md-9">
+                                  <input type="number" class="form-control form-control-sm" name="harga" value="<?php if($k['harga_jual']<1){echo "10000";}else{ echo ($k['harga_jual']*1.1); } ?>">
+                                </div>
+                              </div>
+                              <?php
+                                }
+                              ?>
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

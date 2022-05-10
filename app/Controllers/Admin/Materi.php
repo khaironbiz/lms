@@ -15,6 +15,7 @@ class Materi extends BaseController
     public function index()
     {
         checklogin();
+        admin();
         $m_berita           = new Berita_model();
         $m_kategori         = new Kategori_model();
         $m_kelas            = new Kelas_model();
@@ -37,6 +38,7 @@ class Materi extends BaseController
     public function detail($has_materi)
     {
         checklogin();
+        admin();
         $m_materi       = new Materi_model();
         $m_kategori     = new Kategori_model();
         $m_materi_file  = new Materi_file_model();
@@ -62,6 +64,7 @@ class Materi extends BaseController
     public function add()
     {
         checklogin();
+        admin();
         $m_kategori = new Kategori_model();
         $m_kelas    = new kelas_model();
         $m_materi   = new Materi_model();
@@ -98,6 +101,7 @@ class Materi extends BaseController
     public function update($has_materi)
     {
         checklogin();
+        admin();
         $m_kategori = new Kategori_model();
         $m_kelas    = new kelas_model();
         $m_materi   = new Materi_model();
@@ -133,6 +137,7 @@ class Materi extends BaseController
     public function soft_delete($has_materi)
     {
         checklogin();
+        admin();
         $m_kategori = new Kategori_model();
         $m_kelas    = new kelas_model();
         $m_materi   = new Materi_model();
@@ -167,6 +172,7 @@ class Materi extends BaseController
     public function delete($has_materi)
     {
         checklogin();
+        admin();
         $m_materi   = new Materi_model();
         $materi     = $m_materi->has_materi($has_materi);
         $data       = ['id_materi' => $materi['id_materi']];

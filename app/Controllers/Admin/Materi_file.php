@@ -15,6 +15,7 @@ class Materi_file extends BaseController
     public function index()
     {
         checklogin();
+        admin();
         $m_materi_file      = new Materi_file_model();
         $materi_file        = $m_materi_file->listing();
         $data = [
@@ -27,6 +28,7 @@ class Materi_file extends BaseController
     public function file($has_materi)
     {
         checklogin();
+        admin();
         $m_file             = new File_model();
         $m_materi           = new Materi_model();
         $materi             = $m_materi->has_materi($has_materi);
@@ -46,6 +48,7 @@ class Materi_file extends BaseController
     public function video()
     {
         checklogin();
+        admin();
         $m_materi_file      = new Materi_file_model();
         $materi_file        = $m_materi_file->video();
         $data = [
@@ -59,6 +62,7 @@ class Materi_file extends BaseController
     public function detail($has_materi_file)
     {
         checklogin();
+        admin();
         $m_materi   = new Materi_model();
         $m_kategori = new Kategori_model();
         $materi     = $m_materi->has_materi($has_materi);
@@ -74,6 +78,7 @@ class Materi_file extends BaseController
     public function addfile($has_materi)
     {
         checklogin();
+        admin();
         $m_materi       = new Materi_model();
         $materi         = $m_materi->has_materi($has_materi);
         $m_materi_file  = new Materi_file_model();
@@ -102,6 +107,7 @@ class Materi_file extends BaseController
     public function update($has_materi)
     {
         checklogin();
+        admin();
         $m_kategori = new Kategori_model();
         $m_kelas    = new kelas_model();
         $m_materi   = new Materi_model();

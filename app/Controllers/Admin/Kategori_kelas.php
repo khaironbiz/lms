@@ -10,6 +10,7 @@ class Kategori_kelas extends BaseController
     public function index()
     {
         checklogin();
+        admin();
         $m_kategori_kelas   = new Kategori_kelas_model();
         $kategori_kelas     = $m_kategori_kelas->listing();
         $total              = $m_kategori_kelas->total();
@@ -25,6 +26,7 @@ class Kategori_kelas extends BaseController
     //tambah
     public function tambah(){
         checklogin();
+        admin();
         $m_kategori_kelas   = new Kategori_kelas_model();
         $kategori_kelas     = $m_kategori_kelas->listing();
         $total              = $m_kategori_kelas->total();
@@ -55,6 +57,7 @@ class Kategori_kelas extends BaseController
     public function edit($has_kategori_kelas)
     {
         checklogin();
+        admin();
         $m_kategori_kelas   = new Kategori_kelas_model();
         $kategori_kelas     = $m_kategori_kelas->detail($has_kategori_kelas);
         $total              = $m_kategori_kelas->total();
@@ -96,6 +99,7 @@ class Kategori_kelas extends BaseController
     public function delete($has_kategori_kelas)
     {
         checklogin();
+        admin();
         $m_kategori_kelas   = new Kategori_kelas_model();
         $kategori_kelas     = $m_kategori_kelas->detail($has_kategori_kelas);
         $id_kategori_kelas  = $kategori_kelas['id_kategori_kelas'];

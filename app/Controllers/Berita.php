@@ -7,6 +7,9 @@ use App\Models\Kategori_model;
 use App\Models\Konfigurasi_model;
 use App\Models\Kelas_model;
 use App\Models\Materi_model;
+use App\Models\User_model;
+use App\Models\Akreditasi_profesi_model;
+
 
 class Berita extends BaseController
 {
@@ -70,6 +73,7 @@ class Berita extends BaseController
             'title'         => $berita['judul_berita'],
             'description'   => $berita['judul_berita'],
             'keywords'      => $berita['judul_berita'],
+            'id_user'       => $this->session->get('id_user'),
             'berita'        => $berita,
             'sidebar'       => $sidebar,
             'kelas'         => $kelas,
@@ -82,11 +86,19 @@ class Berita extends BaseController
     //kelas
     public function kelas($has_kelas)
     {
-        checklogin();
-        $session        = \Config\Services::session();
-        $m_kelas        = new Kelas_model();
-        $m_materi       = new Materi_model();
-		$kelas          = $m_kelas->by_has_kelas($has_kelas);
+        
+        $session                = \Config\Services::session();
+        $m_kelas                = new Kelas_model();
+        $m_materi               = new Materi_model();
+		$kelas                  = $m_kelas->by_has_kelas($has_kelas);
+        $id_kelas               = $kelas->id_kelas;
+        $materi                 = $m_materi->kelas($id_kelas);
+        $m_akreditasi_profesi   = new Akreditasi_profesi_model();
+        $akreditasi_profesi     = $m_akreditasi_profesi->by_id_kelas($id_kelas);
+        $id_user                = $this->session->get('id_user');
+        $m_user                 = new User_model();
+        $user                   = $m_user->detail($id_user);
+        
         // Update hits
         $data = [
             'has_kelas'  => $kelas->has_kelas,
@@ -98,6 +110,10 @@ class Berita extends BaseController
             'description'   => $kelas->nama_kelas,
             'keywords'      => $kelas->nama_kelas,
             'kelas'         => $kelas,
+            'materi'        => $materi, 
+            'skp'           => $akreditasi_profesi,
+            'id_user'       => $this->session->get('id_user'),
+            'user'          => $user,
             'content'       => 'kelas/detail',
         ];
         echo view('layout/wrapper', $data);

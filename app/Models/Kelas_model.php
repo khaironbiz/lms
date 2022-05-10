@@ -32,6 +32,7 @@ class Kelas_model extends Model
         $query = $builder->get();
         return $query->getResultArray();
     }
+    
     // Event
     public function event($id_event)
     {
@@ -49,8 +50,8 @@ class Kelas_model extends Model
     public function by_has_kelas($has_kelas)
     {
         $builder = $this->db->table('kelas');
-        $builder->select('kelas.*');
-        
+        $builder->select('kelas.*, kategori_kelas.nama_kategori_kelas');
+        $builder->join('kategori_kelas', 'kategori_kelas.id_kategori_kelas=kelas.kategori_kelas');
         $builder->where([
                     'kelas.has_kelas'   => $has_kelas,
                     'kelas.status'      => '1']);

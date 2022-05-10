@@ -18,6 +18,7 @@ class Akreditasi_profesi extends BaseController
     public function index()
     {
         checklogin();
+        admin();
         $id_user    = $this->session->get('id_user');
         $m_url      = new Url_model();
         $url        = $m_url->listing($id_user);
@@ -35,6 +36,7 @@ class Akreditasi_profesi extends BaseController
     public function create($has_kelas){
         if ($this->request->getMethod() === 'post' ) {
             checklogin();
+            admin();
             $id_user                = $this->session->get('id_user');
             $m_akreditasi_profesi   = new Akreditasi_profesi_model();
             $m_kelas                = new Kelas_model();
@@ -100,6 +102,7 @@ class Akreditasi_profesi extends BaseController
     //tambah data
     public function pengkinian($has_url){
         checklogin();
+        admin();
         $session       = \Config\Services::session();
         $id_user    = $this->session->get('id_user');
         $m_url      = new Url_model();
@@ -161,6 +164,7 @@ class Akreditasi_profesi extends BaseController
     public function edit($has_kategori_kelas)
     {
         checklogin();
+        admin();
         $m_kategori_kelas   = new Kategori_kelas_model();
         $kategori_kelas     = $m_kategori_kelas->detail($has_kategori_kelas);
         $total              = $m_kategori_kelas->total();
@@ -201,6 +205,7 @@ class Akreditasi_profesi extends BaseController
     public function delete($has_kategori_kelas)
     {
         checklogin();
+        admin();
         $m_kategori_kelas   = new Kategori_kelas_model();
         $kategori_kelas     = $m_kategori_kelas->detail($has_kategori_kelas);
         $id_kategori_kelas  = $kategori_kelas['id_kategori_kelas'];

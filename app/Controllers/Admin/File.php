@@ -11,6 +11,7 @@ class File extends BaseController
     public function index()
     {
         checklogin();
+        admin();
         $id_user            = $this->session->get('id_user');
         $m_file             = new File_model();
         $file               = $m_file->listing();
@@ -24,6 +25,7 @@ class File extends BaseController
     // index
     public function tambah(){
         checklogin();
+        admin();
         $id_user            = $this->session->get('id_user');
         $m_file             = new File_model();
         $file               = $m_file->listing();
@@ -37,6 +39,7 @@ class File extends BaseController
     // index
     public function add($has_materi){
         checklogin();
+        admin();
         $id_user            = $this->session->get('id_user');
         $m_materi           = new Materi_model();
         $materi             = $m_materi->has_materi($has_materi);
@@ -53,6 +56,7 @@ class File extends BaseController
     // kategori
     public function kategori($id_kategori){
         checklogin();
+        admin();
         $m_berita   = new Berita_model();
         $m_kategori = new Kategori_model();
         $kategori   = $m_kategori->detail($id_kategori);
@@ -68,6 +72,7 @@ class File extends BaseController
     // save add
     public function create(){
         checklogin();
+        admin();
         $id_user        = $this->session->get('id_user');
         $m_file         = new File_model();
         // Start validasi
@@ -115,6 +120,7 @@ class File extends BaseController
     }
     public function create_to_materi($has_materi){
         checklogin();
+        admin();
         $id_user        = $this->session->get('id_user');
         $m_file         = new File_model();
         // Start validasi
@@ -163,6 +169,7 @@ class File extends BaseController
     }
     public function update($has_materi){
         checklogin();
+        admin();
         $m_kategori = new Kategori_model();
         $m_kelas    = new kelas_model();
         $m_materi   = new Materi_model();

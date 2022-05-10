@@ -11,6 +11,7 @@ class Organisasi_profesi_provinsi extends BaseController{
     
     public function index(){
         checklogin();
+        admin();
         $id_user        = $this->session->get('id_user');
         $m_op           = new Organisasi_profesi_model();
         $m_op_provinsi  = new Organisasi_profesi_provinsi_model();
@@ -29,6 +30,7 @@ class Organisasi_profesi_provinsi extends BaseController{
     }
     public function provinsi($id_provinsi){
         checklogin();
+        admin();
         $id_user        = $this->session->get('id_user');
         $m_op           = new Organisasi_profesi_model();
         $m_op_provinsi  = new Organisasi_profesi_provinsi_model();
@@ -45,6 +47,7 @@ class Organisasi_profesi_provinsi extends BaseController{
     //create
     public function create(){
         checklogin();
+        admin();
         $id_user        = $this->session->get('id_user');
         $m_op           = new Organisasi_profesi_model();
         $m_op_provinsi  = new Organisasi_profesi_provinsi_model();
@@ -114,6 +117,7 @@ class Organisasi_profesi_provinsi extends BaseController{
     //detail
     public function detail($has_op_provinsi){
         checklogin();
+        admin();
         $id_user        = $this->session->get('id_user');
         $m_profesi      = new Profesi_model();
         $m_op           = new Organisasi_profesi_model();
@@ -191,6 +195,7 @@ class Organisasi_profesi_provinsi extends BaseController{
     // delete
     public function delete($has_op){
         checklogin();
+        admin();
         $m_op       = new Organisasi_profesi_model();
         $op         = $m_op->by_has_op($has_op);
         $data       = [

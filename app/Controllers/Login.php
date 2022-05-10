@@ -312,7 +312,7 @@ class Login extends BaseController
                 $this->session->set('nama', $user['nama']);
                 $this->session->setFlashdata('sukses', 'Hai ' . $user['nama'] . ', Anda berhasil login');
                 //return redirect()->to(base_url('admin/dasbor'));
-                $to         = "khaironbiz@gmail.com";
+                $to         = $user['email'];
                 $subject    = "Notif login akun HPII";
                 $alamat_ip  = $_SERVER['REMOTE_ADDR'];
                 $time_login = date('Y-m-d H:i:s');
