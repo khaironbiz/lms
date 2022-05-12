@@ -30,7 +30,7 @@ foreach ($client as $client) { ?>
 				<br><i class="fa fa-map"></i> <?= $client['alamat'] ?>
 			</td>
 			<td>
-				<a href="<?= base_url('admin/client/edit/' . $client['id_client']) ?>" class="btn btn-success btn-sm"><i class="fa fa-edit"></i></a>
+				<a href="<?= base_url('admin/client/edit/' . $client['has_client']) ?>" class="btn btn-success btn-sm"><i class="fa fa-edit"></i></a>
 				<a href="<?= base_url('admin/client/delete/' . $client['id_client']) ?>" class="btn btn-dark btn-sm" onclick="confirmation(event)"><i class="fa fa-trash"></i></a>
 			</td>
 		</tr>

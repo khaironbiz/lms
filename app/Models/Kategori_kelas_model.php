@@ -12,7 +12,7 @@ class Kategori_kelas_model extends Model
     protected $useSoftDeletes     = false;
     protected $allowedFields      = [
                                     'id_kategori_kelas', 
-                                    'kategori_kelas', 
+                                    'nama_kategori_kelas', 
                                     'slug_kategori_kelas', 
                                     'urutan', 
                                     'hits',
@@ -60,11 +60,11 @@ class Kategori_kelas_model extends Model
         return $query->getRowArray();
     }
     // count
-    public function count($kategori_kelas)
+    public function count($nama_kategori_kelas)
     {
         $builder = $this->db->table('kategori_kelas');
         $builder->select('COUNT(*) AS count');
-        $builder->where('kategori_kelas', $kategori_kelas);
+        $builder->where('nama_kategori_kelas', $nama_kategori_kelas);
         $builder->orderBy('kategori_kelas.id_kategori_kelas', 'DESC');
         $query = $builder->get();
         return $query->getRowArray();

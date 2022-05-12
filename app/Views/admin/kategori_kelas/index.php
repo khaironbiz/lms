@@ -18,11 +18,11 @@ include 'tambah.php';
 		<?php $no = 1;
 		$m_kategori_kelas   = new Kategori_kelas_model();
 		foreach ($kategori_kelas as $kategori_kelas) { 
-			$count	= $m_kategori_kelas->count($kategori_kelas['kategori_kelas']);
+			$count	= $m_kategori_kelas->count($kategori_kelas['nama_kategori_kelas']);
 		?>
 		<tr>
 			<td><?= $no ?></td>
-			<td><?= $kategori_kelas['kategori_kelas'] ?></td>
+			<td><?= $kategori_kelas['nama_kategori_kelas'] ?></td>
 			<td><?= $kategori_kelas['slug_kategori_kelas'] ?></td>
 			<td><?= $kategori_kelas['urutan'] ?></td>
 			<td><?= $count['count']?></td>

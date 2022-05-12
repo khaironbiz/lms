@@ -1,4 +1,4 @@
-<form action="<?= base_url('admin/client/edit/' . $client['id_client']) ?>" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+<form action="<?= base_url('admin/client/update/' . $client['has_client']) ?>" method="post" accept-charset="utf-8" enctype="multipart/form-data">
 <?= csrf_field();
 ?>
 <div class="form-group row">

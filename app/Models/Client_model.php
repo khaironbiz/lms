@@ -39,6 +39,16 @@ class Client_model extends Model
 
         return $query->getResultArray();
     }
+     // pemilik perusahaan
+     public function id_user($id_client)
+     {
+         $builder = $this->db->table('client');
+         $builder->where('id_client', $id_client);
+         $builder->orderBy('client.id_client', 'DESC');
+         $query = $builder->get();
+ 
+         return $query->getResultArray();
+     }
 
     // testimoni
     public function testimoni()
@@ -68,6 +78,16 @@ class Client_model extends Model
     {
         $builder = $this->db->table('client');
         $builder->where('id_client', $id_client);
+        $builder->orderBy('client.id_client', 'DESC');
+        $query = $builder->get();
+
+        return $query->getRowArray();
+    }
+    // detail
+    public function has_client($has_client)
+    {
+        $builder = $this->db->table('client');
+        $builder->where('has_client', $has_client);
         $builder->orderBy('client.id_client', 'DESC');
         $query = $builder->get();
 

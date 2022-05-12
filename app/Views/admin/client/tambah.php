@@ -3,7 +3,7 @@
 		<i class="fa fa-plus"></i> Tambah Baru
 	</button>
 </p>
-<form action="<?= base_url('admin/client') ?>" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+<form action="<?= base_url('admin/client/create') ?>" method="post" accept-charset="utf-8" enctype="multipart/form-data">
 <?= csrf_field();
 ?>
 

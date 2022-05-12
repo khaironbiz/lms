@@ -20,7 +20,7 @@ echo csrf_field();
 				<div class="form-group row">
 					<label class="col-3">Kategori kelas</label>
 					<div class="col-9">
-						<input type="text" name="kategori_kelas" class="form-control" placeholder="Nama kategori_kelas" value="<?= set_value('kategori_kelas') ?>" required>
+						<input type="text" name="nama_kategori_kelas" class="form-control" placeholder="Nama kategori_kelas" value="<?= set_value('nama_kategori_kelas') ?>" required>
 					</div>
 				</div>
 

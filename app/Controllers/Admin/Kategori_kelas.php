@@ -33,14 +33,14 @@ class Kategori_kelas extends BaseController
         // Start validasi
         if ($this->request->getMethod() === 'post' && $this->validate(
             [
-                'kategori_kelas' => 'required|min_length[3]|is_unique[kategori_kelas.kategori_kelas]',
+                'nama_kategori_kelas' => 'required|min_length[3]|is_unique[kategori_kelas.nama_kategori_kelas]',
             ]
         )) {
             // masuk database
-            $slug           = url_title($this->request->getPost('kategori_kelas'), '-', true);
-            $kategori_kelas = $this->request->getPost('kategori_kelas');
+            $slug                   = url_title($this->request->getPost('nama_kategori_kelas'), '-', true);
+            $nama_kategori_kelas    = $this->request->getPost('nama_kategori_kelas');
             $data           = [                
-                'kategori_kelas'        => $kategori_kelas,
+                'nama_kategori_kelas'   => $nama_kategori_kelas,
                 'slug_kategori_kelas'   => $slug,
                 'urutan'                => $this->request->getPost('urutan'),
                 'created_by'            => $this->session->get('id_user'),
@@ -71,7 +71,7 @@ class Kategori_kelas extends BaseController
             $id_kategori_kelas = $kategori_kelas['id_kategori_kelas'];
             $slug = url_title($this->request->getPost('kategori_kelas'), '-', true);
             $data = [
-                'kategori_kelas'        => $this->request->getPost('kategori_kelas'),
+                'nama_kategori_kelas'   => $this->request->getPost('kategori_kelas'),
                 'slug_kategori_kelas'   => $slug,
                 'updated_at'            => date('Y-m-d H:i:s'),
                 'sub_menu'              => 'admin/sub_menu/event',
@@ -89,7 +89,7 @@ class Kategori_kelas extends BaseController
             return redirect()->to(base_url('admin/kategori_kelas'));
         }
         $data = [
-            'title'             => 'Edit Kategori kelas: ' . $kategori_kelas['kategori_kelas'],
+            'title'             => 'Edit Kategori kelas: ' . $kategori_kelas['nama_kategori_kelas'],
             'kategori_kelas'    => $kategori_kelas,
             'content'           => 'admin/kategori_kelas/edit',
         ];

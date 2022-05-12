@@ -38,7 +38,7 @@
             </div>
             <div class="card-footer">
               <a href="<?= base_url('berita/read/' . $berita['slug_berita']) ?>" class="btn btn-default">
-                  <i class="fa fa-chevron-right"></i>  Baca...
+                  <i class="fa fa-chevron-right"></i>More
                 </a>
             </div>
           </div>

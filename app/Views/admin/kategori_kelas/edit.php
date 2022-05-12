@@ -6,7 +6,7 @@ echo csrf_field();
 <div class="form-group row">
 	<label class="col-3">Kategori kelas</label>
 	<div class="col-9">
-		<input type="text" name="kategori_kelas" class="form-control" placeholder="Kategori_kelas" value="<?= $kategori_kelas['kategori_kelas'] ?>" required>
+		<input type="text" name="kategori_kelas" class="form-control" placeholder="Kategori_kelas" value="<?= $kategori_kelas['nama_kategori_kelas'] ?>" required>
 	</div>
 </div>
 
