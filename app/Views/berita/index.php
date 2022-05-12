@@ -23,8 +23,12 @@
          <div class="col-lg-4 col-md-6 d-flex ">
            <div class="card mb-2">
             <img src="<?= base_url('assets/upload/image/' . $berita['gambar']) ?>" class="w-100">
+            <div class="card-header">
+              <b><?= $berita['judul_berita'] ?></b><br>
+              <div class="date-box text-white"><h3><?= date('d', strtotime($berita['tanggal'])) ?></h3><h5><?= date('M-y', strtotime($berita['tanggal'])) ?></h5></div>
+            </div>
             <div class="card-body">
-              <h5><?= $berita['judul_berita'] ?></h5>
+              <h5></h5>
               <p class="card-text">
                 <?= $berita['ringkasan'] ?>
               </p>
