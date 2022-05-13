@@ -326,6 +326,7 @@ class Login extends BaseController
                             ";
                 $this->sendMail($to,$subject,$message,2);
                 return redirect()->to(base_url());
+                // var_dump($user);
             }
             // jika username password salah
             $this->session->setFlashdata('warning', 'Username atau password salah');
@@ -471,6 +472,7 @@ class Login extends BaseController
     }
     // Logout
     public function logout(){
+        $session    = \Config\Services::session();
         $this->session->destroy();
         return redirect()->to(base_url());
     }
