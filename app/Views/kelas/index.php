@@ -26,7 +26,7 @@
             <div class="col-lg-4 col-md-6">
                 <div class="member" data-aos="fade-up" data-aos-delay="100">
                 <div class="member-img">
-                    <a href="<?= base_url('berita/kelas/'.$kelas['has_kelas'])?>">
+                    <a href="<?= base_url('kelas/room/'.$kelas['has_kelas'])?>">
                         <img src="<?= base_url('assets/upload/image/'.$kelas['poster'])?>" class="">
                     </a>
                     

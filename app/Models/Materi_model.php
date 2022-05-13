@@ -35,6 +35,19 @@ class Materi_model extends Model
         $query = $builder->get();
         return $query->getResultArray();
     }
+    // Listing
+    public function list_id_kelas($id_kelas)
+    {
+        $builder = $this->db->table('materi');
+        $builder->select('materi.*, berita.judul_berita, users.nama, kelas.nama_kelas');
+        $builder->join('berita', 'berita.id_berita = materi.id_event', 'LEFT');
+        $builder->join('users', 'users.id_user = materi.pemateri', 'LEFT');
+        $builder->join('kelas', 'kelas.id_kelas = materi.id_kelas', 'LEFT');
+        $builder->where(['materi.id_kelas'  => $id_kelas]);
+        $builder->orderBy('materi.waktu_mulai', 'ASC');
+        $query = $builder->get();
+        return $query->getResultArray();
+    }
     // Event
     public function kelas($id_kelas)
     {

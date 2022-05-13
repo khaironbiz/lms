@@ -51,8 +51,10 @@ class Kelas_model extends Model
     public function by_has_kelas($has_kelas)
     {
         $builder = $this->db->table('kelas');
-        $builder->select('kelas.*, kategori_kelas.nama_kategori_kelas');
+        $builder->select('kelas.*, kategori_kelas.nama_kategori_kelas, berita.id_berita, berita.id_client, client.nama as nama_client');
         $builder->join('kategori_kelas', 'kategori_kelas.id_kategori_kelas=kelas.kategori_kelas');
+        $builder->join('berita', 'berita.id_berita=kelas.id_event');
+        $builder->join('client', 'client.id_client=berita.id_client');
         $builder->where([
                     'kelas.has_kelas'   => $has_kelas,
                     'kelas.status'      => '1']);

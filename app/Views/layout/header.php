@@ -57,13 +57,18 @@ $menu_layanan = $menu->layanan();
               <?php } ?>
             </ul>
           </li>
-
           <li class="dropdown"><a href="#"><span>Galeri &amp; Video</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="<?= base_url('galeri') ?>">Galeri Gambar</a></li>
               <li><a href="<?= base_url('video') ?>">Galeri Video</a></li>
             </ul>
           </li>
+            <li class="dropdown"><a href="#"><span>Kelasku</span> <i class="bi bi-chevron-down"></i></a>
+                <ul>
+                    <li><a href="<?= base_url('kelas/soon') ?>">Mendatang</a></li>
+                    <li><a href="<?= base_url('kelas/main') ?>">Riwayat</a></li>
+                </ul>
+            </li>
           <li><a class="nav-link scrollto" href="<?= base_url('download') ?>">Download</a></li>
           <li><a class="nav-link scrollto" href="<?= base_url('kontak') ?>">Kontak</a></li>
         </ul>
@@ -74,6 +79,7 @@ $menu_layanan = $menu->layanan();
       if($id_user>0){
         
       ?>
+
       <a href="<?= base_url('login/logout') ?>" class="appointment-btn scrollto">Logout</a>
       <?php
       }else{

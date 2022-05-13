@@ -68,6 +68,19 @@ class Kelas_peserta_model extends Model
         $query = $builder->get();
         return $query->getResultArray();
     }
+    // Listing by id user soon
+    public function list_by_id_user_soon($id_user)
+    {
+        $now = date('Y:m-d');
+        $builder = $this->db->table('kelas_peserta');
+        $builder->select('kelas_peserta.*, kelas.nama_kelas,kelas.tanggal_mulai,kelas.tanggal_selesai,kelas.has_kelas, kelas.poster');
+        $builder->join('kelas', 'kelas.id_kelas = kelas_peserta.id_kelas', 'LEFT');
+        $builder->where('kelas_peserta.id_user', $id_user);
+        $builder->where('kelas.tanggal_selesai >', $now);
+        $builder->orderBy('kelas_peserta.id_kelas_peserta', 'DESC');
+        $query = $builder->get();
+        return $query->getResultArray();
+    }
     // read
     public function kelas_user($id_user)
     {

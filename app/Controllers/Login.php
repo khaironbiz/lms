@@ -22,12 +22,17 @@ class Login extends BaseController
         $m_konfigurasi = new Konfigurasi_model();
         $m_user        = new User_model();
         $konfigurasi   = $m_konfigurasi->listing();
+        $id_user       = $this->session->get('id_user');
+        
         $data = [
             'title'         => 'Member Area',
             'description'   => $konfigurasi['namaweb'] . ', ' . $konfigurasi['tentang'],
             'keywords'      => $konfigurasi['namaweb'] . ', ' . $konfigurasi['keywords'],
             'session'       => $session,
         ];
+        if($id_user>0){
+            return redirect()->to(base_url());
+        }
         echo view('login/index', $data);
         // End proses
     }
