@@ -8,28 +8,11 @@ use App\Models\Kelas_peserta_model;
 use App\Models\Konfigurasi_model;
 use App\Models\Materi_model;
 
-class Kelas extends BaseController
+class Akun extends BaseController
 {
-    // Client
-    public function index()
-    {
-        $m_konfigurasi = new Konfigurasi_model();
-        $m_client      = new Client_model();
-        $konfigurasi   = $m_konfigurasi->listing();
-        $client        = $m_client->home();
 
-        $data = [
-            'title'         => 'Client Kami',
-            'description'   => 'Client Kami ' . $konfigurasi['namaweb'] . ', ' . $konfigurasi['tentang'],
-            'keywords'      => 'Client Kami ' . $konfigurasi['namaweb'] . ', ' . $konfigurasi['keywords'],
-            'client'        => $client,
-            'konfigurasi'   => $konfigurasi,
-            'content'       => 'client/index',
-        ];
-        echo view('layout/wrapper', $data);
-    }
     // kelas yang dimiliki oleh user
-    public function main(){
+    public function index(){
         checklogin();
         // $session        = \Config\Services::session();
         $id_user        = $this->session->get('id_user');
@@ -38,12 +21,12 @@ class Kelas extends BaseController
         $m_peserta      = new Kelas_peserta_model();
         $peserta        = $m_peserta->list_by_id_user($id_user);
         $data           = [
-            'title'         => 'Kelas Saya',
+            'title'         => 'Dashboard',
             'description'   => 'Client Kami ' . $konfigurasi['namaweb'] . ', ' . $konfigurasi['tentang'],
             'keywords'      => 'Client Kami ' . $konfigurasi['namaweb'] . ', ' . $konfigurasi['keywords'],
             'kelas'         => $peserta,
             'konfigurasi'   => $konfigurasi,
-            'content'       => 'kelas/index',
+            'content'       => 'akun/index',
         ];
         echo view('layout/wrapper', $data);
     }

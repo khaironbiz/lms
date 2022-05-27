@@ -63,19 +63,27 @@ $menu_layanan = $menu->layanan();
               <li><a href="<?= base_url('video') ?>">Galeri Video</a></li>
             </ul>
           </li>
+            <?php
+            $id_user = $session->get('id_user');
+            if($id_user>0){
+            ?>
             <li class="dropdown"><a href="#"><span>Kelasku</span> <i class="bi bi-chevron-down"></i></a>
                 <ul>
-                    <li><a href="<?= base_url('kelas/soon') ?>">Mendatang</a></li>
-                    <li><a href="<?= base_url('kelas/main') ?>">Riwayat</a></li>
+                    <li><a href="<?= base_url('kelas/soon') ?>">On Progress</a></li>
+                    <li><a href="<?= base_url('kelas/soon') ?>">Soon</a></li>
+                    <li><a href="<?= base_url('kelas/main') ?>">Past</a></li>
                 </ul>
             </li>
+            <?php
+            }
+            ?>
           <li><a class="nav-link scrollto" href="<?= base_url('download') ?>">Download</a></li>
           <li><a class="nav-link scrollto" href="<?= base_url('kontak') ?>">Kontak</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
       <?php
-      $id_user = $session->get('id_user');
+
       if($id_user>0){
         
       ?>

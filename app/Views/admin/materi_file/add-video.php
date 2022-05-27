@@ -1,45 +1,55 @@
+<?php
+use App\Models\Materi_file_model;
+$m_materi_file      		= new Materi_file_model();
+?>
 <div class="row">
-	<button type="button" class="btn btn-success mt-2" data-toggle="modal" data-target="#modal-default">
-		<i class="fa fa-plus"></i> Tambah
-	</button>
-	<?= form_open(base_url());
-	echo csrf_field();
-	?>
-	<div class="modal fade" id="modal-default">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title">Tambah Profesi</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<div class="row mt-2">
-						<label class="col-md-3">Nama Profesi</label>
-						<div class="col-md-9 row">
-							<input type="text" name="nama_profesi" class="form-control form-control-sm" placeholder="nama profesi" value="<?= set_value('nama_profesi') ?>" required>
-							
-						</div>
-					</div>
-					
-				</div>
-				<div class="modal-footer justify-content-between">
-					<button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
-					<button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Simpan</button>
-				</div>
-			</div>
-			<!-- /.modal-content -->
-		</div>
-		<!-- /.modal-dialog -->
-	</div>
-	<!-- /.modal -->
-	<?= form_close(); ?>
-</div>
-<div class="row">
-	<table>
-		<tr>
-			<td></td>
-		</tr>
-	</table>
+    <div class="col-md-6">
+        <a href="<?= base_url('admin/video/add/'.$materi['has_materi'])?>" class="btn btn-sm btn-primary mb-2">Video Baru</a>
+        <?= form_open(base_url('admin/materi_file/addvideo/'.$materi['has_materi']));
+        echo csrf_field();
+        ?>
+        <table class="table table-bordered table-sm" id="example4">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Judul Video</th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php
+            $x= 1;
+
+                foreach ($video as $video):
+                    $id_materi                  = $materi['id_materi'];
+                    $id_video                   = $video['id_video'];
+                    $count_id_video_id_materi 	= $m_materi_file->count_id_video_id_materi($id_video, $id_materi);
+            ?>
+                <tr>
+                    <td><?= $x++; ?></td>
+                    <td>
+
+                        <?php
+                        if($count_id_video_id_materi>0){
+                            echo $video['judul'];
+                        }else{
+                            ?>
+                            <input type="radio" name="id_video" value="<?= $video['id_video']?>">
+                            <?= $video['judul'] ?>
+                            <?php
+                        }
+                        ?>
+                    </td>
+                </tr>
+            <?php
+            endforeach;
+            ?>
+            </tbody>
+
+        </table>
+
+        <a href="<?= base_url('admin/materi/detail/'.$materi['has_materi'])?>" class="btn btn-sm btn-danger">Back</a>
+        <button type="submit" class="btn btn-sm btn-primary">Save</button>
+        <?= form_close(); ?>
+    </div>
+
 </div>

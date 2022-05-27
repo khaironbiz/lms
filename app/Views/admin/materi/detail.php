@@ -192,7 +192,7 @@
                         <a href="<?= base_url('admin/materi_file/file/'.$materi['has_materi'])?>" class="btn btn-sm btn-primary">Tambah Media File</a>
                     </div>
                     <div class="col-6 text-right">
-                        <a href="#" class="btn btn-sm btn-danger">Tambah Media Video</a>
+                        <a href="<?= base_url('admin/materi_file/video/'.$materi['has_materi'])?>" class="btn btn-sm btn-danger">Tambah Media Video</a>
                     </div>
                 </div>
                 <table class="table table-sm table-striped">
@@ -207,8 +207,17 @@
                     ?>
                     <tr>
                         <td><?= $no++; ?></td>
-                        <td><?= $mf['judul_file']?></td>
-                        <td><?= $mf['hit_file']?></td>
+                        <td>
+
+                            <?php
+                            if($mf['id_file'] !=0){
+                                echo $mf['judul_file'];
+                            }else{
+                                echo $mf['judul_video'];
+                            }
+                            ?>
+                        </td>
+                        <td><?= $mf['hits']?></td>
                     </tr>
                     <?php
                     endforeach;

@@ -46,13 +46,13 @@ class Kelas_peserta_model extends Model
         return $query->getResultArray();
     }
     // Listing by id kelas
-    public function list_by_id_kelas($id_kelas)
+    public function list_by_id_kelas($id_kelas, $order='kelas_peserta.id_kelas_peserta', $direction='DESC')
     {
         $builder = $this->db->table('kelas_peserta');
         $builder->select('kelas_peserta.*, kelas.nama_kelas');
         $builder->join('kelas', 'kelas.id_kelas = kelas_peserta.id_kelas', 'LEFT');
         $builder->where('kelas_peserta.id_kelas', $id_kelas);
-        $builder->orderBy('kelas_peserta.id_kelas_peserta', 'DESC');
+        $builder->orderBy($order, $direction);
         $query = $builder->get();
         return $query->getResultArray();
     }
@@ -64,7 +64,7 @@ class Kelas_peserta_model extends Model
         $builder->select('kelas_peserta.*, kelas.nama_kelas,kelas.tanggal_mulai,kelas.tanggal_selesai,kelas.has_kelas, kelas.poster');
         $builder->join('kelas', 'kelas.id_kelas = kelas_peserta.id_kelas', 'LEFT');
         $builder->where('kelas_peserta.id_user', $id_user);
-        $builder->orderBy('kelas_peserta.id_kelas_peserta', 'DESC');
+        $builder->orderBy('kelas_peserta.id_kelas_peserta');
         $query = $builder->get();
         return $query->getResultArray();
     }

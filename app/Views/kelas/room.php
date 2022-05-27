@@ -48,8 +48,8 @@
                           <table class="table table-sm table-striped">
                               <thead>
                                   <tr>
-                                      <th>#</th>
-                                      <th>Time</th>
+                                      <th class="text-center">#</th>
+                                      <th class="text-center">Time</th>
                                       <th class="w-75">Materi</th>
                                   </tr>
                               </thead>
@@ -61,9 +61,14 @@
                                     $detik_selesai = strtotime($materi['waktu_selesai']);
                               ?>
                                   <tr>
-                                      <td><?= $x++?></td>
-                                      <td><?= date('H:i', $detik_mulai)?> - <?= date('H:i', $detik_selesai)?></td>
-                                      <td><?= $materi['materi']?><br><b><?= $materi['nama']?></b></td>
+                                      <td class="text-center"><?= $x++?></td>
+                                      <td class="text-center"><?= date('H:i', $detik_mulai)?> - <?= date('H:i', $detik_selesai)?></td>
+                                      <td>
+                                          <a href="<?= base_url('kelas/materi/'.$materi['has_materi'])?>" >
+                                              <?= $materi['materi']?><br><b><?= $materi['nama']?></b>
+                                          </a>
+
+                                      </td>
                                   </tr>
                               <?php
                                 endforeach;
@@ -76,7 +81,6 @@
                 </div>
                 <div class="col-md-4">
                     <img src="<?= base_url('assets/upload/image/'.$kelas->poster)?>" class="w-100">
-                    <p id="demo" class="text-center text-success text-bold"></p>
 
                     <script>
                         // Mengatur waktu akhir perhitungan mundur
@@ -119,6 +123,9 @@
                             }
                         }, 1000);
                     </script>
+                    <?php
+                    include('sub-menu.php');
+                    ?>
                 </div>
 
             </div>

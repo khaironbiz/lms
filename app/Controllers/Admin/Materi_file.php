@@ -8,6 +8,7 @@ use App\Models\Materi_model;
 use App\Models\Materi_file_model;
 use App\Models\User_model;
 use App\Models\Kelas_model;
+use App\Models\Video_model;
 
 class Materi_file extends BaseController
 {
@@ -45,16 +46,19 @@ class Materi_file extends BaseController
         ];
         echo view('admin/layout/wrapper', $data);
     }
-    public function video()
+    public function video($has_materi)
     {
         checklogin();
         admin();
-        $m_materi_file      = new Materi_file_model();
-        $materi_file        = $m_materi_file->video();
+        $m_materi           = new Materi_model();
+        $materi             = $m_materi->has_materi($has_materi);
+        $m_video            = new Video_model();
+        $video              = $m_video->listing();
         $data = [
             'title'         => 'Daftar Kumpulan Materi Pembelajaran',
-            'materi_file'   => $materi_file,
-            'content'       => 'admin/materi_file/index',
+            'materi'        => $materi,
+            'video'         => $video,
+            'content'       => 'admin/materi_file/add-video',
         ];
         echo view('admin/layout/wrapper', $data);
     }
@@ -101,6 +105,36 @@ class Materi_file extends BaseController
             
             // var_dump($data);
             return redirect()->to(base_url('admin/materi_file/file/'.$has_materi))->with('sukses', 'Data Berhasil di Simpan');;
+            // // echo $waktu_mulai;
+        }
+    }
+    // save add
+    public function addvideo($has_materi)
+    {
+        checklogin();
+        admin();
+        $m_materi       = new Materi_model();
+        $materi         = $m_materi->has_materi($has_materi);
+        $m_materi_file  = new Materi_file_model();
+        // Start validasi
+        if ($this->request->getMethod() === 'post') {
+            $id_video   = $this->request->getVar('id_video');
+
+            $data       = [
+                'id_event'      => $materi['id_event'],
+                'id_kelas'      => $materi['id_kelas'],
+                'id_materi'     => $materi['id_materi'],
+                'id_video'      => $id_video,
+                'created_by'    => $this->session->get('id_user'),
+                'created_at'    => date('Y-m-d H:i:s'),
+                'has_materi_file'=> md5(uniqid()),
+            ];
+
+            $m_materi_file->save($data);
+
+
+            // var_dump($data);
+            return redirect()->to(base_url('admin/materi_file/video/'.$has_materi))->with('sukses', 'Data Berhasil di Simpan');;
             // // echo $waktu_mulai;
         }
     }
