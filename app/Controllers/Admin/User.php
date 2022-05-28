@@ -44,47 +44,57 @@ class User extends BaseController
     }
     
     // edit
-    public function edit($id_user)
+    public function edit($has_user)
     {
         checklogin();
         admin();
         $m_user = new User_model();
-        $user   = $m_user->detail($id_user);
-        // Start validasi
-        if ($this->request->getMethod() === 'post' && $this->validate(
-            [
-                'nama' => 'required|min_length[3]',
-            ]
-        )) {
-            // masuk database
-            if (strlen($this->request->getPost('password')) >= 6 && strlen($this->request->getPost('password')) <= 32) {
-                $data = [
-                    'nama'          => $this->request->getPost('nama'),
-                    'email'         => $this->request->getPost('email'),
-                    'username'      => $this->request->getPost('username'),
-                    'password'      => sha1($this->request->getPost('password')),
-                    'akses_level'   => $this->request->getPost('akses_level'),
-                ];
-            } else {
-                $data = [
-                    'nama'          => $this->request->getPost('nama'),
-                    'email'         => $this->request->getPost('email'),
-                    'username'      => $this->request->getPost('username'),
-                    'akses_level'   => $this->request->getPost('akses_level'),
-                ];
-            }
-            $m_user->update($id_user, $data);
-            // masuk database
-            $this->session->setFlashdata('sukses', 'Data telah diedit');
-            return redirect()->to(base_url('admin/user'));
-        }
+        $user   = $m_user->has_user($has_user);
         $data = [
             'title'     => 'Edit Pengguna: ' . $user['nama'],
             'user'      => $user,
             'content'   => 'admin/user/edit',
         ];
         echo view('admin/layout/wrapper', $data);
+
     }
+    // update
+    public function update($id_user)
+    {
+        checklogin();
+        admin();
+        $m_user = new User_model();
+        $user   = $m_user->detail($id_user);
+        $data_validasi = [
+            'nama' => 'required|min_length[3]',
+            'password' => 'required|min_length[6]',
+        ];
+        // Start validasi
+        if ($this->request->getMethod() === 'post') {
+            if($this->validate($data_validasi)){
+                $data = [
+                    'nik'           => $this->request->getPost('nik'),
+                    'nama'          => $this->request->getPost('nama'),
+                    'gelar_depan'   => $this->request->getPost('gelar_depan'),
+                    'gelar_belakang'=> $this->request->getPost('gelar_belakang'),
+                    'email'         => $this->request->getPost('email'),
+                    'akses_level'   => $this->request->getPost('akses_level'),
+                    'status'        => $this->request->getPost('status'),
+                    'has_user'      => md5(uniqid())
+                ];
+                $m_user->update($id_user, $data);
+                // masuk database
+                $this->session->setFlashdata('sukses', 'Data telah diedit');
+                return redirect()->to(base_url('admin/user'));
+            }else{
+                echo "Gagal Validasi";
+            }
+        }else{
+
+        }
+
+    }
+
     // delete
     public function delete($id_user)
     {

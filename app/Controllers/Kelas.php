@@ -30,6 +30,24 @@ class Kelas extends BaseController
         echo view('layout/wrapper', $data);
     }
     // kelas yang dimiliki oleh user
+    public function progress(){
+        checklogin();
+        $id_user        = $this->session->get('id_user');
+        $m_konfigurasi  = new Konfigurasi_model();
+        $konfigurasi    = $m_konfigurasi->listing();
+        $m_peserta      = new Kelas_peserta_model();
+        $peserta        = $m_peserta->list_by_id_user_progress($id_user);
+        $data           = [
+            'title'         => 'Kelas Saya',
+            'description'   => 'Client Kami ' . $konfigurasi['namaweb'] . ', ' . $konfigurasi['tentang'],
+            'keywords'      => 'Client Kami ' . $konfigurasi['namaweb'] . ', ' . $konfigurasi['keywords'],
+            'kelas'         => $peserta,
+            'konfigurasi'   => $konfigurasi,
+            'content'       => 'kelas/index',
+        ];
+        echo view('layout/wrapper', $data);
+    }
+    // kelas yang dimiliki oleh user
     public function main(){
         checklogin();
         // $session        = \Config\Services::session();
