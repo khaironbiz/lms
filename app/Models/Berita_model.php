@@ -68,10 +68,11 @@ class Berita_model extends Model
         $builder->select('berita.*, kategori.nama_kategori, kategori.slug_kategori, users.nama');
         $builder->join('kategori', 'kategori.id_kategori = berita.id_kategori', 'LEFT');
         $builder->join('users', 'users.id_user = berita.id_user', 'LEFT');
-        $builder->where(['status_berita' => 'Publish',
-            'jenis_berita'               => 'Berita', ]);
+        $builder->where([
+            'status_berita' => 'Publish',
+            ]);
         $builder->orderBy('berita.tanggal_publish', 'DESC');
-        $builder->limit(4);
+        $builder->limit(6);
         $query = $builder->get();
 
         return $query->getResultArray();
@@ -114,9 +115,11 @@ class Berita_model extends Model
         $builder->select('berita.*, kategori.nama_kategori, kategori.slug_kategori, users.nama');
         $builder->join('kategori', 'kategori.id_kategori = berita.id_kategori', 'LEFT');
         $builder->join('users', 'users.id_user = berita.id_user', 'LEFT');
-        $builder->where(['status_berita' => 'Publish',
-            'jenis_berita'               => 'Berita',
-            'berita.id_kategori'         => $id_kategori, ]);
+        $builder->where([
+            'status_berita'         => 'Publish',
+            'jenis_berita'          => 'Berita',
+            'berita.id_kategori'    => $id_kategori,
+            ]);
         $builder->orderBy('berita.tanggal_publish', 'DESC');
         $query = $builder->get();
 
@@ -130,19 +133,18 @@ class Berita_model extends Model
         $builder->select('berita.*, kategori.nama_kategori, kategori.slug_kategori, users.nama');
         $builder->join('kategori', 'kategori.id_kategori = berita.id_kategori', 'LEFT');
         $builder->join('users', 'users.id_user = berita.id_user', 'LEFT');
-        $builder->where(['berita.id_kategori' => $id_kategori]);
+        $builder->where([
+            'berita.id_kategori' => $id_kategori
+        ]);
         $builder->orderBy('berita.tanggal_publish', 'DESC');
         $query = $builder->get();
-
         return $query->getResultArray();
     }
-
     // total
     public function total_kategori($id_kategori)
     {
         $builder = $this->db->table('berita')->where('id_kategori', $id_kategori);
         $query   = $builder->get();
-
         return $query->getNumRows();
     }
 
@@ -153,7 +155,9 @@ class Berita_model extends Model
         $builder->select('berita.*, kategori.nama_kategori, kategori.slug_kategori, users.nama');
         $builder->join('kategori', 'kategori.id_kategori = berita.id_kategori', 'LEFT');
         $builder->join('users', 'users.id_user = berita.id_user', 'LEFT');
-        $builder->where(['berita.id_user' => $id_user]);
+        $builder->where([
+            'berita.id_user' => $id_user
+        ]);
         $builder->orderBy('berita.id_berita', 'DESC');
         $query = $builder->get();
 

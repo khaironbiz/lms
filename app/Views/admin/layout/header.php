@@ -10,7 +10,7 @@ $site        = $konfigurasi->listing();
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="<?= base_url('admin/dasbor') ?>" class="nav-link">Dashboard</a>
+        <a href="<?= base_url('admin/user_log/main') ?>" class="nav-link">My Log</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="<?= base_url() ?>" class="nav-link" target="_blank">Homepage</a>

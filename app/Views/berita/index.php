@@ -21,7 +21,7 @@
       <div class="row">
         <?php foreach ($berita as $berita) { ?>
          <div class="col-lg-4 col-md-6 d-flex ">
-           <div class="card mb-2">
+           <div class="card w-100 mb-2">
             <img src="<?= base_url('assets/upload/image/' . $berita['gambar']) ?>" class="w-100">
             <div class="card-header">
               <b><?= $berita['judul_berita'] ?></b><br>

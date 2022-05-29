@@ -11,8 +11,11 @@ class User_model extends Model
     protected $returnType         = 'array';
     protected $useSoftDeletes     = false;
     protected $allowedFields      = [
-                                    'id_user', 
-                                    'nama', 
+                                    'id_user',
+                                    'nik',
+                                    'nama',
+                                    'gelar_depan',
+                                    'gelar_belakang',
                                     'email', 
                                     'username', 
                                     'password', 
@@ -20,7 +23,9 @@ class User_model extends Model
                                     'kode_rahasia', 
                                     'gambar', 
                                     'keterangan', 
-                                    'tanggal_post'
+                                    'tanggal_post',
+                                    'status',
+                                    'has_user'
                                     ];
     protected $useTimestamps      = false;
     protected $createdField       = 'created_at';
@@ -90,7 +95,7 @@ class User_model extends Model
         $builder = $this->db->table('users');
         $builder->where('has_user', $has_user);
         $query = $builder->get();
-        return $query->getRow();
+        return $query->getRowArray();
     }
     // detail
     public function detail($id_user)

@@ -49,11 +49,10 @@ foreach ($slider as $slider) {  ?>
     <!-- ======= Featured Services Section ======= -->
     <section id="featured-services" class="featured-services">
       <div class="container" data-aos="fade-up">
-
         <div class="row">
           <?php $pr = 1;
-
-foreach ($profil as $profil) { ?>
+          foreach ($profil as $profil) {
+              ?>
           <div class="col-md-6 col-lg-4 text-center d-flex align-items-stretch mb-5 mb-lg-0">
             <div class="icon-box" data-aos="fade-up" data-aos-delay="<?= $pr ?>00">
               <div class="icon"><i class="<?= $profil['icon'] ?>"></i></div>
@@ -62,21 +61,21 @@ foreach ($profil as $profil) { ?>
             </div>
           </div>
           <?php $pr++; } ?>
-</div>
+        </div>
       </div>
-    </section><!-- End Featured Services Section -->
+    </section>
+      <!-- End Featured Services Section -->
 
     <!-- ======= Cta Section ======= -->
     <section id="cta" class="cta">
       <div class="container" data-aos="zoom-in">
-
         <div class="text-center">
           <h3>Selamat datang di <?= $konfigurasi['namaweb'] ?></h3>
-          <p><?= $konfigurasi['tagline'] ?></p>
+          <p class="text-white"><?= $konfigurasi['tagline'] ?></p>
         </div>
-
       </div>
-    </section><!-- End Cta Section -->
+    </section>
+      <!-- End Cta Section -->
 
     <!-- ======= About Us Section ======= -->
     <section id="about" class="about">
@@ -88,8 +87,8 @@ foreach ($profil as $profil) { ?>
         </div>
 
         <div class="row">
-          <div class="col-lg-4" data-aos="fade-right">
-            <img src="<?=  base_url('assets/upload/image/'.$konfigurasi['icon']) ?>" class="img-fluid" alt="">
+          <div class="col-lg-4 text-center" data-aos="fade-right">
+            <img src="<?=  base_url('assets/upload/image/'.$konfigurasi['icon']) ?>" class="img-fluid w-50" alt="">
           </div>
           <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
             <?= $konfigurasi['tentang'] ?>
@@ -97,9 +96,8 @@ foreach ($profil as $profil) { ?>
         </div>
 
       </div>
-    </section><!-- End About Us Section -->
-
-
+    </section>
+      <!-- End About Us Section -->
 
     <!-- ======= Services Section ======= -->
     <section id="services" class="services services">
@@ -112,8 +110,7 @@ foreach ($profil as $profil) { ?>
 
         <div class="row">
           <?php $ml = 1;
-
-foreach ($layanan as $layanan) { ?>
+            foreach ($layanan as $layanan) { ?>
           <div class="col-lg-4 col-md-6 icon-box" data-aos="zoom-in" data-aos-delay="<?= $ml; ?>00">
             <div class="icon"><i class="<?= $layanan['icon'] ?>"></i></div>
             <h4 class="title"><a href="<?= base_url('berita/layanan/' . $layanan['slug_berita']) ?>"><?= $layanan['judul_berita'] ?></a></h4>
@@ -123,9 +120,42 @@ foreach ($layanan as $layanan) { ?>
         </div>
 
       </div>
-    </section><!-- End Services Section -->
+    </section>
+      <!-- End Services Section -->
 
-    <?php include 'berita.php'?>
+
+
+      <!-- ======= Contact Section ======= -->
+      <section id="contact" class="contact bg-info">
+          <div class="container">
+              <div class="row">
+                  <div class="col-md-12 text-center section-title">
+                      <h2>Berita Terbaru</h2>
+                  </div>
+                  <?php foreach ($berita2 as $berita2) { ?>
+                      <div class="col-md-4 d-flex">
+                          <div class="card mb-2 w-100">
+                              <img src="<?= base_url('assets/upload/image/' . $berita2['gambar']) ?>">
+                              <div class="card-body">
+                                  <h5 class="text-dark"><?= $berita2['judul_berita'] ?></h5>
+                                  <hr class="text-danger mb-1">
+                                  <p>
+                                      <?= $berita2['ringkasan'] ?>
+                                  </p>
+
+                              </div>
+                              <div class="card-footer">
+                                  <a href="<?= base_url('berita/read/' . $berita2['slug_berita']) ?>" class="btn btn-success">
+                                      <i class="fa fa-chevron-right"></i>  Baca...
+                                  </a>
+                              </div>
+                          </div>
+                      </div>
+                  <?php } ?>
+              </div>
+          </div>
+      </section>
+      <!-- End Contact Section -->
 
     <!-- ======= Contact Section ======= -->
     <section id="contact" class="contact">

@@ -209,7 +209,7 @@ $m_dasbor = new Dasbor_model();
   <!-- /.col -->
   <div class="col-6 col-md-4 col-xl-3 col-xxl-2">
     <div class="info-box mb-3">
-      <span class="info-box-icon bg-warning elevation-1"><a href="<?= base_url('admin/url')?>"><i class="fab fa-whmcs"></i></i></a></span>
+      <span class="info-box-icon bg-warning elevation-1"><a href="<?= base_url('admin/user_log')?>"><i class="fab fa-whmcs"></i></i></a></span>
       <div class="info-box-content">
         <span class="info-box-text">User Log</span>
         <span class="info-box-number"><?= angka($m_dasbor->hits()) ?></span>

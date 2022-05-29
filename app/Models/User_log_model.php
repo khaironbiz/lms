@@ -4,14 +4,14 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Url_model extends Model
+class User_log_model extends Model
 {
     
-    protected $table                = 'url';
-    protected $primaryKey           = 'id_url';
+    protected $table                = 'user_logs';
+    protected $primaryKey           = 'id_user_log';
     protected $returnType           = 'array';
     protected $useSoftDeletes       = false;
-    protected $allowedFields        = ['url_asli','short','created_by','created_at','updated_at', 'has_url'];
+    protected $allowedFields        = [];
     protected $useTimestamps        = false;
     protected $createdField         = 'created_at';
     protected $updatedField         = 'updated_at';
@@ -20,58 +20,34 @@ class Url_model extends Model
     protected $validationMessages   = [];
     protected $skipValidation       = false;
 
-
-    // Listing
-    public function listing($id_user)
+    // listing
+    public function listing()
     {
-        $builder = $this->db->table('url');
-        $builder->select('url.*, users.nama');
-        $builder->where('created_by', $id_user);
-        $builder->join('users', 'users.id_user = url.created_by', 'LEFT');
-        $builder->orderBy('url.id_url', 'DESC');
+        $builder = $this->db->table('user_logs');
+        $builder->select('user_logs.*, users.nama');
+        $builder->join('users', 'users.id_user = user_logs.id_user', 'LEFT');
+        $builder->orderBy('user_logs.id_user_log', 'DESC');
         $query = $builder->get();
 
         return $query->getResultArray();
     }
-    // read
-    public function ly($short)
+    // mylog
+    public function mylog($id_user)
     {
-        $builder = $this->db->table('url');
-        $builder->select('url.*');
-        $builder->where('short', $short);
-        $builder->orderBy('id_url', 'DESC');
+        $builder = $this->db->table('user_logs');
+        $builder->select('user_logs.*, users.nama');
+        $builder->join('users', 'users.id_user = user_logs.id_user', 'LEFT');
+        $builder->where('user_logs.id_user', $id_user);
+        $builder->orderBy('user_logs.id_user_log', 'DESC');
         $query = $builder->get();
-        return $query->getRowArray();
+
+        return $query->getResultArray();
     }
-    //detail
-    public function has_url($has_url)
-    {
-        $builder = $this->db->table('url');
-        $builder->select('*');
-        $builder->where('has_url', $has_url);
-        $query = $builder->get();
-        return $query->getRowArray();
-    }
-    // count
-    public function count($short)
-    {
-        $builder = $this->db->table('url')->where('short', $short);
-        $query   = $builder->get();
-        return $query->getNumRows();
-    }
-    
-    // total
-    public function total()
-    {
-        $builder = $this->db->table('url');
-        $query   = $builder->get();
-        return $query->getNumRows();
-    }
-    
+
     // tambah
     public function tambah($data)
     {
-        $builder = $this->db->table('url');
+        $builder = $this->db->table('user_logs');
         $builder->insert($data);
     }
 

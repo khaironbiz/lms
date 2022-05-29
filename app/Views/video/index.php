@@ -15,19 +15,15 @@
   <!-- ======= Contact Section ======= -->
   <section id="contact" class="contact">
     <div class="container">
-      <div class="row mt-5">
+      <div class="row">
         <?php foreach ($video as $video) { ?>
-          <div class="col-md-6">
-            <div class="card" style="margin-bottom: 20px;">
+          <div class="col-md-4 d-flex">
+            <div class="card w-100 mt-2">
               <div class="embed-responsive embed-responsive-16by9">
                 <iframe  class="embed-responsive-item" src="https://www.youtube.com/embed/<?= $video['video'] ?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="min-height: 300px;"></iframe>
               </div>
               <div class="card-body">
-                
-                <h4><?= $video['judul'] ?></h4>
-                <p class="card-text">
-                  <?= $video['keterangan'] ?>
-                </p>
+                <h6><?= $video['judul'] ?></h6>
               </div>
             </div>
           </div>

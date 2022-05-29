@@ -50,13 +50,7 @@ $menu_layanan = $menu->layanan();
           </li>
           <li><a class="nav-link scrollto" href="<?= base_url('berita') ?>">Berita</a></li>
           <li><a class="nav-link scrollto" href="<?= base_url('berita/event') ?>">Event</a></li>
-          <li class="dropdown"><a href="#"><span>Layanan</span> <i class="bi bi-chevron-down"></i></a>
-            <ul>
-              <?php foreach ($menu_layanan as $menu_layanan) { ?>
-              <li><a href="<?= base_url('berita/layanan/' . $menu_layanan['slug_berita']) ?>"><?= $menu_layanan['judul_berita'] ?></a></li>
-              <?php } ?>
-            </ul>
-          </li>
+
           <li class="dropdown"><a href="#"><span>Galeri &amp; Video</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="<?= base_url('galeri') ?>">Galeri Gambar</a></li>
@@ -69,7 +63,7 @@ $menu_layanan = $menu->layanan();
             ?>
             <li class="dropdown"><a href="#"><span>Kelasku</span> <i class="bi bi-chevron-down"></i></a>
                 <ul>
-                    <li><a href="<?= base_url('kelas/soon') ?>">On Progress</a></li>
+                    <li><a href="<?= base_url('kelas/progress') ?>">Progress</a></li>
                     <li><a href="<?= base_url('kelas/soon') ?>">Soon</a></li>
                     <li><a href="<?= base_url('kelas/main') ?>">Past</a></li>
                 </ul>
