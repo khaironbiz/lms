@@ -327,6 +327,108 @@
                     ?>
                 </table>
             </div>
+            <?php
+            if($count_tugas>0){
+            ?>
+            <div class="card-footer">
+                <b>Tugas </b>
+            </div>
+            <div class="card-body">
+                <button type="button" class="btn btn-sm btn-primary mb-2" data-toggle="modal" data-target="#add-tugas">
+                    <i class="fa fa-plus"> Tugas</i>
+                </button>
+                <?= form_open(base_url('admin/akreditasi_profesi/create/'.$kelas->has_kelas));
+                echo csrf_field();
+                ?>
+                <div class="modal fade text-dark text-left" id="add-tugas">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Tambah Tugas</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <label class="col-3">Organisasi Profesi</label>
+                                    <div class="col-9 row">
+                                        <select class="form-control form-control-sm" name="id_op">
+                                            <option value="">---pilih---</option>
+                                            
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-3">Level Organisasi</label>
+                                    <div class="col-9 row">
+                                        <select class="form-control form-control-sm" name="level_op">
+                                            <option value="">---pilih---</option>
+                                            <option value="1">Pusat</option>
+                                            <option value="2">Provinsi</option>
+                                            <option value="3">Kota</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-3">Besaran SKP</label>
+                                    <div class="col-9 row">
+                                        <input type="number" class="form-control form-control-sm" name="nominal_skp">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-3">Nomor SKP</label>
+                                    <div class="col-9 row">
+                                        <input type="text" class="form-control form-control-sm" name="nomor_skp">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-3">Tanggal SKP</label>
+                                    <div class="col-9 row">
+                                        <input type="date" class="form-control form-control-sm" name="tanggal_skp">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <label class="col-3">Keterangangan</label>
+                                    <div class="col-9 row">
+                                        <input type="text" class="form-control form-control-sm" name="keterangan">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
+                                <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Simpan</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <?= form_close(); ?>
+                <table class="table table-sm">
+                    <tr>
+                        <th>#</th>
+                        <th>Tugas</th>
+                        <th>Aksi</th>
+                    </tr>
+                    <?php
+                    $b=1;
+                    foreach ($tugas_kelas as $tk):
+                    ?>
+                    <tr>
+                        <td><?= $b++; ?></td>
+                        <td><?= $tk['nama_tugas']?></td>
+                        <td><a href="#" class="btn btn-sm btn-info">Detail</a></td>
+                    </tr>
+                    <?php
+                    endforeach;
+                    ?>
+
+                </table>
+            </div>
+            <?php
+            }
+            ?>
             <div class="card-footer">
                 <b>Peserta : <?= $count_peserta?></b>
             </div>

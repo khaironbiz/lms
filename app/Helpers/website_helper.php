@@ -139,7 +139,9 @@ function admin()
 {
     helper('url');
     $session = \Config\Services::session();
+
     if ($session->get('akses_level') != 'Admin') {
+        $logout = $session->destroy();
         echo '<script>';
         echo 'window.location.href = "' . base_url('login') . '?login=belum";';
         echo '</script>';

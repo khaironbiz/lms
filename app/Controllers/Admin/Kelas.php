@@ -5,6 +5,7 @@ namespace App\Controllers\Admin;
 use App\Models\Berita_model;
 use App\Models\Kategori_model;
 use App\Models\Kategori_kelas_model;
+use App\Models\Tugas_kelas_model;
 use App\Models\User_model;
 use App\Models\Kelas_model;
 use App\Models\Materi_model;
@@ -58,6 +59,9 @@ class Kelas extends BaseController
         $m_kelas_peserta        = new Kelas_peserta_model();
         $kelas_peserta          = $m_kelas_peserta->list_by_id_kelas($id_kelas);
         $count_id_kelas         = $m_kelas_peserta->count_id_kelas($id_kelas);
+        $m_tugas_kelas          = new Tugas_kelas_model();
+        $count_tugas            = $m_tugas_kelas->count_id_kelas($id_kelas);
+        $tugas_kelas            = $m_tugas_kelas->list_by_id_kelas($kelas->id_kelas);
         $data = [
             'title'         => $kelas->nama_kelas,
             'kelas'         => $kelas,
@@ -65,7 +69,9 @@ class Kelas extends BaseController
             'user'          => $user,
             'materi'        => $materi,
             'op'            => $op,
-            'ap'            => $akreditasi_profesi,   
+            'count_tugas'   => $count_tugas,
+            'tugas_kelas'   => $tugas_kelas,
+            'ap'            => $akreditasi_profesi,
             'kelas_peserta' => $kelas_peserta,
             'count_peserta' => $count_id_kelas,
             'content'       => 'admin/kelas/detail',

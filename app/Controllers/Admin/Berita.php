@@ -13,6 +13,7 @@ class Berita extends BaseController
     public function index()
     {
         checklogin();
+        admin();
         $m_berita   = new Berita_model();
         $m_kategori = new Kategori_model();
         $berita     = $m_berita->listing();
