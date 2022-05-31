@@ -3,7 +3,7 @@
 		<i class="fa fa-plus"></i> Tambah Baru
 	</button>
 </p>
-<?= form_open(base_url('admin/tugas/create'));
+<?= form_open(base_url('admin/tugas_metode/create'));
 echo csrf_field();
 ?>
 <div class="modal fade" id="modal-default">
@@ -18,9 +18,9 @@ echo csrf_field();
 			<div class="modal-body">
 
 				<div class="form-group row">
-					<label class="col-3">Nama Tugas</label>
+					<label class="col-3">Metode Penugasan</label>
 					<div class="col-9">
-						<input type="text" name="nama_tugas" class="form-control" placeholder="Nama Tugas" value="<?= set_value('nama_tugas') ?>" required>
+						<input type="text" name="nama_metode" class="form-control" placeholder="Metode Penugasan" value="<?= set_value('nama_metode') ?>" required>
 					</div>
 				</div>
 

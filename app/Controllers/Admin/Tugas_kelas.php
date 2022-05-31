@@ -2,6 +2,8 @@
 
 namespace App\Controllers\Admin;
 
+use App\Models\Soal_model;
+use App\Models\Tugas_metode_model;
 use App\Models\Tugas_model;
 use App\Models\Tugas_kelas_model;
 use App\Models\Kelas_model;
@@ -24,32 +26,100 @@ class Tugas_kelas extends BaseController
         ];
         echo view('admin/layout/wrapper', $data);
     }
-    public function edit($has_tugas)
+    public function detail($has_tugas_kelas)
     {
         checklogin();
-        $id_user    = $this->session->get('id_user');
-        $m_tugas    = new Tugas_model();
-        $tugas      = $m_tugas->has_tugas($has_tugas);
+        $id_user        = $this->session->get('id_user');
+        $m_tugas_kelas  = new Tugas_kelas_model();
+        $tugas_kelas    = $m_tugas_kelas->detail($has_tugas_kelas);
+        $id_tugas_kelas = $tugas_kelas['id_tugas_kelas'];
+        $m_soal         = new Soal_model();
+        $soal           = $m_soal->list_id_tugas_kelas($id_tugas_kelas);
+        $m_kelas        = new Kelas_model();
+        $kelas          = $m_kelas->soon();
+        $m_tugas        = new Tugas_model();
+        $tugas          = $m_tugas->listing();
+        $m_tugas_metode = new Tugas_metode_model();
+        $tugas_metode   = $m_tugas_metode->listing();
 
         $data = [
-            'title'     => 'Data Base Tugas',
-            'tugas'     => $tugas,
-            'content'   => 'admin/tugas/edit',
+            'title'         => 'Update Tugas Kelas',
+            'tugas_kelas'   => $tugas_kelas,
+            'tugas'         => $tugas,
+            'kelas'         => $kelas,
+//            'soal'          => $soal,
+            'tugas_metode'  => $tugas_metode,
+            'content'       => 'admin/tugas_kelas/detail',
         ];
         echo view('admin/layout/wrapper', $data);
     }
-    public function update($has_tugas){
+    public function edit($has_tugas_kelas)
+    {
         checklogin();
-        $id_user    = $this->session->get('id_user');
-        $m_tugas    = new Tugas_model();
-        $tugas      = $m_tugas->listing();
-        $data_validasi = [
-            'nama_tugas' => [
-                'rules' => 'required|min_length[3]|is_unique[tugas.nama_tugas]',
+        $id_user        = $this->session->get('id_user');
+        $m_tugas_kelas  = new Tugas_kelas_model();
+        $tugas_kelas    = $m_tugas_kelas->detail($has_tugas_kelas);
+        $m_kelas        = new Kelas_model();
+        $kelas          = $m_kelas->soon();
+        $m_tugas        = new Tugas_model();
+        $tugas          = $m_tugas->listing();
+        $m_tugas_metode = new Tugas_metode_model();
+        $tugas_metode   = $m_tugas_metode->listing();
+
+        $data = [
+            'title'         => 'Update Tugas Kelas',
+            'tugas_kelas'   => $tugas_kelas,
+            'tugas'         => $tugas,
+            'kelas'         => $kelas,
+            'tugas_metode'  => $tugas_metode,
+            'content'       => 'admin/tugas_kelas/edit',
+        ];
+        echo view('admin/layout/wrapper', $data);
+    }
+    public function tambah()
+    {
+        checklogin();
+        $id_user        = $this->session->get('id_user');
+        $m_kelas        = new Kelas_model();
+        $kelas          = $m_kelas->soon();
+        $m_tugas        = new Tugas_model();
+        $tugas          = $m_tugas->listing();
+        $m_tugas_metode = new Tugas_metode_model();
+        $tugas_metode   = $m_tugas_metode->listing();
+
+        $data = [
+            'title'         => 'Tambah Tugas Kelas',
+            'tugas'         => $tugas,
+            'kelas'         => $kelas,
+            'tugas_metode'  => $tugas_metode,
+            'content'       => 'admin/tugas_kelas/create',
+        ];
+        echo view('admin/layout/wrapper', $data);
+    }
+    public function update($has_tugas_kelas){
+        checklogin();
+        $id_user        = $this->session->get('id_user');
+        $m_tugas_kelas  = new Tugas_kelas_model();
+        $data_validasi  = [
+            'tgl_start' => [
+                'rules' => 'required|valid_date[d-m-Y]',
                 'errors' => [
-                    'required'      => 'Nama tugas harus diisi',
-                    'min_length'    => 'Nama tugas minimal 3 karakter',
-                    'is_unique'     => 'Nama tugas yang anda input : '.$this->request->getPost('nama_tugas').' sudah ada di data base'
+                    'required'      => 'Tanggal mulai harus diisi',
+                    'valid_date'    => 'Tanggal mulai tidak sesuai format'
+                ]
+            ],
+            'jam_start' => [
+                'rules' => 'required|valid_date[H:i:s]',
+                'errors' => [
+                    'required'      => 'Jam mulai harus diisi',
+                    'valid_date'    => 'Jam mulai tidak sesuai format'
+                ]
+            ],
+            'keterangan' => [
+                'rules' => 'required|min_length[3]',
+                'errors' => [
+                    'required'      => 'Keterangan harus diisi',
+                    'min_length'    => 'Keterangan minimal 3 karakter'
                 ]
             ]
         ];
@@ -57,25 +127,39 @@ class Tugas_kelas extends BaseController
         // Start validasi
         if ($this->request->getMethod() === 'post') {
             if( $this->validate($data_validasi)){
-                $nama_tugas = $this->request->getPost('nama_tugas');
+                $id_kelas       = $this->request->getPost('id_kelas');
+                $id_tugas       = $this->request->getPost('id_tugas');
+                $id_metode      = $this->request->getPost('id_metode');
+                $date_mulai     = $this->request->getPost('tgl_start');
+                $jam_mulai      = $this->request->getPost('jam_start');
+                $date_selesai   = $this->request->getPost('tgl_selesai');
+                $jam_selesai    = $this->request->getPost('jam_selesai');
+                $time_start     = $date_mulai." ".$jam_mulai;
+                $time_finish    = $date_selesai." ".$jam_selesai;
+                $int_time_1     = strtotime($time_start);
+                $keterangan     = $this->request->getPost('keterangan');
                 $time       = time();
                 $data       = [
-                    'nama_tugas'    => $nama_tugas,
-                    'updated_at'    => $time,
-                    'has_tugas'     => $has_tugas
+                    'id_kelas'          => $id_kelas,
+                    'id_tugas'          => $id_tugas,
+                    'id_metode'         => $id_metode,
+                    'keterangan'        => $keterangan,
+                    'time_start'        => strtotime($time_start),
+                    'time_finish'       => strtotime($time_finish),
+                    'updated_at'        => time(),
+                    'has_tugas_kelas'   => $has_tugas_kelas
                 ];
-//                var_dump($data);
-                // masuk database
-                $m_tugas->edit($data);
+
+                $m_tugas_kelas->edit($data);
                 $this->session->setFlashdata('sukses', 'Data sukses ditambahkan');
-                return redirect()->to(base_url('admin/tugas'));
+                return redirect()->to(base_url('admin/tugas_kelas'));
             }else{
                 session()->setFlashdata('error', $this->validator->listErrors());
                 return redirect()->back()->withInput();
             }
         }else{
             $this->session->setFlashdata('warning', 'Anda Tersesat');
-            return redirect()->to(base_url('admin/tugas'));
+            return redirect()->to(base_url('admin/tugas_kelas'));
         }
     }
     public function kelas($has_kelas)
@@ -100,8 +184,22 @@ class Tugas_kelas extends BaseController
         $m_tugas        = new Tugas_model();
         $m_kelas        = new Kelas_model();
         $m_tugas_kelas  = new Tugas_kelas_model();
-        $kelas          = $m_kelas->detail($has_kelas);
+
         $data_validasi  = [
+            'tgl_start' => [
+                'rules' => 'required|valid_date[d-m-Y]',
+                'errors' => [
+                    'required'      => 'Tanggal mulai harus diisi',
+                    'valid_date'    => 'Tanggal mulai tidak sesuai format'
+                ]
+            ],
+            'jam_start' => [
+                'rules' => 'required|valid_date[H:i:s]',
+                'errors' => [
+                    'required'      => 'Jam mulai harus diisi',
+                    'valid_date'    => 'Jam mulai tidak sesuai format'
+                ]
+            ],
             'keterangan' => [
                 'rules' => 'required|min_length[3]',
                 'errors' => [
@@ -112,7 +210,7 @@ class Tugas_kelas extends BaseController
         ];
         if($this->request->getMethod() === 'post'){
             if($this->validate($data_validasi)){
-                $id_kelas       = $kelas['id_kelas'];
+                $id_kelas       = $this->request->getPost('id_kelas');
                 $id_tugas       = $this->request->getPost('id_tugas');
                 $id_metode      = $this->request->getPost('id_metode');
                 $date_mulai     = $this->request->getPost('tgl_start');
@@ -136,8 +234,10 @@ class Tugas_kelas extends BaseController
                     'has_tugas_kelas'   => md5($uniqid),
                 ];
                 $m_tugas_kelas->tambah($data);
+                return redirect()->back()->with('sukses', 'Data Berhasil di Simpan');
             }else{
-                echo "Gagal Validasi";
+                session()->setFlashdata('error', $this->validator->listErrors());
+                return redirect()->back()->withInput();
             }
 
         }else{
@@ -186,8 +286,11 @@ class Tugas_kelas extends BaseController
                     'has_tugas_kelas'   => md5($uniqid),
                 ];
                 $m_tugas_kelas->tambah($data);
+
+                return redirect()->back()->with('sukses', 'Data Berhasil di Simpan');
             }else{
-                echo "Gagal Validasi";
+                session()->setFlashdata('error', $this->validator->listErrors());
+                return redirect()->back()->withInput();
             }
 
         }else{

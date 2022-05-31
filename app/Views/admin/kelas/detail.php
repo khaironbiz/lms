@@ -337,7 +337,7 @@
                 <button type="button" class="btn btn-sm btn-primary mb-2" data-toggle="modal" data-target="#add-tugas">
                     <i class="fa fa-plus"> Tugas</i>
                 </button>
-                <?= form_open(base_url('admin/akreditasi_profesi/create/'.$kelas->has_kelas));
+                <?= form_open(base_url('admin/tugas_kelas/create_tugas_kelas/'.$kelas->has_kelas));
                 echo csrf_field();
                 ?>
                 <div class="modal fade text-dark text-left" id="add-tugas">
@@ -351,47 +351,63 @@
                             </div>
                             <div class="modal-body">
                                 <div class="row">
-                                    <label class="col-3">Organisasi Profesi</label>
-                                    <div class="col-9 row">
-                                        <select class="form-control form-control-sm" name="id_op">
-                                            <option value="">---pilih---</option>
-                                            
+                                    <label class="col-3">Kelas</label>
+                                    <div class="col-9">
+                                        <select class="form-control form-control-sm" name="kelas">
+                                            <option value=""><?= $kelas->nama_kelas; ?></option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-3">Level Organisasi</label>
-                                    <div class="col-9 row">
-                                        <select class="form-control form-control-sm" name="level_op">
-                                            <option value="">---pilih---</option>
-                                            <option value="1">Pusat</option>
-                                            <option value="2">Provinsi</option>
-                                            <option value="3">Kota</option>
+                                    <label class="col-3">Jenis Tugas</label>
+                                    <div class="col-9">
+                                        <select class="form-control form-control-sm" name="id_tugas">
+                                            <?php
+                                            foreach ($tugas as $tugas):
+                                            ?>
+                                            <option value="<?= $tugas['id_tugas']?>"><?= $tugas['nama_tugas']?></option>
+                                                <?php
+                                            endforeach;
+                                                ?>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-3">Besaran SKP</label>
-                                    <div class="col-9 row">
-                                        <input type="number" class="form-control form-control-sm" name="nominal_skp">
+                                    <label class="col-3">Metode</label>
+                                    <div class="col-9">
+                                        <select class="form-control form-control-sm" name="id_metode">
+                                            <?php
+                                            foreach ($tugas_metode as $tm):
+                                                ?>
+                                                <option value="<?= $tm['id_tugas_metode']?>"><?= $tm['nama_metode']?></option>
+                                            <?php
+                                            endforeach;
+                                            ?>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-3">Nomor SKP</label>
-                                    <div class="col-9 row">
-                                        <input type="text" class="form-control form-control-sm" name="nomor_skp">
+                                    <label class="col-3">Waktu Mulai</label>
+                                    <div class="col-5">
+                                        <input type="text" class="form-control form-control-sm tanggal" name="tgl_start" placeholder="tanggal mulai">
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="text" class="form-control form-control-sm jam" name="jam_start" placeholder="jam mulai">
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <label class="col-3">Tanggal SKP</label>
-                                    <div class="col-9 row">
-                                        <input type="date" class="form-control form-control-sm" name="tanggal_skp">
+                                    <label class="col-3">Waktu Selesai</label>
+                                    <div class="col-5">
+                                        <input type="text" class="form-control form-control-sm tanggal" name="tgl_finish" placeholder="tanggal selesai">
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="text" class="form-control form-control-sm jam" name="jam_finish" placeholder="jam selesai">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <label class="col-3">Keterangangan</label>
-                                    <div class="col-9 row">
-                                        <input type="text" class="form-control form-control-sm" name="keterangan">
+                                    <div class="col-9">
+                                        <textarea class="form-control" name="keterangan"></textarea>
                                     </div>
                                 </div>
                             </div>

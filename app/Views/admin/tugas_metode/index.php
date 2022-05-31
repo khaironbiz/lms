@@ -17,15 +17,15 @@ echo view('admin/sub_menu/tugas');
             <tbody>
             <?php
             $no = 1;
-            foreach ($tugas as $tugas) {?>
+            foreach ($tugas_metode as $tm) {?>
                 <tr>
                     <td><?= $no ?></td>
-                    <td><?= $tugas['nama_tugas'] ?></td>
+                    <td><?= $tm['nama_metode'] ?></td>
                     <td></td>
                     <td></td>
                     <td>
-                        <a href="<?= base_url('admin/tugas/edit/' . $tugas['has_tugas']) ?>" class="btn btn-success btn-sm"><i class="fa fa-edit"></i></a>
-                        <a href="<?= base_url('admin/tugas/delete/' . $tugas['has_tugas']) ?>" class="btn btn-dark btn-sm" onclick="confirmation(event)"><i class="fa fa-trash"></i></a>
+                        <a href="<?= base_url('admin/tugas_metode/edit/' . $tm['has_tugas_metode']) ?>" class="btn btn-success btn-sm"><i class="fa fa-edit"></i></a>
+                        <a href="<?= base_url('admin/tugas_metode/delete/' . $tm['has_tugas_metode']) ?>" class="btn btn-dark btn-sm" onclick="confirmation(event)"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
                 <?php $no++; } ?>

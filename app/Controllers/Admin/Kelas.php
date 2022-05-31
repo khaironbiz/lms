@@ -6,6 +6,8 @@ use App\Models\Berita_model;
 use App\Models\Kategori_model;
 use App\Models\Kategori_kelas_model;
 use App\Models\Tugas_kelas_model;
+use App\Models\Tugas_metode_model;
+use App\Models\Tugas_model;
 use App\Models\User_model;
 use App\Models\Kelas_model;
 use App\Models\Materi_model;
@@ -62,6 +64,10 @@ class Kelas extends BaseController
         $m_tugas_kelas          = new Tugas_kelas_model();
         $count_tugas            = $m_tugas_kelas->count_id_kelas($id_kelas);
         $tugas_kelas            = $m_tugas_kelas->list_by_id_kelas($kelas->id_kelas);
+        $m_tugas                = new Tugas_model();
+        $tugas                  = $m_tugas->listing('tugas.nama_tugas','ASC');
+        $m_tugas_metode         = new Tugas_metode_model();
+        $tugas_metode           = $m_tugas_metode->listing('tugas_metode.nama_metode', 'ASC');
         $data = [
             'title'         => $kelas->nama_kelas,
             'kelas'         => $kelas,
@@ -69,8 +75,10 @@ class Kelas extends BaseController
             'user'          => $user,
             'materi'        => $materi,
             'op'            => $op,
+            'tugas'         => $tugas,
             'count_tugas'   => $count_tugas,
             'tugas_kelas'   => $tugas_kelas,
+            'tugas_metode'  => $tugas_metode,
             'ap'            => $akreditasi_profesi,
             'kelas_peserta' => $kelas_peserta,
             'count_peserta' => $count_id_kelas,

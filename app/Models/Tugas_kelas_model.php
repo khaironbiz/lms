@@ -25,14 +25,16 @@ class Tugas_kelas_model extends Model
     public function listing($order='tugas_kelas.id_tugas_kelas', $direction='DESC')
     {
         $builder = $this->db->table('tugas_kelas');
-        $builder->select('tugas_kelas.*, users.nama, kelas.nama_kelas, tugas.nama_tugas');
+        $builder->select('tugas_kelas.*, users.nama, kelas.nama_kelas, tugas.nama_tugas, tugas_metode.nama_metode');
         $builder->join('users', 'users.id_user = tugas_kelas.created_by', 'LEFT');
         $builder->join('kelas', 'kelas.id_kelas = tugas_kelas.id_kelas', 'LEFT');
         $builder->join('tugas', 'tugas.id_tugas = tugas_kelas.id_tugas', 'LEFT');
+        $builder->join('tugas_metode', 'tugas_metode.id_tugas_metode = tugas_kelas.id_metode', 'LEFT');
         $builder->orderBy($order, $direction);
         $query = $builder->get();
         return $query->getResultArray();
     }
+
     // read
     public function list_by_id_kelas($id_kelas)
     {
@@ -44,6 +46,19 @@ class Tugas_kelas_model extends Model
         $builder->where('tugas_kelas.id_kelas', $id_kelas);
         $query = $builder->get();
         return $query->getResultArray();
+    }
+    // detail
+    public function detail($has_tugas_kelas)
+    {
+        $builder = $this->db->table('tugas_kelas');
+        $builder->select('tugas_kelas.*, users.nama, kelas.nama_kelas, tugas.nama_tugas, tugas_metode.nama_metode');
+        $builder->join('users', 'users.id_user = tugas_kelas.created_by', 'LEFT');
+        $builder->join('kelas', 'kelas.id_kelas = tugas_kelas.id_kelas', 'LEFT');
+        $builder->join('tugas', 'tugas.id_tugas = tugas_kelas.id_tugas', 'LEFT');
+        $builder->join('tugas_metode', 'tugas_metode.id_tugas_metode = tugas_kelas.id_metode', 'LEFT');
+        $builder->where('tugas_kelas.has_tugas_kelas', $has_tugas_kelas);
+        $query = $builder->get();
+        return $query->getRowArray();
     }
 
     // count
@@ -71,8 +86,8 @@ class Tugas_kelas_model extends Model
     // edit
     public function edit($data)
     {
-        $builder = $this->db->table('tugas');
-        $builder->where('has_tugas', $data['has_tugas']);
+        $builder = $this->db->table('tugas_kelas');
+        $builder->where('has_tugas_kelas', $data['has_tugas_kelas']);
         $builder->update($data);
     }
 }

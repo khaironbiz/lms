@@ -33,6 +33,19 @@ class Kelas_model extends Model
         $query = $builder->get();
         return $query->getResultArray();
     }
+    //soon
+    public function soon()
+    {
+        $date_now = date('Y-m-d');
+        $builder = $this->db->table('kelas');
+        $builder->select('kelas.*, berita.judul_berita, users.nama');
+        $builder->join('berita', 'berita.id_berita = kelas.id_event', 'LEFT');
+        $builder->join('users', 'users.id_user = kelas.pic_kelas', 'LEFT');
+        $builder->orderBy('kelas.id_event', 'DESC');
+        $builder->where('tanggal_selesai >=', $date_now);
+        $query = $builder->get();
+        return $query->getResultArray();
+    }
     
     // Event
     public function event($id_event)
