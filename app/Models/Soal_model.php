@@ -82,7 +82,7 @@ class Soal_model extends Model
     // tambah
     public function tambah($data)
     {
-        $builder = $this->db->table('url');
+        $builder = $this->db->table('soal');
         $builder->insert($data);
     }
 
