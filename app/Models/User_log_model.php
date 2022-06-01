@@ -31,6 +31,17 @@ class User_log_model extends Model
 
         return $query->getResultArray();
     }
+    // distinct
+    public function distinct($variabel)
+    {
+        $builder = $this->db->table('user_logs');
+        $distinct="DISTINCT($variabel)";
+        $builder->select($distinct);
+        $builder->orderBy($variabel, 'DESC');
+        $query = $builder->get();
+
+        return $query->getResultArray();
+    }
     // mylog
     public function mylog($id_user)
     {

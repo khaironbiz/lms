@@ -171,61 +171,39 @@ class Soal extends BaseController
                 ];
                 
                 $tambah_soal = $m_soal->tambah($data_soal);
-
+                if($tambah_soal != 'NULL'){
                     $soal       = $m_soal->detail($has_soal);
                     $id_soal    = $soal['id_soal'];
-                    $jawabanA   = $this->request->getPost('a');
-                    $jawabanB   = $this->request->getPost('b');
-                    $jawabanC   = $this->request->getPost('c');
-                    $jawabanD   = $this->request->getPost('d');
-                    $jawabanE   = $this->request->getPost('e');
-                    $data_jawaban_a = [
-                        'id_soal'       => $id_soal,
-                        'jawaban'       => $jawabanA,
-                        'created_at'    => $time,
-                        'created_by'    => $id_user,
-                        'has_soal_jawaban'  => md5(uniqid())
-                    ];
-                    $data_jawaban_b = [
-                        'id_soal'       => $id_soal,
-                        'jawaban'       => $jawabanB,
-                        'created_at'    => $time,
-                        'created_by'    => $id_user,
-                        'soalhas_soal_jawaban'   => md5(uniqid())
-                    ];
-                    $data_jawaban_c = [
-                        'id_soal'       => $id_soal,
-                        'jawaban'       => $jawabanC,
-                        'created_at'    => $time,
-                        'created_by'    => $id_user,
-                        'has_soal_jawaban'   => md5(uniqid())
-                    ];
-                    $data_jawaban_d = [
-                        'id_soal'       => $id_soal,
-                        'jawaban'       => $jawabanD,
-                        'created_at'    => $time,
-                        'created_by'    => $id_user,
-                        'has_soal_jawaban'   => md5(uniqid())
-                    ];
-                    $data_jawaban_e = [
-                        'id_soal'       => $id_soal,
-                        'jawaban'       => $jawabanE,
-                        'created_at'    => $time,
-                        'created_by'    => $id_user,
-                        'has_soal_jawaban'   => md5(uniqid())
-                    ];
-                    $tambah_jawaban_a   = $m_jawaban->tambah($data_jawaban_a);
-                    $tambah_jawaban_b   = $m_jawaban->tambah($data_jawaban_b);
-                    $tambah_jawaban_c   = $m_jawaban->tambah($data_jawaban_c);
-                    $tambah_jawaban_d   = $m_jawaban->tambah($data_jawaban_d);
-                    $tambah_jawaban_e   = $m_jawaban->tambah($data_jawaban_e);
+                    $count_jawaban = count($this->request->getPost('jawaban'));
+                    echo $count_jawaban;
+                    for ($n=0; $n<$count_jawaban; $n++) {
+                        $jawaban[$n]        = $this->request->getPost('jawaban['.$n.']');
+                        $data_jawaban[$n] = [
+                            'id_soal'           => $id_soal,
+                            'jawaban'           => $jawaban[$n],
+                            'created_at'        => $time,
+                            'created_by'        => $id_user,
+                            'has_soal_jawaban'  => md5(uniqid())
+                        ];
+                        $tambah_jawaban[$n]= $m_jawaban->tambah($data_jawaban[$n]);
+
+                    }
+
+                    $this->session->setFlashdata('sukses', 'Data berhasil disimpan');
+                    return redirect()->to(base_url('admin/tugas_kelas/detail/'.$has_tugas_kelas));
+
+                }
+
+
 
             }else{
-                echo "Gagal Validasi";
+                session()->setFlashdata('error', $this->validator->listErrors());
+                return redirect()->back()->withInput();
             }
 
         }else{
-            echo "Anda Tersesat ";
+            $this->session->setFlashdata('warning', 'Anda Tersesat');
+            return redirect()->back();
         }
 
     }

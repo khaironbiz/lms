@@ -42,12 +42,13 @@ class Tugas_kelas extends BaseController
         $m_tugas_metode = new Tugas_metode_model();
         $tugas_metode   = $m_tugas_metode->listing();
 
+
         $data = [
             'title'         => 'Update Tugas Kelas',
             'tugas_kelas'   => $tugas_kelas,
             'tugas'         => $tugas,
             'kelas'         => $kelas,
-//            'soal'          => $soal,
+            'soal'          => $soal,
             'tugas_metode'  => $tugas_metode,
             'content'       => 'admin/tugas_kelas/detail',
         ];

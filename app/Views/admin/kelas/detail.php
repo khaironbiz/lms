@@ -190,30 +190,9 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="4">
-                            <div class="row">
-                                <div class="col-6">
-                                    <b>Bahan Ajar</b>
-                                </div>
-                                <div class="col-6 text-right">
-                                </div>
-                            </div>
-                        </td>
-                        
+                        <td colspan="4"><b>Bahan Ajar : 6 berkas</b></td>
                     </tr>
-                    <?php
-                    $nomor = 1;
-                    foreach($materi_file as $mf) :
-                    ?>
-                    
-                    <tr>
-                        <td></td>
-                        <td colspan="3"><?= $mf['judul_file']?><br></td>
-                    </tr>
-                    
-                    <?php
-                    endforeach
-                    ?>
+
                     <?php
                     endforeach
                     ?>
@@ -434,7 +413,7 @@
                     <tr>
                         <td><?= $b++; ?></td>
                         <td><?= $tk['nama_tugas']?></td>
-                        <td><a href="#" class="btn btn-sm btn-info">Detail</a></td>
+                        <td><a href="<?= base_url('admin/tugas_kelas/detail/'.$tk['has_tugas_kelas'])?>" class="btn btn-sm btn-info">Detail</a></td>
                     </tr>
                     <?php
                     endforeach;

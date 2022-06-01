@@ -39,4 +39,20 @@ class User_log extends BaseController
 
         echo view('admin/layout/wrapper', $data);
     }
+    // my log
+    public function distinct($variabel)
+    {
+        checklogin();
+        $id_user    = $this->session->get('id_user');
+        $m_user_log = new User_log_model();
+        $user_log   = $m_user_log->distinct($variabel);
+
+        $data = [
+            'title'     => 'My Log',
+            'user_log'  => $user_log,
+            'content'   => 'admin/user_log/index',
+        ];
+var_dump($data);
+//        echo view('admin/layout/wrapper', $data);
+    }
 }

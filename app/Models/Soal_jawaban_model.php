@@ -33,15 +33,12 @@ class Soal_jawaban_model extends Model
         return $query->getResultArray();
     }
     // Listing
-    public function list_id_tugas_kelas($id_tugas_kelas)
+    public function list_id_soal($id_soal)
     {
-        $builder = $this->db->table('soal');
-        $builder->select('soal.*, users.nama, kelas.nama_kelas, tugas_kelas.time_start, tugas_kelas.time_finish');
-        $builder->join('users', 'users.id_user = soal.created_by', 'LEFT');
-        $builder->join('kelas', 'kelas.id_kelas = soal.id_kelas', 'LEFT');
-        $builder->join('tugas_kelas', 'tugas_kelas.id_tugas_kelas = soal.id_tugas_kelas', 'LEFT');
-        $builder->where('soal.id_tugas_kelas', $id_tugas_kelas);
-        $builder->orderBy('soal.id_soal', 'DESC');
+        $builder = $this->db->table('soal_jawaban');
+        $builder->select('soal_jawaban.*');
+        $builder->where('soal_jawaban.id_soal', $id_soal);
+        $builder->orderBy('soal_jawaban.id_soal_jawaban', 'RANDOM');
         $query = $builder->get();
         return $query->getResultArray();
     }
@@ -64,9 +61,9 @@ class Soal_jawaban_model extends Model
         return $query->getRowArray();
     }
     // count
-    public function count($short)
+    public function count_id_soal($id_soal)
     {
-        $builder = $this->db->table('url')->where('short', $short);
+        $builder = $this->db->table('soal_jawaban')->where('id_soal', $id_soal);
         $query   = $builder->get();
         return $query->getNumRows();
     }
