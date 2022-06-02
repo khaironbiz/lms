@@ -35,7 +35,7 @@
         // Jika hitungan mundur selesai, tulis beberapa teks
         if (distance < 0) {
             clearInterval(x);
-            document.getElementById("demo").innerHTML = "<a href='<?= base_url('kelas/conference/'.$kelas->has_kelas)?>'>View <?= $kelas->tanggal_mulai?></a>";
+            document.getElementById("demo").innerHTML = "<a href='<?= base_url('kelas/conference/'.$kelas->has_kelas)?>' class='btn btn-sm btn-danger'>View</a>";
         }
     }, 1000);
 </script>
@@ -53,18 +53,19 @@
             <a href="<?= base_url('kelas/materi/'.$kelas->has_kelas)?>" class="btn btn-sm btn-primary">Detail</a>
         </th>
     </tr>
+    <?php
+    foreach ($tugas_kelas as $tk):
+    ?>
     <tr>
-        <th>Penugasan</th>
+        <th><?= $tk['nama_tugas']?></th>
         <th class="text-center">
-            <a href="<?= base_url()?>" class="btn btn-sm btn-primary">Detail</a>
+            <a href="<?= base_url('kelas/tugas/'.$tk['has_tugas_kelas'])?>" class="btn btn-sm btn-primary">Detail</a>
         </th>
     </tr>
-    <tr>
-        <th>Posttest</th>
-        <th class="text-center">
-            <a href="<?= base_url()?>" class="btn btn-sm btn-warning">Kerjakan</a>
-        </th>
-    </tr>
+    <?php
+    endforeach;
+    ?>
+
     <tr>
         <th>Video Conference</th>
         <th><p id="demo" class="text-center text-success text-bold"></p></th>

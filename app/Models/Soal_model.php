@@ -64,9 +64,9 @@ class Soal_model extends Model
         return $query->getRowArray();
     }
     // count
-    public function count($short)
+    public function count_id_tugas_kelas($id_tugas_kelas)
     {
-        $builder = $this->db->table('url')->where('short', $short);
+        $builder = $this->db->table('soal')->where('id_tugas_kelas', $id_tugas_kelas);
         $query   = $builder->get();
         return $query->getNumRows();
     }

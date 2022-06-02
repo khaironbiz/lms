@@ -79,6 +79,10 @@ class Kelas_model extends Model
     {
         $builder = $this->db->table('kelas');
         $builder->select('kelas.*');
+        $builder->select('kelas.*, kategori_kelas.nama_kategori_kelas, berita.id_berita, berita.id_client, client.nama as nama_client');
+        $builder->join('kategori_kelas', 'kategori_kelas.id_kategori_kelas=kelas.kategori_kelas');
+        $builder->join('berita', 'berita.id_berita=kelas.id_event');
+        $builder->join('client', 'client.id_client=berita.id_client');
         $builder->where([
                     'kelas.id_kelas'   => $id_kelas,
                     'kelas.status'     => '1']);
