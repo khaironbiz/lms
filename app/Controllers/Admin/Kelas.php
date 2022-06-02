@@ -88,18 +88,26 @@ class Kelas extends BaseController
     }
 
     // jenis_berita
-    public function berita($jenis_berita)
+    public function skp ($has_kelas)
     {
         checklogin();
-        $m_berita   = new Berita_model();
-        $m_kategori = new Kategori_model();
-        $berita     = $m_berita->jenis_berita_all($jenis_berita);
-        $total      = $m_berita->total_jenis_berita($jenis_berita);
+        $m_kelas                = new Kelas_model();
+        $m_berita               = new Berita_model();
+        $kelas                  = $m_kelas->by_has_kelas($has_kelas);
+        $id_kelas               = $kelas->id_kelas;
+        $id_event               = $kelas->id_event;
+        $m_akreditasi_profesi   = new Akreditasi_profesi_model();
+        $akreditasi_profesi     = $m_akreditasi_profesi->by_id_kelas($id_kelas);
+        $m_op                   = new Organisasi_profesi_model();
+        $op                     = $m_op->listing();
+
+
         $data = [
-            'title'     => $jenis_berita . ' (' . $total . ')',
-            'berita'    => $berita,
-            'sub_menu'  => 'admin/sub_menu/berita',
-            'content'   => 'admin/berita/index',
+            'title'     => 'Akreditasi Profesi',
+            'kelas'     => $kelas,
+            'op'        => $op,
+            'ap'        => $akreditasi_profesi,
+            'content'   => 'admin/kelas/skp',
         ];
         echo view('admin/layout/wrapper', $data);
     }

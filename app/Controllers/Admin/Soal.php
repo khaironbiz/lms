@@ -27,17 +27,20 @@ class Soal extends BaseController
         ];
         echo view('admin/layout/wrapper', $data);
     }
-    public function edit($has_tugas)
+    public function edit($has_soal)
     {
         checklogin();
-        $id_user    = $this->session->get('id_user');
-        $m_tugas    = new Tugas_model();
-        $tugas      = $m_tugas->has_tugas($has_tugas);
-
+        $id_user            = $this->session->get('id_user');
+        $m_soal             = new Soal_model();
+        $soal               = $m_soal->detail($has_soal);
+        $id_soal            = $soal['id_soal'];
+        $m_soal_jawaban     = new Soal_jawaban_model();
+        $soal_jawaban       = $m_soal_jawaban->list_id_soal($id_soal);
         $data = [
-            'title'     => 'Data Base Tugas',
-            'tugas'     => $tugas,
-            'content'   => 'admin/tugas/edit',
+            'title'         => 'Update Soal',
+            'soal'          => $soal,
+            'soal_jawaban'  => $soal_jawaban,
+            'content'       => 'admin/soal/edit',
         ];
         echo view('admin/layout/wrapper', $data);
     }
@@ -82,18 +85,23 @@ class Soal extends BaseController
             return redirect()->to(base_url('admin/tugas'));
         }
     }
-    public function update($has_tugas){
+    public function update($has_soal){
         checklogin();
         $id_user    = $this->session->get('id_user');
-        $m_tugas    = new Tugas_model();
-        $tugas      = $m_tugas->listing();
+        $m_soal     = new Soal_model();
+//        $soal       = $m_soal->detail($has_soal);
         $data_validasi = [
-            'nama_tugas' => [
-                'rules' => 'required|min_length[3]|is_unique[tugas.nama_tugas]',
+            'soal' => [
+                'rules' => 'required|min_length[3]',
                 'errors' => [
-                    'required'      => 'Nama tugas harus diisi',
-                    'min_length'    => 'Nama tugas minimal 3 karakter',
-                    'is_unique'     => 'Nama tugas yang anda input : '.$this->request->getPost('nama_tugas').' sudah ada di data base'
+                    'required'      => 'Soal harus diisi',
+                    'min_length'    => 'Soal minimal 3 karakter',
+                ]
+            ],
+            'id_jawaban' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required'      => 'Jawaban harus dipilih salah satu'
                 ]
             ]
         ];
@@ -101,18 +109,22 @@ class Soal extends BaseController
         // Start validasi
         if ($this->request->getMethod() === 'post') {
             if( $this->validate($data_validasi)){
-                $nama_tugas = $this->request->getPost('nama_tugas');
+                $soal       = $this->request->getPost('soal');
+                $id_jawaban = $this->request->getPost('id_jawaban');
                 $time       = time();
                 $data       = [
-                    'nama_tugas'    => $nama_tugas,
+                    'soal'          => $soal,
+                    'id_jawaban'    => $id_jawaban,
                     'updated_at'    => $time,
-                    'has_tugas'     => $has_tugas
+                    'has_soal'      => $has_soal
                 ];
 //                var_dump($data);
                 // masuk database
-                $m_tugas->edit($data);
+                $m_soal->edit($data);
                 $this->session->setFlashdata('sukses', 'Data sukses ditambahkan');
-                return redirect()->to(base_url('admin/tugas'));
+//                return redirect()->to(base_url('admin/tugas'));
+                return redirect()->back()->withInput();
+
             }else{
                 session()->setFlashdata('error', $this->validator->listErrors());
                 return redirect()->back()->withInput();

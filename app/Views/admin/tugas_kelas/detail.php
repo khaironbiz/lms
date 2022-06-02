@@ -30,9 +30,7 @@ echo view('admin/sub_menu/tugas');
                 <div class="col-md-9"><?= $tugas_kelas['keterangan']?></div>
 
             </div>
-            <div class="form-group row">
-                <label class="col-md-3"><a href="<?= base_url('/admin/tugas_kelas')?>" class="btn btn-danger">Back</a></label>
-            </div>
+
         </div>
         <div class="col-md-12">
             <div class="card">
@@ -137,11 +135,11 @@ echo view('admin/sub_menu/tugas');
                                     ?>
                                 </div>
                                 <?php if($soal['id_jawaban']<1){?>
-                                <div class="card-footer"><a href="#" class="btn btn-sm btn-danger"> Tentukan Jawaban</a></div>
+                                <div class="card-footer"><a href="<?= base_url('admin/soal/edit/'.$soal['has_soal'])?>" class="btn btn-sm btn-danger"> Tentukan Jawaban</a></div>
                                 <?php
                                 }else{
                                 ?>
-                                    <div class="card-footer"><a href="#" class="btn btn-sm btn-success"> Edit Jawaban</a></div>
+                                    <div class="card-footer"><a href="<?= base_url('admin/soal/edit/'.$soal['has_soal'])?>" class="btn btn-sm btn-success"> Edit Jawaban</a></div>
                                 <?php
                                 }
                                 ?>

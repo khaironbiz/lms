@@ -91,7 +91,7 @@ echo csrf_field();
 
             </div>
             <div class="form-group row">
-                <label class="col-md-3"><a href="<?= base_url('/admin/tugas_kelas')?>" class="btn btn-danger">Back</a></label>
+                <label class="col-md-3"></label>
                 <div class="col-md-9 text-right">
                     <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Simpan</button>
                 </div>

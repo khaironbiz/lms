@@ -85,5 +85,11 @@ class Soal_model extends Model
         $builder = $this->db->table('soal');
         $builder->insert($data);
     }
+    public function edit($data)
+    {
+        $builder = $this->db->table('soal');
+        $builder->where('has_soal', $data['has_soal']);
+        $builder->update($data);
+    }
 
 }

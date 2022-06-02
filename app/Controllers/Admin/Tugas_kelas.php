@@ -153,7 +153,7 @@ class Tugas_kelas extends BaseController
 
                 $m_tugas_kelas->edit($data);
                 $this->session->setFlashdata('sukses', 'Data sukses ditambahkan');
-                return redirect()->to(base_url('admin/tugas_kelas'));
+                return redirect()->back()->withInput();
             }else{
                 session()->setFlashdata('error', $this->validator->listErrors());
                 return redirect()->back()->withInput();
