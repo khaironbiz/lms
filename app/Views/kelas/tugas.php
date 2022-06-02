@@ -2,11 +2,9 @@
 use App\Models\Soal_jawaban_model;
 ?>
 <main id="main">
-
     <!-- ======= Breadcrumbs Section ======= -->
     <section class="breadcrumbs">
         <div class="container">
-
             <div class="d-flex justify-content-between align-items-center">
                 <h2><?= $title ?></h2>
                 <ol>
@@ -14,7 +12,6 @@ use App\Models\Soal_jawaban_model;
                     <li><?= $title ?></li>
                 </ol>
             </div>
-
         </div>
     </section><!-- End Breadcrumbs Section -->
 
@@ -43,7 +40,6 @@ use App\Models\Soal_jawaban_model;
                                 }
                                 ?><br>
                                 <b class="text-primary"><small><?= $kelas->nama_client?></small></b>
-
                             </small>
                         </div>
                         <div class="card-body">
@@ -53,10 +49,7 @@ use App\Models\Soal_jawaban_model;
                                 $id_soal = $soal['id_soal'];
                                 $m_soal_jawaban = new Soal_jawaban_model();
                                 $soal_jawaban   = $m_soal_jawaban->list_id_soal($id_soal);
-
                                 ?>
-
-
                             <div class="card mb-1">
                                 <div class="card-header"><b><?= $soal['soal'];?></b></div>
                                 <div class="card-body">
@@ -71,23 +64,17 @@ use App\Models\Soal_jawaban_model;
                             </div>
                             <?php
                             }
-
                             ?>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <img src="<?= base_url('assets/upload/image/'.$kelas->poster)?>" class="w-100">
-
                     <?php
                     include('sub-menu.php')
                     ?>
                 </div>
-
             </div>
-
         </div>
     </section><!-- End Doctors Section -->
-
-
 </main><!-- End #main -->
