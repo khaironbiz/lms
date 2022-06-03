@@ -19,7 +19,7 @@ $session = \Config\Services::session();
                 <div class="col-md-8 mb-2">
                     <div class="card">
                         <div class="card-header">
-                            <h4><?= $kelas->nama_kelas ?></h4>
+                            <h4><?= $kelas['nama_kelas'] ?></h4>
                         </div>
                         <div class="card-body table-responsive">
                             <h5>Materi Pembelajaran</h5>
@@ -80,21 +80,21 @@ $session = \Config\Services::session();
                             </table>
                         </div>
                         <div class="card-footer">
-                        <button type="button" class="btn btn-primary btn-sm " data-bs-toggle="modal" data-bs-target="#daftar<?= $kelas->has_kelas ?>">
+                        <button type="button" class="btn btn-primary btn-sm " data-bs-toggle="modal" data-bs-target="#daftar<?= $kelas['has_kelas'] ?>">
                         Daftar
                         </button>
                         <!-- Modal -->
                         <?php
                         if($id_user>0){
-                            echo form_open(base_url('admin/kelas_peserta/create/'.$kelas->has_kelas));
+                            echo form_open(base_url('admin/kelas_peserta/create/'.$kelas['has_kelas']));
                             echo csrf_field();
                         }else{
                         ?>
-                        <?= form_open(base_url('admin/kelas_peserta/daftar_tamu/'.$kelas->has_kelas));
+                        <?= form_open(base_url('admin/kelas_peserta/daftar_tamu/'.$kelas['has_kelas']));
                         echo csrf_field();
                         }
                         ?>
-                        <div class="modal fade" id="daftar<?= $kelas->has_kelas ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal fade" id="daftar<?= $kelas['has_kelas'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                 <div class="modal-header">
@@ -109,7 +109,7 @@ $session = \Config\Services::session();
                                         <label for="staticEmail" class="col-md-3">Kelas</label>
                                         <div class="col-md-9">
                                             <select class="form-control form-control-sm" name="id_kelas">
-                                                <option value="<?= $kelas->id_kelas; ?>"><?= $kelas->nama_kelas; ?></option>
+                                                <option value="<?= $kelas['id_kelas']; ?>"><?= $kelas['nama_kelas']; ?></option>
                                             </select>
                                         </div>
                                     </div>
@@ -139,7 +139,7 @@ $session = \Config\Services::session();
                                     <div class="row mb-1">
                                         <label for="inputPassword" class="col-md-3">Harga Member</label>
                                         <div class="col-md-9">
-                                            <input type="number" class="form-control form-control-sm" name="harga" value="<?= $kelas->harga_jual; ?>">
+                                            <input type="number" class="form-control form-control-sm" name="harga" value="<?= $kelas['harga_jual']; ?>">
                                         </div>
                                     </div>
                                     <?php
@@ -167,7 +167,7 @@ $session = \Config\Services::session();
                                     <div class="row mb-1">
                                         <label for="inputPassword" class="col-md-3">Harga Non Member</label>
                                         <div class="col-md-9">
-                                            <input type="number" class="form-control form-control-sm" name="harga" value="<?php if($kelas->harga_jual<1){echo "10000";}else{ echo ($kelas->harga_jual*1.1); } ?>">
+                                            <input type="number" class="form-control form-control-sm" name="harga" value="<?php if($kelas['harga_jual']<1){echo "10000";}else{ echo ($kelas['harga_jual']*1.1); } ?>">
                                         </div>
                                     </div>
                                     <?php
@@ -188,23 +188,12 @@ $session = \Config\Services::session();
                 <div class="col-md-4">
                     <div class="card">
                         <?php
-                        if($kelas->poster){
+                        if($kelas['poster']){
                         ?>
-                        <img src="<?= base_url('assets/upload/image/' . $kelas->poster) ?>">
+                        <img src="<?= base_url('assets/upload/image/' . $kelas['poster']) ?>">
                         <?php
                         }
                         ?>
-                        <div class="card-body">
-                            
-                            <?= $kelas->nama_kategori_kelas ?>
-                            <?php
-                                $waktu_awal = strtotime($kelas->tanggal_mulai);
-                                $waktu_ahir = strtotime($kelas->tanggal_selesai);
-                                if($waktu_awal == $waktu_ahir){
-                                    echo "Satu Hari";
-                                }
-                            ?>
-                        </div>
                     </div>
                 </div>
                 <div class="col-md-4">

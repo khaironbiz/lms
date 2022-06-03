@@ -5,6 +5,7 @@ namespace App\Controllers\Admin;
 use App\Models\Berita_model;
 use App\Models\Kategori_model;
 use App\Models\Kategori_kelas_model;
+use App\Models\Soal_model;
 use App\Models\Tugas_kelas_model;
 use App\Models\Tugas_metode_model;
 use App\Models\Tugas_model;
@@ -88,7 +89,7 @@ class Kelas extends BaseController
     }
 
     // jenis_berita
-    public function skp ($has_kelas)
+    public function skp($has_kelas)
     {
         checklogin();
         $m_kelas                = new Kelas_model();
@@ -96,18 +97,181 @@ class Kelas extends BaseController
         $kelas                  = $m_kelas->by_has_kelas($has_kelas);
         $id_kelas               = $kelas->id_kelas;
         $id_event               = $kelas->id_event;
-        $m_akreditasi_profesi   = new Akreditasi_profesi_model();
-        $akreditasi_profesi     = $m_akreditasi_profesi->by_id_kelas($id_kelas);
+        $berita                 = $m_berita->by_id($id_event);
+        $m_user                 = new User_model();
+        $user                   = $m_user->listing();
+        $m_materi               = new Materi_model();
+        $materi                 = $m_materi->kelas($id_kelas);
         $m_op                   = new Organisasi_profesi_model();
         $op                     = $m_op->listing();
-
-
+        $m_akreditasi_profesi   = new Akreditasi_profesi_model();
+        $akreditasi_profesi     = $m_akreditasi_profesi->by_id_kelas($id_kelas);
+        $m_kelas_peserta        = new Kelas_peserta_model();
+        $kelas_peserta          = $m_kelas_peserta->list_by_id_kelas($id_kelas);
+        $count_id_kelas         = $m_kelas_peserta->count_id_kelas($id_kelas);
+        $m_tugas_kelas          = new Tugas_kelas_model();
+        $count_tugas            = $m_tugas_kelas->count_id_kelas($id_kelas);
+        $tugas_kelas            = $m_tugas_kelas->list_by_id_kelas($kelas->id_kelas);
+        $m_tugas                = new Tugas_model();
+        $tugas                  = $m_tugas->listing('tugas.nama_tugas','ASC');
+        $m_tugas_metode         = new Tugas_metode_model();
+        $tugas_metode           = $m_tugas_metode->listing('tugas_metode.nama_metode', 'ASC');
         $data = [
-            'title'     => 'Akreditasi Profesi',
-            'kelas'     => $kelas,
-            'op'        => $op,
-            'ap'        => $akreditasi_profesi,
-            'content'   => 'admin/kelas/skp',
+            'title'         => $kelas->nama_kelas,
+            'kelas'         => $kelas,
+            'berita'        => $berita,
+            'user'          => $user,
+            'materi'        => $materi,
+            'op'            => $op,
+            'tugas'         => $tugas,
+            'count_tugas'   => $count_tugas,
+            'tugas_kelas'   => $tugas_kelas,
+            'tugas_metode'  => $tugas_metode,
+            'ap'            => $akreditasi_profesi,
+            'kelas_peserta' => $kelas_peserta,
+            'count_peserta' => $count_id_kelas,
+            'content'       => 'admin/kelas/skp',
+        ];
+        echo view('admin/layout/wrapper', $data);
+    }
+    // jenis_berita
+    public function peserta($has_kelas)
+    {
+        checklogin();
+        $m_kelas                = new Kelas_model();
+        $m_berita               = new Berita_model();
+        $kelas                  = $m_kelas->by_has_kelas($has_kelas);
+        $id_kelas               = $kelas->id_kelas;
+        $id_event               = $kelas->id_event;
+        $berita                 = $m_berita->by_id($id_event);
+        $m_user                 = new User_model();
+        $user                   = $m_user->listing();
+        $m_materi               = new Materi_model();
+        $materi                 = $m_materi->kelas($id_kelas);
+        $m_op                   = new Organisasi_profesi_model();
+        $op                     = $m_op->listing();
+        $m_akreditasi_profesi   = new Akreditasi_profesi_model();
+        $akreditasi_profesi     = $m_akreditasi_profesi->by_id_kelas($id_kelas);
+        $m_kelas_peserta        = new Kelas_peserta_model();
+        $kelas_peserta          = $m_kelas_peserta->list_by_id_kelas($id_kelas);
+        $count_id_kelas         = $m_kelas_peserta->count_id_kelas($id_kelas);
+        $m_tugas_kelas          = new Tugas_kelas_model();
+        $count_tugas            = $m_tugas_kelas->count_id_kelas($id_kelas);
+        $tugas_kelas            = $m_tugas_kelas->list_by_id_kelas($kelas->id_kelas);
+        $m_tugas                = new Tugas_model();
+        $tugas                  = $m_tugas->listing('tugas.nama_tugas','ASC');
+        $m_tugas_metode         = new Tugas_metode_model();
+        $tugas_metode           = $m_tugas_metode->listing('tugas_metode.nama_metode', 'ASC');
+        $data = [
+            'title'         => $kelas->nama_kelas,
+            'kelas'         => $kelas,
+            'berita'        => $berita,
+            'user'          => $user,
+            'materi'        => $materi,
+            'op'            => $op,
+            'tugas'         => $tugas,
+            'count_tugas'   => $count_tugas,
+            'tugas_kelas'   => $tugas_kelas,
+            'tugas_metode'  => $tugas_metode,
+            'ap'            => $akreditasi_profesi,
+            'kelas_peserta' => $kelas_peserta,
+            'count_peserta' => $count_id_kelas,
+            'content'       => 'admin/kelas/peserta',
+        ];
+        echo view('admin/layout/wrapper', $data);
+    }
+    // jenis_berita
+    public function tugas($has_kelas)
+    {
+        checklogin();
+        $m_kelas                = new Kelas_model();
+        $m_berita               = new Berita_model();
+        $kelas                  = $m_kelas->by_has_kelas($has_kelas);
+        $id_kelas               = $kelas->id_kelas;
+        $id_event               = $kelas->id_event;
+        $berita                 = $m_berita->by_id($id_event);
+        $m_user                 = new User_model();
+        $user                   = $m_user->listing();
+        $m_materi               = new Materi_model();
+        $materi                 = $m_materi->kelas($id_kelas);
+        $m_op                   = new Organisasi_profesi_model();
+        $op                     = $m_op->listing();
+        $m_akreditasi_profesi   = new Akreditasi_profesi_model();
+        $akreditasi_profesi     = $m_akreditasi_profesi->by_id_kelas($id_kelas);
+        $m_kelas_peserta        = new Kelas_peserta_model();
+        $kelas_peserta          = $m_kelas_peserta->list_by_id_kelas($id_kelas);
+        $count_id_kelas         = $m_kelas_peserta->count_id_kelas($id_kelas);
+        $m_tugas_kelas          = new Tugas_kelas_model();
+        $count_tugas            = $m_tugas_kelas->count_id_kelas($id_kelas);
+        $tugas_kelas            = $m_tugas_kelas->list_by_id_kelas($kelas->id_kelas);
+        $m_tugas                = new Tugas_model();
+        $tugas                  = $m_tugas->listing('tugas.nama_tugas','ASC');
+        $m_tugas_metode         = new Tugas_metode_model();
+        $tugas_metode           = $m_tugas_metode->listing('tugas_metode.nama_metode', 'ASC');
+        $data = [
+            'title'         => $kelas->nama_kelas,
+            'kelas'         => $kelas,
+            'berita'        => $berita,
+            'user'          => $user,
+            'materi'        => $materi,
+            'op'            => $op,
+            'tugas'         => $tugas,
+            'count_tugas'   => $count_tugas,
+            'tugas_kelas'   => $tugas_kelas,
+            'tugas_metode'  => $tugas_metode,
+            'ap'            => $akreditasi_profesi,
+            'kelas_peserta' => $kelas_peserta,
+            'count_peserta' => $count_id_kelas,
+            'content'       => 'admin/kelas/tugas',
+        ];
+        echo view('admin/layout/wrapper', $data);
+    }
+    // jenis_berita
+    public function materi($has_kelas)
+    {
+        checklogin();
+        $m_kelas                = new Kelas_model();
+        $m_berita               = new Berita_model();
+        $kelas                  = $m_kelas->by_has_kelas($has_kelas);
+        $id_kelas               = $kelas->id_kelas;
+        $id_event               = $kelas->id_event;
+        $berita                 = $m_berita->by_id($id_event);
+        $m_user                 = new User_model();
+        $user                   = $m_user->listing();
+        $m_materi               = new Materi_model();
+        $materi                 = $m_materi->kelas($id_kelas);
+        $m_op                   = new Organisasi_profesi_model();
+        $op                     = $m_op->listing();
+        $m_akreditasi_profesi   = new Akreditasi_profesi_model();
+        $akreditasi_profesi     = $m_akreditasi_profesi->by_id_kelas($id_kelas);
+        $m_kelas_peserta        = new Kelas_peserta_model();
+        $kelas_peserta          = $m_kelas_peserta->list_by_id_kelas($id_kelas);
+        $count_id_kelas         = $m_kelas_peserta->count_id_kelas($id_kelas);
+        $m_tugas_kelas          = new Tugas_kelas_model();
+        $count_tugas            = $m_tugas_kelas->count_id_kelas($id_kelas);
+        $tugas_kelas            = $m_tugas_kelas->list_by_id_kelas($kelas->id_kelas);
+        $m_tugas                = new Tugas_model();
+        $tugas                  = $m_tugas->listing('tugas.nama_tugas','ASC');
+        $m_tugas_metode         = new Tugas_metode_model();
+        $tugas_metode           = $m_tugas_metode->listing('tugas_metode.nama_metode', 'ASC');
+        $m_materi_file          = new Materi_file_model();
+        $materi_file            = $m_materi_file->list_by_id_kelas($id_kelas);
+        $data = [
+            'title'         => $kelas->nama_kelas,
+            'kelas'         => $kelas,
+            'berita'        => $berita,
+            'user'          => $user,
+            'materi'        => $materi,
+            'file'          => $materi_file,
+            'op'            => $op,
+            'tugas'         => $tugas,
+            'count_tugas'   => $count_tugas,
+            'tugas_kelas'   => $tugas_kelas,
+            'tugas_metode'  => $tugas_metode,
+            'ap'            => $akreditasi_profesi,
+            'kelas_peserta' => $kelas_peserta,
+            'count_peserta' => $count_id_kelas,
+            'content'       => 'admin/kelas/materi',
         ];
         echo view('admin/layout/wrapper', $data);
     }

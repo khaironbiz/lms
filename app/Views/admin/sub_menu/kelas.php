@@ -6,16 +6,19 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('admin/kelas/skp/'.$kelas->has_kelas)?>" target="_blank">SKP</a>
+                <a class="nav-link" href="<?= base_url('admin/kelas/skp/'.$kelas->has_kelas)?>">SKP</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('admin/tugas')?>">Jadwal</a>
+                <a class="nav-link" href="<?= base_url('admin/kelas/peserta/'.$kelas->has_kelas)?>">Peserta</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('admin/tugas_metode')?>">Materi</a>
+                <a class="nav-link" href="<?= base_url('admin/kelas/detail/'.$kelas->has_kelas)?>">Jadwal</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?= base_url('admin/tugas_metode')?>">Tugas</a>
+                <a class="nav-link" href="<?= base_url('admin/kelas/materi/'.$kelas->has_kelas)?>">Materi</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<?= base_url('admin/kelas/tugas/'.$kelas->has_kelas)?>">Tugas</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<?= base_url('admin/tugas_metode')?>">Converence</a>

@@ -60,6 +60,18 @@ class Tugas_kelas_model extends Model
         $query = $builder->get();
         return $query->getRowArray();
     }
+    public function detail_id_kelas($id_kelas)
+    {
+        $builder = $this->db->table('tugas_kelas');
+        $builder->select('tugas_kelas.*, users.nama, kelas.nama_kelas, tugas.nama_tugas, tugas_metode.nama_metode');
+        $builder->join('users', 'users.id_user = tugas_kelas.created_by', 'LEFT');
+        $builder->join('kelas', 'kelas.id_kelas = tugas_kelas.id_kelas', 'LEFT');
+        $builder->join('tugas', 'tugas.id_tugas = tugas_kelas.id_tugas', 'LEFT');
+        $builder->join('tugas_metode', 'tugas_metode.id_tugas_metode = tugas_kelas.id_metode', 'LEFT');
+        $builder->where('tugas_kelas.id_kelas', $id_kelas);
+        $query = $builder->get();
+        return $query->getRowArray();
+    }
 
     // count
     public function count_id_kelas($id_kelas)

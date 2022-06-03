@@ -74,7 +74,7 @@ $session = \Config\Services::session();
                           </div>
                           <div class="modal-body">
                             <div class="row mb-1">
-                                <label for="staticEmail" class="col-md-3">Kelas</label>
+                                <label class="col-md-3">Kelas</label>
                                 <div class="col-md-9">
                                   <select class="form-control form-control-sm" name="id_kelas">
                                     <option value="<?= $k['id_kelas']?>"><?= $k['nama_kelas']?></option>
@@ -82,28 +82,28 @@ $session = \Config\Services::session();
                                 </div>
                               </div>
                               <div class="row mb-1">
-                                <label for="staticEmail" class="col-md-3">Email</label>
+                                <label class="col-md-3">Email</label>
                                 <div class="col-md-9">
-                                  <input type="text" class="form-control form-control-sm" name="email_peserta">
+                                  <input type="text" class="form-control form-control-sm" name="email_peserta" value="<?= $user['email']?>">
                                 </div>
                               </div>
                               <div class="row mb-1">
-                                <label for="inputPassword" class="col-md-3">No HP</label>
+                                <label class="col-md-3">No HP</label>
                                 <div class="col-md-9">
-                                  <input type="telp" class="form-control form-control-sm" name="hp_peserta">
+                                  <input type="text" class="form-control form-control-sm" name="hp_peserta" value="<?= $user['hp']?>">
                                 </div>
                               </div>
                               <div class="row mb-1">
-                                <label for="inputPassword" class="col-md-3">Nama di Sertifikat</label>
+                                <label class="col-md-3">Nama di Sertifikat</label>
                                 <div class="col-md-9">
-                                  <input type="telp" class="form-control form-control-sm" name="nama_sertifikat">
+                                  <input type="text" class="form-control form-control-sm" name="nama_sertifikat" value="<?= $user['nama']?>">
                                 </div>
                               </div>
                               <?php
                                 if($id_user>0){
                               ?>
                               <div class="row mb-1">
-                                <label for="inputPassword" class="col-md-3">Harga Member</label>
+                                <label class="col-md-3">Harga Member</label>
                                 <div class="col-md-9">
                                   <input type="number" class="form-control form-control-sm" name="harga" value="<?= $k['harga_jual']; ?>">
                                 </div>
@@ -112,7 +112,7 @@ $session = \Config\Services::session();
                                 }else{
                               ?>
                               <div class="row mb-1">
-                                <label for="inputPassword" class="col-md-3">Harga Non Member</label>
+                                <label class="col-md-3">Harga Non Member</label>
                                 <div class="col-md-9">
                                   <input type="number" class="form-control form-control-sm" name="harga" value="<?php if($k['harga_jual']<1){echo "10000";}else{ echo ($k['harga_jual']*1.1); } ?>">
                                 </div>
@@ -129,7 +129,7 @@ $session = \Config\Services::session();
                       </div>
                     </div>
                     <?= form_close(); ?>
-                    
+
                   </td>
                   
                 </tr>

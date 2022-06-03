@@ -52,18 +52,29 @@ class Berita extends BaseController
     {
         
         $session        = \Config\Services::session();
+        $m_user         = new User_model();
         $m_konfigurasi  = new Konfigurasi_model();
         $m_berita       = new Berita_model();
         $m_kelas        = new Kelas_model();
         $m_materi       = new Materi_model();
+        if ($session->get('username') === ''){
+            $user       = [
+                'nama'  => 'Tamu',
+                'email' => '',
+                'hp'    => '',
+            ];
+        }else{
+            $id_user        = $this->session->get('id_user');
+            $user           = $m_user->detail($id_user);
+
+        }
         $konfigurasi    = $m_konfigurasi->listing();
         $berita         = $m_berita->read($slug_berita);
         $sidebar        = $m_berita->sidebar();
         $id_event       = $berita['id_berita'];
 		$kelas          = $m_kelas->event($id_event);
         $materi         = $m_materi->event($id_event);
-        // var_dump($berita);
-        // Update hits
+
         $data = [
             'id_berita' => $berita['id_berita'],
             'hits'      => $berita['hits'] + 1,
@@ -77,7 +88,8 @@ class Berita extends BaseController
             'berita'        => $berita,
             'sidebar'       => $sidebar,
             'kelas'         => $kelas,
-            'materi'        => $materi, 
+            'materi'        => $materi,
+            'user'          => $user,
             'content'       => 'berita/read',
         ];
         echo view('layout/wrapper', $data);
@@ -90,8 +102,8 @@ class Berita extends BaseController
         $session                = \Config\Services::session();
         $m_kelas                = new Kelas_model();
         $m_materi               = new Materi_model();
-		$kelas                  = $m_kelas->by_has_kelas($has_kelas);
-        $id_kelas               = $kelas->id_kelas;
+		$kelas                  = $m_kelas->detail($has_kelas);
+        $id_kelas               = $kelas['id_kelas'];
         $materi                 = $m_materi->kelas($id_kelas);
         $m_akreditasi_profesi   = new Akreditasi_profesi_model();
         $akreditasi_profesi     = $m_akreditasi_profesi->by_id_kelas($id_kelas);
@@ -101,14 +113,14 @@ class Berita extends BaseController
         
         // Update hits
         $data = [
-            'has_kelas'  => $kelas->has_kelas,
-            'hit_kelas' => $kelas->hit_kelas + 1,
+            'has_kelas'  => $kelas['has_kelas'],
+            'hit_kelas' => $kelas['hit_kelas'] + 1,
         ];
         $m_kelas->edit($data);
         $data = [
-            'title'         => $kelas->nama_kelas,
-            'description'   => $kelas->nama_kelas,
-            'keywords'      => $kelas->nama_kelas,
+            'title'         => $kelas['nama_kelas'],
+            'description'   => $kelas['nama_kelas'],
+            'keywords'      => $kelas['nama_kelas'],
             'kelas'         => $kelas,
             'materi'        => $materi, 
             'skp'           => $akreditasi_profesi,
