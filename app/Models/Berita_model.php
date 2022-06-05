@@ -85,8 +85,7 @@ class Berita_model extends Model
         $builder->select('berita.*, kategori.nama_kategori, kategori.slug_kategori, users.nama');
         $builder->join('kategori', 'kategori.id_kategori = berita.id_kategori', 'LEFT');
         $builder->join('users', 'users.id_user = berita.id_user', 'LEFT');
-        $builder->where(['status_berita' => 'Publish',
-            'jenis_berita'               => 'Berita', ]);
+        $builder->where(['status_berita' => 'Publish']);
         $builder->orderBy('berita.tanggal_publish', 'DESC');
         $builder->limit(10);
         $query = $builder->get();
@@ -246,9 +245,7 @@ class Berita_model extends Model
         $builder->join('kategori', 'kategori.id_kategori = berita.id_kategori', 'LEFT');
         $builder->join('users', 'users.id_user = berita.id_user', 'LEFT');
         $builder->where('berita.id_berita', $id_berita);
-        $builder->orderBy('berita.id_berita', 'DESC');
         $query = $builder->get();
-
         return $query->getRowArray();
     }
     //by has berita
@@ -256,11 +253,11 @@ class Berita_model extends Model
     public function has_berita($has_berita)
     {
         $builder = $this->db->table('berita');
-        $builder->select('berita.*, kategori.nama_kategori, kategori.slug_kategori, users.nama');
+        $builder->select('berita.*, kategori.nama_kategori, kategori.slug_kategori, users.nama, client.nama as nama_client');
         $builder->join('kategori', 'kategori.id_kategori = berita.id_kategori', 'LEFT');
         $builder->join('users', 'users.id_user = berita.id_user', 'LEFT');
+        $builder->join('client', 'client.id_client = berita.id_client', 'LEFT');
         $builder->where('berita.has_berita', $has_berita);
-        $builder->orderBy('berita.id_berita', 'DESC');
         $query = $builder->get();
 
         return $query->getRowArray();

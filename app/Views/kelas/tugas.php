@@ -56,7 +56,7 @@ use App\Models\Soal_jawaban_model;
                                     <?php
                                     foreach ($soal_jawaban as $jawaban):
                                     ?>
-                                    <input type="radio" value="<?= $jawaban['id_soal_jawaban']?>" name="jawaban[]"><?= $jawaban['jawaban']?><br>
+                                    <input type="radio" value="<?= $jawaban['id_soal_jawaban']?>" name="jawaban"><?= $jawaban['jawaban']?><br>
                                         <?php
                                     endforeach;
                                         ?>
@@ -66,6 +66,7 @@ use App\Models\Soal_jawaban_model;
                             }
                             ?>
                         </div>
+                        <?= $pager->links('soal','mypagination');?>
                     </div>
                 </div>
                 <div class="col-md-4">

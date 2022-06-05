@@ -44,28 +44,15 @@
                             </small>
                         </div>
                         <div class="card-body">
-                            <b>Materi</b>
-                            <table class="table table-sm table-striped">
-                                <thead>
-                                <tr>
-                                    <th class="text-center">#</th>
-                                    <th>Nama</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <?php
-                                $x=1;
-                                foreach ($peserta as $p):
+                            <b>Peserta</b><br>
+                            <?php
+                            $x=1;
+                            foreach ($peserta as $p):
                                 ?>
-                                <tr>
-                                    <td class="text-center"><?= $x++; ?></td>
-                                    <td><?= $p['nama_sertifikat']; ?></td>
-                                </tr>
-                                <?php
-                                endforeach;
-                                ?>
-                                </tbody>
-                            </table>
+                            <button class="btn btn-sm btn-info"><?= $p['nama_sertifikat']; ?></button>
+                            <?php
+                            endforeach;
+                            ?>
 
                         </div>
                     </div>

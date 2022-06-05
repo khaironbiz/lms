@@ -22,17 +22,28 @@ class Registrasi_model extends Model
     // Listing
     public function listing()
     {
-        $builder = $this->db->table('prov');
-        $builder->orderBy('prov.nama_prov', 'ASC');
+        $builder = $this->db->table('registrasi');
+        $builder->select('registrasi.*, prov.nama_prov');
+        $builder->join('prov', 'prov.id_prov = registrasi.dpw', 'LEFT');
+        $builder->orderBy('registrasi.id_registrasi', 'DESC');
+        $query = $builder->get();
+        return $query->getResultArray();
+    }
+    // Listing
+    public function ready()
+    {
+        $builder = $this->db->table('registrasi');
+        $builder->where('registrasi.password !=', '');
+        $builder->orderBy('registrasi.id_registrasi', 'DESC');
         $query = $builder->get();
 
         return $query->getResultArray();
     }
     public function has_registrasi($has_registrasi){
         $builder = $this->db->table('registrasi');
-        $builder->select('registrasi.*, token.token, token.exp_date');
-        $builder->where('has_registrasi', $has_registrasi);
-        $builder->join('token', 'token.token = registrasi.has_registrasi');
+        $builder->select('registrasi.*, prov.nama_prov');
+        $builder->join('prov', 'prov.id_prov = registrasi.dpw', 'LEFT');
+        $builder->where('registrasi.has_registrasi', $has_registrasi);
         $query = $builder->get();
         return $query->getRowArray();
     }

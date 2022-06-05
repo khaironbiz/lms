@@ -171,7 +171,7 @@ class Event extends BaseController
                     // Create thumb
                     $image = \Config\Services::image()
                         ->withFile('assets/upload/image/' . $namabaru)
-                        ->fit(100, 100, 'center')
+                        ->fit(400, 400, 'center')
                         ->save('assets/upload/image/thumbs/' . $namabaru);
                     // masuk database
                     return redirect()->to(base_url('admin/event'))->with('sukses', 'Data Berhasil disimpan');
@@ -231,7 +231,7 @@ class Event extends BaseController
         echo view('admin/layout/wrapper', $data);
     }
     // edit
-    public function edit($id_berita)
+    public function edit($has_berita)
     {
         checklogin();
         admin();
@@ -240,7 +240,7 @@ class Event extends BaseController
         $m_client   = new Client_model();
         $client     = $m_client->listing();
         $kategori   = $m_kategori->listing();
-        $berita     = $m_berita->detail($id_berita);
+        $berita     = $m_berita->has_berita($has_berita);
         $data       = [
             'title'     => 'Edit',
             'kategori'  => $kategori,
@@ -259,27 +259,57 @@ class Event extends BaseController
         $m_berita   = new Berita_model();
         $kategori   = $m_kategori->listing();
         $berita     = $m_berita->detail($id_berita);
+        $data_validasi = [
+            'judul_berita' => 'required',
+            'gambar' => [
+                'mime_in[gambar,image/jpg,image/jpeg,image/gif,image/png]',
+                'max_size[gambar,4096]',
+            ],
+        ];
         // Start validasi
-        if ($this->request->getMethod() === 'post' && $this->validate(
-            [
-                'judul_berita' => 'required',
-                'gambar' => [
-                    'mime_in[gambar,image/jpg,image/jpeg,image/gif,image/png]',
-                    'max_size[gambar,4096]',
-                ],
-            ]
-        )) {
-            if (! empty($_FILES['gambar']['name'])) {
-                // Image upload
-                $avatar   = $this->request->getFile('gambar');
-                $namabaru = str_replace(' ', '-', $avatar->getName());
-                $avatar->move('assets/upload/image/', $namabaru);
-                // Create thumb
-                $image = \Config\Services::image()
-                    ->withFile('assets/upload/image/' . $namabaru)
-                    ->fit(100, 100, 'center')
-                    ->save('assets/upload/image/thumbs/' . $namabaru);
-                // masuk database
+        if ($this->request->getMethod() === 'post') {
+            if($this->validate($data_validasi)){
+                if (! empty($_FILES['gambar']['name'])) {
+                    $validasi_image = [
+                        'gambar' => [
+                            'mime_in[gambar,image/jpg,image/jpeg,image/gif,image/png]',
+                            'max_size[gambar,4096]',
+                        ],
+                    ];
+                    if($this->validate($validasi_image)){
+                    // Image upload
+                    $avatar   = $this->request->getFile('gambar');
+                    $namabaru = str_replace(' ', '-', $avatar->getName());
+                    $avatar->move('assets/upload/image/', $namabaru);
+                    // Create thumb
+                    $image = \Config\Services::image()
+                        ->withFile('assets/upload/image/' . $namabaru)
+                        ->fit(400, 400, 'center')
+                        ->save('assets/upload/image/thumbs/' . $namabaru);
+
+                    $data = [
+                        'id_berita'       => $id_berita,
+                        'id_user'         => $this->session->get('id_user'),
+                        'id_client'       => $this->request->getVar('id_client'),
+                        'id_kategori'     => $this->request->getVar('id_kategori'),
+                        'slug_berita'     => strtolower(url_title($this->request->getVar('judul_berita'))),
+                        'judul_berita'    => $this->request->getVar('judul_berita'),
+                        'ringkasan'       => $this->request->getVar('ringkasan'),
+                        'isi'             => $this->request->getVar('isi'),
+                        'status_berita'   => $this->request->getVar('status_berita'),
+                        'jenis_berita'    => $this->request->getVar('jenis_berita'),
+                        'keywords'        => $this->request->getVar('keywords'),
+                        'gambar'          => $namabaru,
+                        'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
+                        'has_berita'      => md5(uniqid()),
+                    ];
+                    $m_berita->edit($data);
+                    return redirect()->to(base_url('admin/event'))->with('sukses', 'Data Berhasil di Simpan');
+                    }else{
+                        session()->setFlashdata('error', $this->validator->listErrors());
+                        return redirect()->back()->withInput();
+                    }
+                }
                 $data = [
                     'id_berita'       => $id_berita,
                     'id_user'         => $this->session->get('id_user'),
@@ -292,32 +322,18 @@ class Event extends BaseController
                     'status_berita'   => $this->request->getVar('status_berita'),
                     'jenis_berita'    => $this->request->getVar('jenis_berita'),
                     'keywords'        => $this->request->getVar('keywords'),
-                    'gambar'          => $namabaru,
                     'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
                     'has_berita'      => md5(uniqid()),
                 ];
                 $m_berita->edit($data);
-                return redirect()->to(base_url('admin/event'))->with('sukses', 'Data Berhasil di Simpan');
+                return redirect()->to(base_url('admin/event'))->with('sukses', 'Data Berhasil disimpan');
+            }else{
+                session()->setFlashdata('error', $this->validator->listErrors());
+                return redirect()->back()->withInput();
             }
-            $data = [
-                'id_berita'       => $id_berita,
-                'id_user'         => $this->session->get('id_user'),
-                'id_client'       => $this->request->getVar('id_client'),
-                'id_kategori'     => $this->request->getVar('id_kategori'),
-                'slug_berita'     => strtolower(url_title($this->request->getVar('judul_berita'))),
-                'judul_berita'    => $this->request->getVar('judul_berita'),
-                'ringkasan'       => $this->request->getVar('ringkasan'),
-                'isi'             => $this->request->getVar('isi'),
-                'status_berita'   => $this->request->getVar('status_berita'),
-                'jenis_berita'    => $this->request->getVar('jenis_berita'),
-                'keywords'        => $this->request->getVar('keywords'),
-                'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
-                'has_berita'      => md5(uniqid()),
-            ];
-            $m_berita->edit($data);
-            return redirect()->to(base_url('admin/event'))->with('sukses', 'Data Berhasil disimpan');
+
         }else{
-            return redirect()->to(base_url('admin/event'))->with('warning', 'Data gagal disimpan');
+            return redirect()->to(base_url('admin/event'))->with('warning', 'Anda Tersesat');
         }
     }
     // Delete

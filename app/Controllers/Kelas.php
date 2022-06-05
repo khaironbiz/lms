@@ -162,6 +162,38 @@ class Kelas extends BaseController
         echo view('layout/wrapper', $data);
 
     }
+    public function loop (){
+        $tahun      = date('Y');
+        $bulan      = date('m');
+        $n          = 0;
+        $n_tahun    = 7;
+        while($n <= $n_tahun){
+            $tahun_maju     = $tahun+$n++;
+            echo "<b>$tahun_maju</b><br>";
+            $x          = 1;
+            $x_bulan    = 12;
+            while($x <= $x_bulan){
+                $bulan_ini      = $tahun_maju."-".$x++;
+                $bulan_maju     = $bulan_ini."-01 00:00:00";
+                $time_bulan     = strtotime($bulan_maju);
+                $bulan_berjalan = date('Y-m-d', $time_bulan);
+                $hari_tahun     = date('c', $time_bulan);
+                echo $bulan_maju." --- $time_bulan ---- $bulan_berjalan ---- $hari_tahun<br>";
+                $y_min  = 1;
+                $y_max  = 31;
+
+                while($y_min <= $y_max){
+                    $tanggal_ini    = $y_min++;
+                    $tanggal_maju   = $bulan_ini."-".$tanggal_ini." 00:00:00";
+                    $time_tanggal   = strtotime($tanggal_maju);
+                    echo $tanggal_maju."--- $time_tanggal ---".date('Y-m-d', $time_tanggal)."<br>";
+                }
+            }
+        }
+        $tanggal_ini        = date('Y-m-d');
+        $month_start        = strtotime($tanggal_ini);
+        echo $month_start;
+    }
     public function conference($has_kelas){
         checklogin();
         $id_user        = $this->session->get('id_user');
@@ -195,7 +227,8 @@ class Kelas extends BaseController
         $id_kelas       = $tugas_kelas['id_kelas'];
         $tugas_kelas_list = $m_tugas_kelas->list_by_id_kelas($id_kelas);
         $m_soal         = new Soal_model();
-        $soal           = $m_soal->list_id_tugas_kelas($id_tugas_kelas);
+        $soal           = $m_soal->where('id_tugas_kelas', $id_tugas_kelas)->paginate(1,'soal');
+        $pager          = $m_soal->pager;
         $count_soal     = $m_soal->count_id_tugas_kelas($id_tugas_kelas);
         $m_kelas        = new Kelas_model();
         $kelas          = $m_kelas->by_id_kelas($id_kelas);
@@ -206,6 +239,7 @@ class Kelas extends BaseController
             'tugas_kelas_detail'   => $tugas_kelas,
             'tugas_kelas'   => $tugas_kelas_list,
             'soal'          => $soal,
+            'pager'         => $pager,
             'count_soal'    => $count_soal,
             'kelas'         => $kelas,
             'konfigurasi'   => $konfigurasi,

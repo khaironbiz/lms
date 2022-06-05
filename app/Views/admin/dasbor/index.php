@@ -167,7 +167,7 @@ $m_dasbor = new Dasbor_model();
   <!-- /.col -->
   <div class="col-6 col-md-4 col-xl-3 col-xxl-2">
     <div class="info-box mb-3">
-      <span class="info-box-icon bg-danger elevation-1"><i class="fab fa-youtube"></i></span>
+        <span class="info-box-icon bg-danger elevation-1"><a href="<?= base_url('admin/video')?>"><i class="fab fa-youtube"></i></a></span>
 
       <div class="info-box-content">
         <span class="info-box-text">Video Youtube</span>

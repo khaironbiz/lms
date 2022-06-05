@@ -54,6 +54,19 @@ class User_log_model extends Model
 
         return $query->getResultArray();
     }
+    public function filter_date($tgl_awal, $tgl_ahir)
+    {
+        $db = db_connect();
+        $sql = 'SELECT * FROM some_table WHERE id = :id: AND status = :status: AND author = :name:';
+        $builder = $db->query($sql, [
+            'id'     => 3,
+            'status' => 'live',
+            'name'   => 'Rick',
+        ]);
+        $query = $builder->get();
+
+        return $query->getResultArray();
+    }
 
     // tambah
     public function tambah($data)

@@ -32,8 +32,10 @@
                     
                 </div>
                 <div class="member-info">
-                    <b><?= $kelas['nama_kelas'] ?></b>
-                    <span><?php if($kelas['tanggal_mulai'] == $kelas['tanggal_selesai']){ echo $kelas['tanggal_mulai']; }else{ echo $kelas['tanggal_mulai'] . " sd ".$kelas['tanggal_selesai']; }  ?></span>
+                    <a href="<?= base_url('kelas/room/'.$kelas['has_kelas'])?>">
+                        <b><?= $kelas['nama_kelas'] ?></b>
+                        <span><?php if($kelas['tanggal_mulai'] == $kelas['tanggal_selesai']){ echo $kelas['tanggal_mulai']; }else{ echo $kelas['tanggal_mulai'] . " sd ".$kelas['tanggal_selesai']; }  ?></span>
+                    </a>
                 </div>
                 </div>
             </div>

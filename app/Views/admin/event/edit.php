@@ -20,7 +20,13 @@
 			<?php
 				foreach($client as $client):
 			?>
-			<option value="<?= $client['id_client']?>"><?= $client['nama']?></option>
+			<option value="<?= $client['id_client']?>"
+                <?php
+                if($client['id_client']===$berita['id_client']){
+                    echo "selected";
+                }
+                ?>
+            ><?= $client['nama']?></option>
 			<?php
 				endforeach
 			?>
