@@ -3,14 +3,6 @@ use App\Models\Dasbor_model;
 
 $m_dasbor = new Dasbor_model();
 ?>
-<div class="alert alert-info">
-	<h4>Hai <em class="text-warning"><?= $session->get('nama') ?></em></h4>
-	<hr>
-	<p>Selamat datang di website <strong><?= namaweb() ?></strong>. Website ini adalah sample hasil belajar di Java Web Media <a href="https://javawebmedia.com">www.javawebmedia.com</a>. Semoga bermanfaat yah.</p>
-</div>
-
-
-
 
  <!-- Info boxes -->
 <div class="row">

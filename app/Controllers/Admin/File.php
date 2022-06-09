@@ -3,6 +3,7 @@
 namespace App\Controllers\Admin;
 
 use App\Models\File_model;
+use App\Models\File_hitter_model;
 use App\Models\Materi_model;
 
 class File extends BaseController
@@ -204,16 +205,31 @@ class File extends BaseController
     }
     // Unduh
     public function unduh($has_file){
-        $m_file     = new File_model();
-        $file       = $m_file->has_file($has_file);
+        checklogin();
+        admin();
+        $id_user        = $this->session->get('id_user');
+        $m_file         = new File_model();
+        $m_file_hitter  = new File_hitter_model();
+        $file           = $m_file->has_file($has_file);
+        $ip             = $_SERVER['REMOTE_ADDR'];
         // Update hits
         $data = [
             'id_file'   => $file['id_file'],
             'hit_file'  => $file['hit_file'] + 1,
         ];
-        $update_hit = $m_file->edit($data);
+        $data_hitter = [
+            'id_file'   => $file['id_file'],
+            'created_at'=> time(),
+            'created_by'=> $id_user,
+            'ip'        => $ip,
+        ];
+        $add_hitter = $m_file_hitter->save($data_hitter);
+        $update_hit = $m_file->save($data);
+        if($update_hit != NULL){
+            return $this->response->download('assets/upload/file/' . $file['nama_file'], null);
+        }
 
         // Update hits
-        return $this->response->download('assets/upload/file/' . $file['nama_file'], null);
+
     }
 }

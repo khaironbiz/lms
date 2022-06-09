@@ -8,7 +8,7 @@ class File_hitter_model extends Model
 {
     protected $table         = 'file_hitter';
     protected $primaryKey    = 'id_file_hitter';
-    protected $allowedFields = [];
+    protected $allowedFields = ['id_file', 'created_at', 'created_by', 'ip'];
     // Listing
     public function listing()
     {
