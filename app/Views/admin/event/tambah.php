@@ -11,10 +11,10 @@
 
 <div class="form-group row">
 	<label class="col-md-2">Banner</label>
-	<div class="col-md-4">
+	<div class="col-md-3">
 		<input type="file" name="gambar" class="form-control" value="<?= set_value('gambar') ?>">
 	</div>
-	<div class="col-md-6">
+	<div class="col-md-3">
 		<select name="id_client" class="form-control" required>
 			<option value="">---pilih---</option>
 			<?php
@@ -27,26 +27,43 @@
 		</select>
 		
 	</div>
+    <div class="col-md-2">
+        <select name="jenis_berita" class="form-control">
+            <option value="Event">Event</option>
+        </select>
+        <small class="text-secondary">Jenis konten</small>
+    </div>
+    <div class="col-md-2">
+        <select name="status_berita" class="form-control">
+            <option value="Publish">Publish</option>
+            <option value="Draft">Draft</option>
+        </select>
+        <small class="text-secondary">Status publikasi</small>
+    </div>
 </div>
 
-<div class="form-group row">
-	<label class="col-md-2">Kategori</label>
-	
-	<div class="col-md-2">
-		<select name="jenis_berita" class="form-control">
-			<option value="Event">Event</option>
-		</select>
-		<small class="text-secondary">Jenis konten</small>
-	</div>
-	<div class="col-md-2">
-		<select name="status_berita" class="form-control">
-			<option value="Publish">Publish</option>
-			<option value="Draft">Draft</option>
-		</select>
-		<small class="text-secondary">Status publikasi</small>
-	</div>
-	
-</div>
+    <div class="form-group row">
+        <label class="col-md-2">Tanggal Kegiatan</label>
+        <div class="col-md-4">
+            <input type="text" name="tanggal_mulai" class="form-control tanggal" value="<?php if (isset($_POST['tanggal_mulai'])) {
+                echo set_value('tanggal_mulai');
+            } else {
+                echo date('d-m-Y');
+            } ?>">
+            <small class="text-secondary">Format <strong>dd-mm-yyyy</strong></small>
+        </div>
+        <div class="col-md-1 text-center">
+            <b>Sampai</b>
+        </div>
+        <div class="col-md-4">
+            <input type="text" name="tanggal_selesai" class="form-control tanggal" value="<?php if (isset($_POST['tanggal_selesai'])) {
+                echo set_value('tanggal_selesai');
+            } else {
+                echo date('d-m-Y');
+            } ?>">
+            <small class="text-secondary">Format <strong>dd-mm-yyyy</strong></small>
+        </div>
+    </div>
 
 <div class="form-group row">
 	<label class="col-md-2">Waktu Publikasi</label>

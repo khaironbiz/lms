@@ -107,65 +107,71 @@ class Berita extends BaseController
         $m_kategori = new Kategori_model();
         $m_berita   = new Berita_model();
         $kategori   = $m_kategori->listing();
+        $m_client   = new Client_model();
+        $client     = $m_client->listing();
+        $data_validasi = [
+            'judul_berita'  => 'required|',
+            'gambar'        => [
+                'mime_in[gambar,image/jpg,image/jpeg,image/gif,image/png]',
+                'max_size[gambar,4096]',
+            ],
+        ];
 
         // Start validasi
-        if ($this->request->getMethod() === 'post' && $this->validate(
-            [
-                'judul_berita'  => 'required|',
-                'gambar'        => [
-                    'mime_in[gambar,image/jpg,image/jpeg,image/gif,image/png]',
-                    'max_size[gambar,4096]',
-                ],
-            ]
-        )) {
-            if (! empty($_FILES['gambar']['name'])) {
-                // Image upload
-                $avatar   = $this->request->getFile('gambar');
-                $namabaru = str_replace(' ', '-', $avatar->getName());
-                $avatar->move('assets/upload/image/', $namabaru);
-                // Create thumb
-                $image = \Config\Services::image()
-                    ->withFile('assets/upload/image/' . $namabaru)
-                    ->fit(100, 100, 'center')
-                    ->save('assets/upload/image/thumbs/' . $namabaru);
-                // masuk database
-                $data = [
-                    'id_user'         => $this->session->get('id_user'),
-                    'id_kategori'     => $this->request->getVar('id_kategori'),
-                    'slug_berita'     => strtolower(url_title($this->request->getVar('judul_berita'))),
-                    'judul_berita'    => $this->request->getVar('judul_berita'),
-                    'ringkasan'       => $this->request->getVar('ringkasan'),
-                    'isi'             => $this->request->getVar('isi'),
-                    'status_berita'   => $this->request->getVar('status_berita'),
-                    'jenis_berita'    => $this->request->getVar('jenis_berita'),
-                    'keywords'        => $this->request->getVar('keywords'),
-                    'icon'            => $this->request->getVar('icon'),
-                    'gambar'          => $namabaru,
-                    'tanggal_post'    => date('Y-m-d H:i:s'),
-                    'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
-                    'has_berita'      => md5(uniqid()),
-                ];
+        if ($this->request->getMethod() === 'post') {
+            if($this->validate($data_validasi)){
+                if (! empty($_FILES['gambar']['name'])) {
+                    // Image upload
+                    $avatar   = $this->request->getFile('gambar');
+                    $namabaru = uniqid().str_replace(' ', '-', $avatar->getName());
+                    $avatar->move('assets/upload/image/', $namabaru);
+                    // Create thumb
+                    $image = \Config\Services::image()
+                        ->withFile('assets/upload/image/' . $namabaru)
+                        ->fit(400, 400, 'center')
+                        ->save('assets/upload/image/thumbs/' . $namabaru);
+                    // masuk database
+                    $data = [
+                        'id_user'         => $this->session->get('id_user'),
+                        'id_kategori'     => $this->request->getVar('id_kategori'),
+                        'slug_berita'     => strtolower(url_title($this->request->getVar('judul_berita'))),
+                        'judul_berita'    => $this->request->getVar('judul_berita'),
+                        'ringkasan'       => $this->request->getVar('ringkasan'),
+                        'isi'             => $this->request->getVar('isi'),
+                        'status_berita'   => $this->request->getVar('status_berita'),
+                        'jenis_berita'    => $this->request->getVar('jenis_berita'),
+                        'keywords'        => $this->request->getVar('keywords'),
+                        'icon'            => $this->request->getVar('icon'),
+                        'gambar'          => $namabaru,
+                        'tanggal_post'    => date('Y-m-d H:i:s'),
+                        'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
+                        'has_berita'      => md5(uniqid()),
+                    ];
+                    $m_berita->tambah($data);
+                    return redirect()->to(base_url('admin/berita'))->with('sukses', 'Data Berhasil di Simpan');
+                }else{
+                    $data = [
+                        'id_user'         => $this->session->get('id_user'),
+                        'id_kategori'     => $this->request->getVar('id_kategori'),
+                        'slug_berita'     => strtolower(url_title($this->request->getVar('judul_berita'))),
+                        'judul_berita'    => $this->request->getVar('judul_berita'),
+                        'ringkasan'       => $this->request->getVar('ringkasan'),
+                        'isi'             => $this->request->getVar('isi'),
+                        'status_berita'   => $this->request->getVar('status_berita'),
+                        'jenis_berita'    => $this->request->getVar('jenis_berita'),
+                        'keywords'        => $this->request->getVar('keywords'),
+                        'icon'            => $this->request->getVar('icon'),
+                        'tanggal_post'    => date('Y-m-d H:i:s'),
+                        'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
+                        'has_berita'      => md5(uniqid()),
+                    ];
+                }
                 $m_berita->tambah($data);
-                return redirect()->to(base_url('admin/berita'))->with('sukses', 'Data Berhasil di Simpan');
-            }
-            $data = [
-                'id_user'         => $this->session->get('id_user'),
-                'id_kategori'     => $this->request->getVar('id_kategori'),
-                'slug_berita'     => strtolower(url_title($this->request->getVar('judul_berita'))),
-                'judul_berita'    => $this->request->getVar('judul_berita'),
-                'ringkasan'       => $this->request->getVar('ringkasan'),
-                'isi'             => $this->request->getVar('isi'),
-                'status_berita'   => $this->request->getVar('status_berita'),
-                'jenis_berita'    => $this->request->getVar('jenis_berita'),
-                'keywords'        => $this->request->getVar('keywords'),
-                'icon'            => $this->request->getVar('icon'),
-                'tanggal_post'    => date('Y-m-d H:i:s'),
-                'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
-                'has_berita'      => md5(uniqid()),
-            ];
-            $m_berita->tambah($data);
 
-            return redirect()->to(base_url('admin/berita'))->with('sukses', 'Data Berhasil di Simpan');
+                return redirect()->to(base_url('admin/berita'))->with('sukses', 'Data Berhasil di Simpan');
+
+            }
+
         }
 
         $data = [
@@ -199,12 +205,12 @@ class Berita extends BaseController
             if (! empty($_FILES['gambar']['name'])) {
                 // Image upload
                 $avatar   = $this->request->getFile('gambar');
-                $namabaru = str_replace(' ', '-', $avatar->getName());
+                $namabaru = uniqid().str_replace(' ', '-', $avatar->getName());
                 $avatar->move('assets/upload/image/', $namabaru);
                 // Create thumb
                 $image = \Config\Services::image()
                     ->withFile('assets/upload/image/' . $namabaru)
-                    ->fit(100, 100, 'center')
+                    ->fit(400, 400, 'center')
                     ->save('assets/upload/image/thumbs/' . $namabaru);
                 // masuk database
                 $data = [

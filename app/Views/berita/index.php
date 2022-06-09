@@ -25,7 +25,7 @@
             <img src="<?= base_url('assets/upload/image/' . $berita['gambar']) ?>" class="w-100">
             <div class="card-header">
               <b><?= $berita['judul_berita'] ?></b><br>
-              <div class="date-box text-white"><h3><?= date('d', strtotime($berita['tanggal'])) ?></h3><h5><?= date('M-y', strtotime($berita['tanggal'])) ?></h5></div>
+              <div class="date-box text-white"><h3><?= date('d', $berita['tanggal_mulai']) ?></h3><h5><?= date('M-y', $berita['tanggal_mulai']) ?></h5></div>
             </div>
             <div class="card-body">
               <h5></h5>

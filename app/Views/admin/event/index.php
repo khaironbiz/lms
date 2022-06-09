@@ -33,7 +33,7 @@ echo view($sub_menu)
 				if ($berita['gambar'] === ''){
 					echo '-';
 					}else{ ?>
-					<img src="<?= base_url('assets/upload/image/thumbs/' . $berita['gambar']) ?>" class="rounded w-100">
+					<img src="<?= base_url('assets/upload/image/thumbs/' . $berita['gambar']) ?>" class="rounded w-50">
 				<?php 
 				} 
 				?>

@@ -8,6 +8,7 @@ use App\Models\User_model;
 use App\Models\Kelas_model;
 use App\Models\Materi_model;
 use App\Models\Client_model;
+use App\Models\Metode_belajar_model;
 use App\Models\Kategori_kelas_model;
 
 class Event extends BaseController
@@ -149,7 +150,7 @@ class Event extends BaseController
             if (! empty($_FILES['gambar']['name'])) {
                 // Image upload
                 $avatar   = $this->request->getFile('gambar');
-                $namabaru = str_replace(' ', '-', $avatar->getName());
+                $namabaru = uniqid().str_replace(' ', '-', $avatar->getName());
                 $data = [
                     'id_user'         => $this->session->get('id_user'),
                     'id_client'       => $this->request->getVar('id_client'),
@@ -161,6 +162,8 @@ class Event extends BaseController
                     'jenis_berita'    => $this->request->getVar('jenis_berita'),
                     'keywords'        => $this->request->getVar('keywords'),
                     'gambar'          => $namabaru,
+                    'tanggal_mulai'   => strtotime($this->request->getVar('tanggal_mulai')),
+                    'tanggal_selesai' => strtotime($this->request->getVar('tanggal_selesai')),
                     'tanggal_post'    => date('Y-m-d H:i:s'),
                     'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
                     'has_berita'      => md5(uniqid()),
@@ -190,6 +193,8 @@ class Event extends BaseController
                     'status_berita'   => $this->request->getVar('status_berita'),
                     'jenis_berita'    => $this->request->getVar('jenis_berita'),
                     'keywords'        => $this->request->getVar('keywords'),
+                    'tanggal_mulai'   => strtotime($this->request->getVar('tanggal_mulai')),
+                    'tanggal_selesai' => strtotime($this->request->getVar('tanggal_selesai')),
                     'tanggal_post'    => date('Y-m-d H:i:s'),
                     'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
                     'has_berita'      => md5(uniqid()),
@@ -209,7 +214,7 @@ class Event extends BaseController
     {
         checklogin();
         admin();
-        $m_kategori         = new Kategori_model();
+        $m_metode_belajar   = new Metode_belajar_model();
         $m_berita           = new Berita_model();
         $m_kelas            = new Kelas_model();
         $m_kategori_kelas   = new Kategori_kelas_model();
@@ -219,14 +224,16 @@ class Event extends BaseController
         $id_berita          = $berita['id_berita'];
         $kelas              = $m_kelas->event($id_berita);
         $user               = $m_user->listing();
+        $metode_belajar     = $m_metode_belajar->findAll();
         $data               = [
                             'title'             => "Detail Event",
                             'kategori_kelas'    => $kategori,
-                            'berita'    => $berita,
-                            'user'      => $user,
-                            'kelas'     => $kelas,
-                            'sub_menu'  => 'admin/sub_menu/event',
-                            'content'   => 'admin/event/detail',
+                            'berita'            => $berita,
+                            'user'              => $user,
+                            'kelas'             => $kelas,
+                            'metode_belajar'    => $metode_belajar,
+                            'sub_menu'          => 'admin/sub_menu/event',
+                            'content'           => 'admin/event/detail',
         ];
         echo view('admin/layout/wrapper', $data);
     }
@@ -279,7 +286,7 @@ class Event extends BaseController
                     if($this->validate($validasi_image)){
                     // Image upload
                     $avatar   = $this->request->getFile('gambar');
-                    $namabaru = str_replace(' ', '-', $avatar->getName());
+                    $namabaru = uniqid().str_replace(' ', '-', $avatar->getName());
                     $avatar->move('assets/upload/image/', $namabaru);
                     // Create thumb
                     $image = \Config\Services::image()
@@ -299,6 +306,8 @@ class Event extends BaseController
                         'status_berita'   => $this->request->getVar('status_berita'),
                         'jenis_berita'    => $this->request->getVar('jenis_berita'),
                         'keywords'        => $this->request->getVar('keywords'),
+                        'tanggal_mulai'   => strtotime($this->request->getVar('tanggal_mulai')),
+                        'tanggal_selesai' => strtotime($this->request->getVar('tanggal_selesai')),
                         'gambar'          => $namabaru,
                         'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
                         'has_berita'      => md5(uniqid()),
@@ -322,6 +331,8 @@ class Event extends BaseController
                     'status_berita'   => $this->request->getVar('status_berita'),
                     'jenis_berita'    => $this->request->getVar('jenis_berita'),
                     'keywords'        => $this->request->getVar('keywords'),
+                    'tanggal_mulai'   => strtotime($this->request->getVar('tanggal_mulai')),
+                    'tanggal_selesai' => strtotime($this->request->getVar('tanggal_selesai')),
                     'tanggal_publish' => date('Y-m-d', strtotime($this->request->getVar('tanggal_publish'))) . ' ' . date('H:i', strtotime($this->request->getVar('jam'))),
                     'has_berita'      => md5(uniqid()),
                 ];

@@ -10,41 +10,36 @@
 </div>
 
 <div class="form-group row">
-	<label class="col-md-2">Upload Gambar Berita</label>
-	<div class="col-md-10">
+	<label class="col-md-2">Gambar, Kategori &amp; Status</label>
+	<div class="col-md-3">
 		<input type="file" name="gambar" class="form-control" value="<?= set_value('gambar') ?>">
 	</div>
-</div>
-
-<div class="form-group row">
-	<label class="col-md-2">Kategori, Jenis &amp; Status</label>
-	<div class="col-md-2">
-		<select name="id_kategori" class="form-control">
-			<?php foreach ($kategori as $kategori) { ?>
-			<option value="<?= $kategori['id_kategori'] ?>">
-				<?= $kategori['nama_kategori'] ?>
-			</option>
-			<?php } ?>
-		</select>
-		<small class="text-secondary">Kategori</small>
-	</div>
-	<div class="col-md-2">
-		<select name="jenis_berita" class="form-control">
-			<option value="Berita">Berita</option>
-			<option value="Layanan">Layanan</option>
-			<option value="Profil">Profil</option>
-			<option value="Event">Event</option>
-		</select>
-		<small class="text-secondary">Jenis konten</small>
-	</div>
-	<div class="col-md-2">
-		<select name="status_berita" class="form-control">
-			<option value="Publish">Publish</option>
-			<option value="Draft">Draft</option>
-		</select>
-		<small class="text-secondary">Status publikasi</small>
-	</div>
-	
+    <div class="col-md-3">
+        <select name="id_kategori" class="form-control">
+            <?php foreach ($kategori as $kategori) { ?>
+                <option value="<?= $kategori['id_kategori'] ?>">
+                    <?= $kategori['nama_kategori'] ?>
+                </option>
+            <?php } ?>
+        </select>
+        <small class="text-secondary">Kategori</small>
+    </div>
+    <div class="col-md-2">
+        <select name="status_berita" class="form-control">
+            <option value="Publish">Publish</option>
+            <option value="Draft">Draft</option>
+        </select>
+        <small class="text-secondary">Status publikasi</small>
+    </div>
+    <div class="col-md-2">
+        <select name="jenis_berita" class="form-control">
+            <option value="Berita">Berita</option>
+            <option value="Layanan">Layanan</option>
+            <option value="Profil">Profil</option>
+            <option value="Event">Event</option>
+        </select>
+        <small class="text-secondary">Jenis konten</small>
+    </div>
 </div>
 
 <div class="form-group row">

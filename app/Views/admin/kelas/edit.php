@@ -75,10 +75,17 @@
 			<label class="col-md-2 mt-1">Metode</label>
 			<div class="col-md-4">
 				<select name="metode_pembelajaran" class="form-control form-control-sm" required>
-					<option value="<?= $kelas['metode_pembelajaran']?>"><?= metode_belajar($kelas['metode_pembelajaran'])?></option>
-					<option value="0">Daring</option>
-					<option value="1">Luring</option>					
-					<option value="2">Gabungan Daring dan Luring</option>
+                    <?php
+                    foreach ($metode_belajar as $mb):
+                    ?>
+					<option value="<?= $mb['id_metode_belajar']?>"
+                        <?php
+                        if($kelas['metode_belajar']===$mb['id_metode_belajar']){echo "selected";}
+                        ?>
+                    ><?= $mb['metode_belajar']?></option>
+                    <?php
+                        endforeach;
+                    ?>
 				</select>
 			</div>
 		</div>

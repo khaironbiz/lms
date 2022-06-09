@@ -133,6 +133,35 @@ echo view($sub_menu)
                                     </div>
                                 </div>
                                 <div class="mt-1 row">
+                                    <label class="col-md-2">PIC</label>
+                                    <div class="col-md-4">
+                                        <select class="form-control form-control-sm" name="pic">
+                                            <?php
+                                            foreach($user as $user):
+                                            ?>
+                                            <option vakue="<?= $user['id_user']?>"><?= $user['nama']?></option>
+                                            <?php
+                                            endforeach;
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <label class="col-2">Metode</label>
+                                    <div class="col-md-4">
+                                        <select class="form-control form-control-sm" name="metode_belajar">
+                                            <?php
+                                            foreach($metode_belajar as $mb):
+                                                ?>
+                                                <option vakue="<?= $mb['id_metode_belajar']?>"><?= $mb['metode_belajar']?></option>
+                                            <?php
+                                            endforeach;
+                                            ?>
+                                        </select>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="mt-1 row">
                                     <label class="col-md-2">Kategori</label>
                                     <div class="col-md-4">
                                         <select class="form-control form-control-sm" name="kategori_kelas" riquired>

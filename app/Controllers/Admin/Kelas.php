@@ -5,6 +5,7 @@ namespace App\Controllers\Admin;
 use App\Models\Berita_model;
 use App\Models\Kategori_model;
 use App\Models\Kategori_kelas_model;
+use App\Models\Metode_belajar_model;
 use App\Models\Soal_model;
 use App\Models\Tugas_kelas_model;
 use App\Models\Tugas_metode_model;
@@ -354,6 +355,7 @@ class Kelas extends BaseController
                     'tanggal_mulai'     => $tanggal_mulai,
                     'tanggal_selesai'   => $tanggal_selesai,
                     'kuota'             => $this->request->getVar('kuota'),
+                    'metode_belajar'    => $this->request->getVar('metode_belajar'),
                     'status'            => $this->request->getVar('status'),
                     'poster'            => $namabaru,
                     'harga_dasar'       => $this->request->getVar('harga_dasar'),
@@ -387,14 +389,17 @@ class Kelas extends BaseController
     {
         checklogin();
         $m_kategori_kelas   = new Kategori_kelas_model();
+        $m_metode_belajar   = new Metode_belajar_model();
         $m_kelas            = new Kelas_model();
         $m_user             = new User_model();
         $user               = $m_user->listing();
         $kategori_kelas     = $m_kategori_kelas->listing();
         $kelas              = $m_kelas->detail($has_kelas);
+        $metode_belajar     = $m_metode_belajar->findAll();
         $data               = [
             'title'             => $kelas['nama_kelas'],
             'kategori_kelas'    => $kategori_kelas,
+            'metode_belajar'    => $metode_belajar,
             'kelas'             => $kelas,
             'user'              => $user,
             'content'           => 'admin/kelas/edit',
@@ -443,7 +448,7 @@ class Kelas extends BaseController
                         'harga_dasar'           => $this->request->getVar('harga_dasar'),
                         'harga_jual'            => $this->request->getVar('harga_jual'),
                         'status'                => $this->request->getVar('status'),
-                        'metode_pembelajaran'   => $this->request->getVar('metode_pembelajaran'),
+                        'metode_belajar'        => $this->request->getVar('metode_belajar'),
                         'poster'                => $namabaru,
                         'has_kelas'             => $has_kelas
                     ];

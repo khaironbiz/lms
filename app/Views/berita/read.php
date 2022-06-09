@@ -59,77 +59,114 @@ $session = \Config\Services::session();
                       if($id_user>0){
                         echo form_open(base_url('admin/kelas_peserta/create/'.$k['has_kelas']));
                         echo csrf_field();
+                        ?>
+                          <div class="modal fade" id="daftar<?= $k['has_kelas']?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-lg">
+                                  <div class="modal-content">
+                                      <div class="modal-header">
+                                          <h5 class="modal-title" id="staticBackdropLabel">Pendaftaran Kegiatan</h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                      </div>
+                                      <div class="modal-body">
+                                          <div class="row mb-1">
+                                              <label class="col-md-3">Kelas</label>
+                                              <div class="col-md-9">
+                                                  <select class="form-control form-control-sm" name="id_kelas">
+                                                      <option value="<?= $k['id_kelas']?>"><?= $k['nama_kelas']?></option>
+                                                  </select>
+                                              </div>
+                                          </div>
+                                          <div class="row mb-1">
+                                              <label class="col-md-3">Email</label>
+                                              <div class="col-md-9">
+                                                  <input type="text" class="form-control form-control-sm" name="email_peserta" value="<?= $user['email']?>">
+                                              </div>
+                                          </div>
+                                          <div class="row mb-1">
+                                              <label class="col-md-3">No HP</label>
+                                              <div class="col-md-9">
+                                                  <input type="text" class="form-control form-control-sm" name="hp_peserta" value="<?= $user['hp']?>">
+                                              </div>
+                                          </div>
+                                          <div class="row mb-1">
+                                              <label class="col-md-3">Nama di Sertifikat</label>
+                                              <div class="col-md-9">
+                                                  <input type="text" class="form-control form-control-sm" name="nama_sertifikat" value="<?= $user['nama']?>">
+                                              </div>
+                                          </div>
+                                          <div class="row mb-1">
+                                              <label class="col-md-3">Harga Member</label>
+                                              <div class="col-md-9">
+                                                  <input type="number" class="form-control form-control-sm" name="harga" value="<?= $k['harga_jual']; ?>">
+                                              </div>
+                                          </div>
+
+                                      </div>
+                                      <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                          <button type="submit" class="btn btn-default btn-sm">Save</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <?= form_close();
                       }else{
                     ?>
                     <?= form_open(base_url('admin/kelas_peserta/daftar_tamu/'.$k['has_kelas']));
                     echo csrf_field();
+                    ?>
+                          <div class="modal fade" id="daftar<?= $k['has_kelas']?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-lg">
+                                  <div class="modal-content">
+                                      <div class="modal-header bg-warning">
+                                          <h5 class="modal-title" id="staticBackdropLabel">Pendaftaran Kegiatan</h5>
+                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                      </div>
+                                      <div class="modal-body">
+                                          <div class="row mb-1">
+                                              <label class="col-md-3">Kelas</label>
+                                              <div class="col-md-9">
+                                                  <select class="form-control form-control-sm" name="id_kelas">
+                                                      <option value="<?= $k['id_kelas']?>"><?= $k['nama_kelas']?></option>
+                                                  </select>
+                                              </div>
+                                          </div>
+                                          <div class="row mb-1">
+                                              <label class="col-md-3">Email</label>
+                                              <div class="col-md-9">
+                                                  <input type="text" class="form-control form-control-sm" name="email_peserta">
+                                              </div>
+                                          </div>
+                                          <div class="row mb-1">
+                                              <label class="col-md-3">No HP</label>
+                                              <div class="col-md-9">
+                                                  <input type="text" class="form-control form-control-sm" name="hp_peserta">
+                                              </div>
+                                          </div>
+                                          <div class="row mb-1">
+                                              <label class="col-md-3">Nama di Sertifikat</label>
+                                              <div class="col-md-9">
+                                                  <input type="text" class="form-control form-control-sm" name="nama_sertifikat">
+                                              </div>
+                                          </div>
+                                          <div class="row mb-1">
+                                              <label class="col-md-3">Harga Non Member</label>
+                                              <div class="col-md-9">
+                                                  <input type="number" class="form-control form-control-sm" name="harga" value="<?php if($k['harga_jual']<1){echo "10000";}else{ echo ($k['harga_jual']*1.1); } ?>">
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                          <button type="submit" class="btn btn-default btn-sm">Save</button>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <?= form_close(); ?>
+                    <?php
                       }
                     ?>
-                    <div class="modal fade" id="daftar<?= $k['has_kelas']?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                      <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Pendaftaran Kegiatan <?= $berita['id_berita']?></h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div class="modal-body">
-                            <div class="row mb-1">
-                                <label class="col-md-3">Kelas</label>
-                                <div class="col-md-9">
-                                  <select class="form-control form-control-sm" name="id_kelas">
-                                    <option value="<?= $k['id_kelas']?>"><?= $k['nama_kelas']?></option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="row mb-1">
-                                <label class="col-md-3">Email</label>
-                                <div class="col-md-9">
-                                  <input type="text" class="form-control form-control-sm" name="email_peserta" value="<?= $user['email']?>">
-                                </div>
-                              </div>
-                              <div class="row mb-1">
-                                <label class="col-md-3">No HP</label>
-                                <div class="col-md-9">
-                                  <input type="text" class="form-control form-control-sm" name="hp_peserta" value="<?= $user['hp']?>">
-                                </div>
-                              </div>
-                              <div class="row mb-1">
-                                <label class="col-md-3">Nama di Sertifikat</label>
-                                <div class="col-md-9">
-                                  <input type="text" class="form-control form-control-sm" name="nama_sertifikat" value="<?= $user['nama']?>">
-                                </div>
-                              </div>
-                              <?php
-                                if($id_user>0){
-                              ?>
-                              <div class="row mb-1">
-                                <label class="col-md-3">Harga Member</label>
-                                <div class="col-md-9">
-                                  <input type="number" class="form-control form-control-sm" name="harga" value="<?= $k['harga_jual']; ?>">
-                                </div>
-                              </div>
-                              <?php
-                                }else{
-                              ?>
-                              <div class="row mb-1">
-                                <label class="col-md-3">Harga Non Member</label>
-                                <div class="col-md-9">
-                                  <input type="number" class="form-control form-control-sm" name="harga" value="<?php if($k['harga_jual']<1){echo "10000";}else{ echo ($k['harga_jual']*1.1); } ?>">
-                                </div>
-                              </div>
-                              <?php
-                                }
-                              ?>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-default btn-sm">Save</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <?= form_close(); ?>
-
                   </td>
                   
                 </tr>

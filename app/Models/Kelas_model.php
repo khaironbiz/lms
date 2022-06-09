@@ -18,6 +18,7 @@ class Kelas_model extends Model
                                 'kuota',
                                 'status',
                                 'poster',
+                                'metode_belajar',
                                 'harga_dasar',
                                 'harga_jual', 
                                 'has_kelas',];
